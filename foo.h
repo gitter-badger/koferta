@@ -5,28 +5,16 @@
 
 #define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
-#define EXEC(s) \
-    do{ \
-        DEBUG << "zapytanie mysql: " << s; \
-        if(q.exec(s) == false) \
-        { \
-            DEBUG << "Zapytanie mysql zkończone niepowodzeniem!"; \
-            qDebug() << "\tError text: " <<  q.lastError().driverText(); \
-            return; \
-        } \
-    }while(0)
+enum actions
+{
+    towar,
+    klient,
+    help
+};
 
-#define EXEC_SILENT(s) \
-    do{ \
-        if(q.exec(s) == false) \
-        { \
-            DEBUG << "Zapytanie mysql zkończone niepowodzeniem!"; \
-            qDebug() << "\tZapytanie mysql: " << s; \
-            qDebug() << "\tError text: " <<  q.lastError().text(); \
-            return; \
-        } \
-    }while(0)
-
-QStringList importTowar(const QString& fileName, bool dryRun = false);
+bool connect(const QString& ip);
+void import(const QString& fileName, QStringList& sl, actions action, bool dryRun = true);
+void importTowar(const QString& fileName, QStringList& sl, bool dryRun);
+void importKlient(const QString& fileName, QStringList& sl, bool dryRun);
 
 #endif // FOO_H
