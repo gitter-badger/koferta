@@ -7,8 +7,6 @@
 
 const QString ip = "192.168.1.90";
 
-
-
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -98,12 +96,12 @@ int main(int argc, char *argv[])
         }
     }
 
-    qDebug() << "\n##############################################";
-    qDebug() << "Zakończono pracę. Błedne wpisy w plikach:";
+    qDebug() << "\nPrzetworzono plików: " << files;
+    qDebug() << "Błędnych wpisów: " << sl.size();
+    qDebug() << "Błedne wpisy:";
+    qDebug() << "Plik\t\t| Linia\t| Błąd";
     foreach(s, sl)
         qDebug() << s;
 
-    qDebug() << "Przetworzono plików: " << files;
-    qDebug() << "W sumie błędnych wpisów: " << sl.size();
     return 0;
 }

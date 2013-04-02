@@ -91,7 +91,7 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
     QStringList list;
     QString sRead;
     QString cena;
-    QDebug dbg(QtDebugMsg);
+
     QString s;
     double dCena;
     bool f;
@@ -108,25 +108,28 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
 
     qDebug() << "\n#############################################################################";
     qDebug() <<  "#\tPrzetwarzanie pliku:" << fileName << "\t#";
-    qDebug() << "#############################################################################\n";
+    qDebug() << "#############################################################################";
 
     QTextStream in(&file);
     in.setCodec("UTF-8");
 
-    for(unsigned i=0; !in.atEnd(); ++i)
+    unsigned i=0;
+    while(!in.atEnd())
     {
+        ++i;
+
         sRead = in.readLine();
         list = sRead.split("|");
         if(list.size() < 3)
         {
-            sl << QString("%1\t| %2\tZa mało kolumn").arg(fileName, QString::number(i+1));
+            sl << QString("%1\t| %2\tZa mało kolumn").arg(fileName, QString::number(i));
             continue;
         }
 
         key = list[1];
         if(keys.contains(key))
         {
-            sl << QString("%1\t| %2\tDuplikat klucza: %3").arg(fileName, QString::number(i+1), key);
+            sl << QString("%1\t| %2\tDuplikat klucza: %3").arg(fileName, QString::number(i), key);
             continue;
         }
         keys << key;
@@ -137,7 +140,7 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
         dCena = cena.toDouble(&f);
         if(!f)
         {
-            sl << QString("%1\t| %2\tZła cena: %3").arg(fileName, QString::number(i+1), cena);
+            sl << QString("%1\t| %2\tZła cena: %3").arg(fileName, QString::number(i), cena);
             continue;
         }
 
@@ -146,20 +149,28 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
         else
             s = "szt.";
 
-        dbg <<  "\rPrzetworzono lini:\t" << i+1;
-
         if(!dryRun)
         {
+            ids << key;
             nazwy << list[0];
             ceny << dCena;
             j << s;
         }
     }
 
-    dbg << "\n";
+    qDebug() <<  "Przetworzono lini:\t" << i;
+
 
     if(dryRun)
         return;
+
+    int size = ids.size();
+    if(size != nazwy.size() || size != ceny.size() || size != j.size())
+    {
+        DEBUG << "Błąd długości wektorów danych, długości:";
+        qDebug() << QString("%1\t%2\t%3\t%4").arg(QString::number(size), QString::number(nazwy.size()), QString::number(ceny.size()), QString::number(j.size()));
+        return;
+    }
 
     q.prepare("INSERT INTO towar (id, nazwa, cena, jednostka) VALUES (:id, :nazwa, :cena, :j) ON DUPLICATE KEY UPDATE nazwa=VALUES(nazwa), cena=VALUES(cena), jednostka=VALUES(jednostka)");
     q.bindValue(":id", ids);
@@ -167,8 +178,17 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
     q.bindValue(":cena", ceny);
     q.bindValue(":j", j);
 
+    qDebug() << "Wysyłanie zapytania do bazy danych...";
+
     if (!q.execBatch())
          DEBUG << q.lastError();
+
+    if(q.numRowsAffected() == 1)
+        qDebug() << "Dodano wpisy";
+    else if(q.numRowsAffected() == 0)
+        qDebug() << "Brak nowych wpisów";
+    else
+        DEBUG << "Error?";
 
     return;
 }

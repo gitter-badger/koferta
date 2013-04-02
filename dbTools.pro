@@ -13,7 +13,7 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-QMAKE_CXXFLAGS += -Wall -Werror -Wextra
+QMAKE_CXXFLAGS += -Wall -Wextra -Werror
 LIBS += -L/usr/lib/mysql -lmysqlclient
 
 OBJECTS_DIR =   temp
