@@ -135,13 +135,23 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
         keys << key;
 
         cena =  list[2];
-        cena.remove(' ');
-        cena.replace(',', '.');
-        dCena = cena.toDouble(&f);
-        if(!f)
+        if(cena.isEmpty())
+            dCena = 0;
+        else
         {
-            sl << QString("%1\t| %2\tZła cena: %3").arg(fileName, QString::number(i), cena);
-            continue;
+       //     qDebug() << "przed konwersją: " << cena;
+            cena.remove(' ');
+            cena.remove('.');
+            cena.remove(',');
+            //cena.replace(',', '.');
+            cena.insert(cena.size()-2, '.');
+         //   qDebug() << "po konwersji: " << cena;
+            dCena = cena.toDouble(&f);
+            if(!f)
+            {
+                sl << QString("%1\t| %2\tZła cena: %3").arg(fileName, QString::number(i), cena);
+                continue;
+            }
         }
 
         if(list.size() > 3 && (list[3] == "mb." || list[3] == "m" || list[3] == "metr"))
