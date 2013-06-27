@@ -193,12 +193,12 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
     if (!q.execBatch())
          DEBUG << q.lastError();
 
-    if(q.numRowsAffected() == 1)
-        qDebug() << "Dodano wpisy";
+    if(q.numRowsAffected() == -1)
+        DEBUG << "Error?";
     else if(q.numRowsAffected() == 0)
         qDebug() << "Brak nowych wpisów";
     else
-        DEBUG << "Error?";
+        qDebug() << "Dodano wpisy";
 
     return;
 }
