@@ -5,7 +5,7 @@
 #include "foo.h"
 #include <QDirIterator>
 
-const QString ip = "192.168.1.90";
+const QString ip = "localhost";// "192.168.1.90";
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +26,8 @@ int main(int argc, char *argv[])
             action = towar;
         else if(ar[0] == "klient")
             action = klient;
+        else if(ar[0] == "user")
+            action = usr;
         else
             action = help;
         ar.removeFirst();
@@ -36,7 +38,8 @@ int main(int argc, char *argv[])
 
     if(action == help)
     {
-        qDebug() << "dbTools towar/klient [-h] [-d] [-r path] [file1.csv ...]";
+        qDebug() << "dbTools action [-h] [-d] [-r path] [file1.csv ...]";
+        qDebug() << "actions:\ttowar, klient, user";
         qDebug() << "-h --help\tPrint this help and exit";
         qDebug() << "-d\t\tDry run - check syntax, not inserting into base";
         qDebug() << "-r path\t\tRecursive - scans path for all .csv files";

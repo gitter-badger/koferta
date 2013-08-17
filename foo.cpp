@@ -71,6 +71,10 @@ bool connect(const QString &ip)
 
 void import(const QString& fileName, QStringList& sl, actions action, bool dryRun)
 {
+    qDebug() << "\n#############################################################################";
+    qDebug() <<  "#\tPrzetwarzanie pliku:" << fileName << "\t#";
+    qDebug() << "#############################################################################";
+
     switch(action)
     {
     case towar:
@@ -79,8 +83,70 @@ void import(const QString& fileName, QStringList& sl, actions action, bool dryRu
     case klient:
         importKlient(fileName, sl, dryRun);
         break;
+    case usr:
+        importUser(fileName, sl, dryRun);
+        break;
     case help:
         break;
+    }
+}
+
+void importUser(const QString& fileName, QStringList& sl, bool dryRun)
+{
+    QStringList list;
+    QSqlQuery q;
+    QString s;
+    QString sRead;
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        if(!file.exists())DEBUG <<  "cennik nie iesnieje";
+        else DEBUG <<  "cennik niedostępny";
+        return;
+    }
+
+    QTextStream in(&file);
+    in.setCodec("UTF-8");
+
+    unsigned i=0;
+    while(!in.atEnd())
+    {
+        ++i;
+
+        sRead = in.readLine();
+        list = sRead.split(" ");
+        if(list.size() < 2)
+        {
+            sl << QString("%1\t| %2\tZa mało kolumn").arg(fileName, QString::number(i));
+            continue;
+        }
+
+        s = list[0];
+        s.truncate(12);
+        s.replace("ł", "l");
+        s.replace("ą", "a");
+        s.replace("ę", "e");
+        s.replace("ó", "o");
+        s.replace("ś", "s");
+        s.replace("ż", "z");
+        s.replace("ź", "z");
+        s.replace("ć", "c");
+        s.replace("ń", "n");
+        s = "kOf_" + s;
+
+        if(dryRun)
+            continue;
+/*
+        q.prepare(QString("CREATE USER '%1'@'%' IDENTIFIED BY '%2'").arg(s, list[1]));
+        if(!q.exec())
+            DEBUG << q.lastError();
+*/
+        q.prepare(QString("GRANT SELECT, INSERT, UPDATE, DELETE ON kOferta.* TO '%1'@'%' IDENTIFIED BY '%2' REQUIRE SSL").arg(s, list[1]));
+        if(!q.exec())
+            DEBUG << q.lastError();
+
+        qDebug() << "Dodano użytkownika:\t" << s;
     }
 }
 
@@ -105,10 +171,6 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
         else DEBUG <<  "cennik niedostępny";
         return;
     }
-
-    qDebug() << "\n#############################################################################";
-    qDebug() <<  "#\tPrzetwarzanie pliku:" << fileName << "\t#";
-    qDebug() << "#############################################################################";
 
     QTextStream in(&file);
     in.setCodec("UTF-8");
@@ -199,8 +261,6 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
         qDebug() << "Brak nowych wpisów";
     else
         qDebug() << "Dodano wpisy";
-
-    return;
 }
 
 void importKlient(const QString& fileName, QStringList& sl, bool dryRun)
@@ -267,6 +327,10 @@ void importKlient(const QString& fileName, QStringList& sl, bool dryRun)
 
     if (!q.execBatch())
          DEBUG << q.lastError();
-
-    return;
+    if(q.numRowsAffected() == -1)
+        DEBUG << "Error?";
+    else if(q.numRowsAffected() == 0)
+        qDebug() << "Brak nowych wpisów";
+    else
+        qDebug() << "Dodano wpisy";
 }
