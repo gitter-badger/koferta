@@ -1,10 +1,30 @@
 #include "Towar.h"
+#include <QSqlRecord>
+#include <QVariant>
 
-Towar::Towar(QObject *parent) :
-    QObject(parent)
+Towar::Towar() :
+    m_rabat(0), m_ilosc(0)
 {
 
 }
+
+Towar::Towar(const QSqlRecord &rec) :
+    m_rabat(0), m_ilosc(0)
+{
+    m_kod = rec.value(0).toString();
+    m_nazwa = rec.value(1).toString();
+    m_cenaKat = rec.value(2).toDouble();
+    m_metr = (rec.value(3).toString() == "mb.");
+
+}
+/*
+Towar::Towar(QObject *parent, QString kod, QString nazwa, double cenaKat, double rabat, double ilosc, bool metr) :
+    QObject(parent),
+    m_kod(kod), m_nazwa()
+{
+
+}
+*/
 
 QString Towar::kod() const
 {
