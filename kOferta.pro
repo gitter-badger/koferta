@@ -46,7 +46,7 @@ win32 { #nmake & M$ compiler
 }
 
 unix {
-    QMAKE_CXXFLAGS += -Wall -Werror -Wextra
+#    QMAKE_CXXFLAGS += -Wall -Werror -Wextra
     LIBS += -L/usr/lib/mysql -lmysqlclient
     #DEFINES += NOSSL
     #DEFINES += RELEASE
@@ -77,7 +77,8 @@ HEADERS += Database.h \
            WyborKlienta.h \
     WyborTowaru.h \
     EdycjaKombo.h \
-    Towar.h
+    Towar.h \
+    TowarModel.h
 
 FORMS += EdycjaKlienta.ui \
          EdycjaTowaru.ui \
@@ -112,7 +113,8 @@ SOURCES += Database.cpp \
            WyborKlienta.cpp \        
     WyborTowaru.cpp \
     EdycjaKombo.cpp \
-    Towar.cpp
+    Towar.cpp \
+    TowarModel.cpp
 
 RESOURCES += res/zasoby.qrc
 
