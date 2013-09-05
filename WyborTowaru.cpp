@@ -80,11 +80,17 @@ void WyborTowaru::refresh(const QSqlRecord& _rec)
     ui->plainTextEdit->setPlainText(s);
 
     ui->spinBox->setEnabled(true);
-    ui->spinBox->setValue(dynamic_cast<MainWindow*>(this->parent())->ileTowaru(rec->value(0).toString()));
+    emit itemSelected(rec->value(0).toString());
+    //ui->spinBox->setValue(dynamic_cast<MainWindow*>(this->parent())->ileTowaru(rec->value(0).toString()));
 }
 
 void WyborTowaru::spin(int ile)
 {
     if(ile != 0 && rec != NULL)
         emit countChanged(*rec, ile);
+}
+
+void WyborTowaru::setItemCount(int amount)
+{
+    ui->spinBox->setValue(amount);
 }

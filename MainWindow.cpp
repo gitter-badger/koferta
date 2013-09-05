@@ -49,6 +49,8 @@
 #include "User.h"
 #include "Macros.h"
 #include "EdycjaKombo.h"
+#include "TowarModel.h"
+#include "Towar.h"
 
 /*************************
 **      GŁÓWNE OKNO     **
@@ -67,6 +69,7 @@ MainWindow::~MainWindow()
     delete terminModel;
     delete ofertaModel;
     delete klient;
+    delete m_towarModel;
 
     DEBUG << "destruktor mainwindow - koniec";
 }
@@ -148,7 +151,7 @@ MainWindow::MainWindow ():
     connect(ui->checkBox_zapytanieNr, SIGNAL(toggled(bool)), this, SLOT(checkNr(bool)));
 
     //inne
-    connect(ui->tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(change(QTableWidgetItem*)));
+    //connect(ui->tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(change(QTableWidgetItem*)));
 
 /**
   ui
@@ -220,6 +223,10 @@ MainWindow::MainWindow ():
     ui->plainTextEdit_oferta->setReadOnly(true);
     ui->label_oferta->setText(tr("Warunki Oferty:"));
 
+    m_towarModel = new TowarModel;
+    ui->tableView->setModel(m_towarModel);
+    ui->tableView->setDragDropMode(QAbstractItemView::InternalMove);
+
     ui->label_uwagi->setText(tr("Uwagi:"));
 }
 
@@ -269,42 +276,9 @@ void MainWindow::setTitle(QString* nr)
     this->setWindowTitle(s);
 }
 
-int MainWindow::ileTowaru(const QString& id)
-{
-    if(id.isEmpty() || id.isNull())
-        return 0;
-
- //   DEBUG << "search for existing idTowaru:" << id;
-    QList<QTableWidgetItem*> list = ui->tableWidget->findItems(id, Qt::MatchFixedString);
-    if(list.isEmpty())
-    {
- //       DEBUG << "not found in table";
-        return 0;
-    }
-    else
-    {
-        int row = list[0]->row();
-   //     DEBUG << "found in row: " << row;
-        return ui->tableWidget->item(row, 5)->text().toInt();
-    }
-}
-
-
-void MainWindow::clear()
-{
-    while(ui->tableWidget->rowCount()){
-        ui->tableWidget->removeRow(ui->tableWidget->rowCount()-1);
-    }
-
-    ui->tableWidget->insertRow(0);
-    QTableWidgetItem* item;
-    item = new QTableWidgetItem("razem €");
-    ui->tableWidget->setItem(0, 6, item);
-    item = new QTableWidgetItem();
-    ui->tableWidget->setItem(0, 7, item);
-}
 void MainWindow::rabat()
 {
+    /*
     uint rows = ui->tableWidget->rowCount();
     if(rows < 2)return;
 
@@ -316,21 +290,24 @@ void MainWindow::rabat()
            przelicz(i);
        }
     sum();
+    */
 }
 
 void MainWindow::sum()
 {
+    /*
     double sum=0;
     unsigned row = ui->tableWidget->rowCount()-1;
     for(unsigned i=0; i<row; ++i){
         sum += ev(i, 7);
     }
     ui->tableWidget->item(row, 7)->setText(QString::number(sum, 'f', 2));
+*/
 }
 
 void MainWindow::setTowar(const QSqlRecord& rec, int ile)
 {
-
+/*
     QString id = rec.value("id").toString();
     QList<QTableWidgetItem*> list = ui->tableWidget->findItems(id, Qt::MatchFixedString);
 
@@ -381,14 +358,17 @@ void MainWindow::setTowar(const QSqlRecord& rec, int ile)
     }
 
     sum();
+*/
 }
 
 double MainWindow::ev(unsigned row, unsigned col)
 {
-    return ui->tableWidget->item(row, col)->text().toDouble();
+    return 0;
+  //  return ui->tableWidget->item(row, col)->text().toDouble();
 }
 void MainWindow::przelicz(unsigned row)
 {
+    /*
     double r;
     r = 100 - ev(row, 3);
     r /= 100;
@@ -397,22 +377,12 @@ void MainWindow::przelicz(unsigned row)
     r = ui->tableWidget->item(row, 4)->text().toDouble();
     r *= ev(row, 5);
     ui->tableWidget->item(row, 7)->setText(QString::number(r, 'f', 2));
-}
-
-void MainWindow::change(QTableWidgetItem* item)
-{
-    if (!(item && item == ui->tableWidget->currentItem()))return;
-    if(item->column() == 0 ||item->column() == 1)return;
-    przelicz(item->row());
-    sum();
+*/
 }
 
 void MainWindow::del()
 {
-    int row = ui->tableWidget->currentRow();
-    if(row == ui->tableWidget->rowCount() -1)return; //wiersz z suma
-    ui->tableWidget->removeRow(row);
-    sum();
+    m_towarModel->removeRow(ui->tableView->currentIndex().row());
 }
 
 void MainWindow::dostawaRef(int row)
@@ -488,7 +458,9 @@ void MainWindow::popWyborKlienta()
 void MainWindow::popWyborTowaru()
 {
     WyborTowaru* pop = new WyborTowaru(this);
-    connect(pop, SIGNAL(countChanged(QSqlRecord,int)), this, SLOT(setTowar(QSqlRecord,int)));
+    connect(pop, SIGNAL(itemSelected(QString)), m_towarModel, SLOT(ileTowaru(QString)));
+    connect(m_towarModel, SIGNAL(iloscTowaru(int)), pop, SLOT(setItemCount(int)));
+    connect(pop, SIGNAL(countChanged(QSqlRecord,int)), m_towarModel, SLOT(changeItemCount(QSqlRecord,int)));
     pop->showMaximized();
     pop->exec();
     delete pop;
@@ -522,12 +494,14 @@ void MainWindow::pln_on()
     ui->kurs->setEnabled(true);
     ui->kurs_label->setEnabled(true);
     ui->kurs->setText("4.00");
-
+/*
     ui->tableWidget->horizontalHeaderItem(2)->setText("Cena kat. zł");
     ui->tableWidget->horizontalHeaderItem(4)->setText("Cena zł");
     ui->tableWidget->horizontalHeaderItem(7)->setText("Wartość zł");
 
     tabupd();
+    */
+    m_towarModel->setPln(true);
 }
 
 void MainWindow::pln_off()
@@ -537,11 +511,7 @@ void MainWindow::pln_off()
     ui->kurs->setEnabled(false);
     ui->kurs_label->setEnabled(false);
 
-    ui->tableWidget->horizontalHeaderItem(2)->setText("Cena kat. €");
-    ui->tableWidget->horizontalHeaderItem(4)->setText("Cena €");
-    ui->tableWidget->horizontalHeaderItem(7)->setText("Wartość €");
-
-    tabupd();
+    m_towarModel->setPln(false);
 }
 
 void MainWindow::chKurs(QString sKurs)
@@ -557,6 +527,7 @@ void MainWindow::chKurs(QString sKurs)
 
 void MainWindow::tabupd()
 {
+    /*
     double x;
     for(int i=0; i<ui->tableWidget->rowCount()-1; ++i)
     {
@@ -573,6 +544,7 @@ void MainWindow::tabupd()
         przelicz(i);
     }
     sum();
+    */
 }
 /*************************
 **      OFERTA          **
@@ -601,7 +573,7 @@ void MainWindow::nowa()
     if(ui->tab->isEnabled()==false)
         this->init();
     else
-        this->clear();
+        m_towarModel->clear();
 }
 
 void MainWindow::init()
@@ -615,12 +587,12 @@ void MainWindow::init()
     ui->actionNR->setEnabled(true);
 
     //inicjacja tabelki
-    this->clear();
-    for(int i=0; i<ui->tableWidget->columnCount(); i++)
-        ui->tableWidget->setColumnWidth(i, 85);
-    ui->tableWidget->setColumnWidth(1, 410);
-    ui->tableWidget->setColumnWidth(0, 99);
-    ui->tableWidget->setSortingEnabled(true);
+    m_towarModel->clear();
+    for(int i=0; i < m_towarModel->columnCount(); i++)
+        ui->tableView->setColumnWidth(i, 85);
+    ui->tableView->setColumnWidth(1, 410);
+    ui->tableView->setColumnWidth(0, 99);
+  //  ui->tableView->setSortingEnabled(true);
 }
 
 void MainWindow::zapisz()
@@ -650,9 +622,11 @@ void MainWindow::zapisz()
         zNumer = QString::null;
 
     insert_zapisane(*nr_oferty, klient->value("id").toInt(), *data, currentUser->uid(), zData, zNumer, ui->comboBox_dostawa->currentIndex(), ui->comboBox_termin->currentIndex(), ui->comboBox_platnosc->currentIndex(), ui->comboBox_oferta->currentIndex(), ui->plainTextEdit_uwagi->toPlainText());
-
+/*
     for(int i=0; i < ui->tableWidget->rowCount() - 1; ++i)
         insert_zapisane_towary(*nr_oferty, ui->tableWidget->item(i, 0)->text(), ui->tableWidget->item(i, 5)->text().toDouble(), ui->tableWidget->item(i, 3)->text().toDouble());
+*/
+    //------------------ zapisywanie! ---------------
 }
 
 void MainWindow::popLoadDialog()
@@ -669,18 +643,17 @@ void MainWindow::loadOffer(const QSqlRecord& rec, const QSqlTableModel& mod)
 
     this->init();
     this->setTitle(nr_oferty);
-
+/*
     QSqlQuery q;
     QString s;
 
     s = QString("SELECT DISTINCT id_klienta FROM zapisane WHERE nr_oferty = '%1'").arg(*nr_oferty);
     EXEC(s);
     q.next();
-
+*/
     QSqlQueryModel klientModel;
-    s = QString("SELECT DISTINCT * FROM klient WHERE id = %1").arg(q.value(0).toInt());
-    DEBUG << s;
-    klientModel.setQuery(s);
+    qDebug() << rec.value("id_klienta").toString();
+    klientModel.setQuery(QString("SELECT DISTINCT * FROM klient WHERE id = %1").arg(rec.value("id_klienta").toInt()));
 
     clientChanged(klientModel.record(0));
 
@@ -705,50 +678,7 @@ void MainWindow::loadOffer(const QSqlRecord& rec, const QSqlTableModel& mod)
     ui->comboBox_oferta->setCurrentIndex(rec.value("platnosc").toInt());
     ui->plainTextEdit_uwagi->setPlainText(rec.value("uwagi").toString());
 
-    QTableWidgetItem* item;
-    double r;
-    QSqlRecord record;
-    for(int row=0; row<mod.rowCount(); ++row)
-    {
-        record = mod.record(row);
-
-        s = QString("SELECT nazwa, cena, jednostka FROM towar WHERE id='%1'").arg(record.value("kod").toString());
-        EXEC(s);
-        q.next();
-
-        ui->tableWidget->insertRow(row);
-
-        //kod
-        item = new QTableWidgetItem(record.value("kod").toString());
-        ui->tableWidget->setItem(row, 0, item);
-        //nazwa
-        item = new QTableWidgetItem(q.value(0).toString());
-        ui->tableWidget->setItem(row, 1, item);
-        //cena kat
-        r = q.value(1).toDouble();
-        item = new QTableWidgetItem(QString::number(r, 'f', 2));
-        ui->tableWidget->setItem(row, 8, item);
-        if(pln) r *= kurs;
-        item = new QTableWidgetItem(QString::number(r, 'f', 2));
-        ui->tableWidget->setItem(row, 2, item);
-        //rabat
-        item = new QTableWidgetItem(record.value("rabat").toString());
-        ui->tableWidget->setItem(row, 3, item);
-        //cana
-        item = new QTableWidgetItem("");
-        ui->tableWidget->setItem(row, 4, item);
-        //ilosc
-        item = new QTableWidgetItem(record.value("ilosc").toString());
-        ui->tableWidget->setItem(row, 5, item);
-        //jednostka
-        item = new QTableWidgetItem(q.value(2).toString());
-        ui->tableWidget->setItem(row, 6, item);
-        //koszt
-        item = new QTableWidgetItem("");
-        ui->tableWidget->setItem(row, 7, item);
-        przelicz(row);
-    }
-    sum();
+    m_towarModel->loadOffer(mod);
 }
 
 void MainWindow::dostawaNew()
@@ -882,6 +812,7 @@ void MainWindow::print(QPrinter *printer)
 
 void MainWindow::makeDocument(QString *sDoc)
 {
+ #ifdef xxx
     if(klient == NULL)
         klient = new QSqlRecord;
 
@@ -1180,6 +1111,7 @@ void MainWindow::makeDocument(QString *sDoc)
             "</table>\n"
             "</body>\n"
             "</html>\n";
+#endif
 }
 
 void MainWindow::ofertaNew()

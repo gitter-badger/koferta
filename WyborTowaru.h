@@ -38,9 +38,11 @@ public:
 public slots:
     void refresh(const QSqlRecord &);
     void spin(int);
+    void setItemCount(int amount);
 
 signals:
     void countChanged(const QSqlRecord &, int);
+    void itemSelected(QString kod);
     
 private:
     Ui::WyborTowaru *ui;

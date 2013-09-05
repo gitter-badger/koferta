@@ -24,6 +24,7 @@
 
 #include <QMainWindow>
 
+class TowarModel;
 class QSqlTableModel;
 class QModelIndex;
 class QTextDocument;
@@ -46,8 +47,6 @@ public:
     explicit MainWindow();                              //aktualny użytkownik przekazywany jako parametr
     ~MainWindow();
 
-    int ileTowaru(const QString&);                      //ilość danego towaru do wyświetlenia w wyborzeTowaru
-
 public slots:
     void popWyborKlienta();
     void popWyborTowaru();
@@ -62,8 +61,8 @@ public slots:
     void ofertaNew();
 
     //obsługa głównej tabeli
-    void change(QTableWidgetItem*);                     //wywoływane przeliczenia wartości kosztu i sumy w przypadku zmiany którejś wartości w tabeli
-    void clear();                                       //czyszczenie tabeli
+  //  void change(QTableWidgetItem*);                     //wywoływane przeliczenia wartości kosztu i sumy w przypadku zmiany którejś wartości w tabeli
+ //   void clear();                                       //czyszczenie tabeli
     void rabat();                                       //ustawia rabat dla wszystkich pozycji jednocześnie
     void del();                                         //usuwanie wiersza z tabeli
 
@@ -134,6 +133,8 @@ private:
     QSqlTableModel* platnoscModel;
     QSqlTableModel* terminModel;
     QSqlTableModel* ofertaModel;
+
+    TowarModel* m_towarModel;
 
     QCalendarWidget* calendarWidget;
     QSqlRecord* klient;    

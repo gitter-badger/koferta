@@ -25,7 +25,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -71,59 +71,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableWidget">
-          <property name="baseSize">
-           <size>
-            <width>7</width>
-            <height>1</height>
-           </size>
-          </property>
-          <column>
-           <property name="text">
-            <string>Kod</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Nazwa</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Cena kat. €</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Rabat</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Cena €</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Ilość</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Jedn.</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Wartość €</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Cena kat. €</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTableView" name="tableView"/>
         </item>
        </layout>
       </widget>
@@ -733,7 +681,7 @@
      <x>0</x>
      <y>0</y>
      <width>1065</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOferta">
