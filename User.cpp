@@ -36,7 +36,7 @@ cUser::cUser(QString name)
 
     QSqlDatabase* d = new QSqlDatabase(QSqlDatabase::database(QSqlDatabase::connectionNames().at(0), false));
 
-    d->setUserName("kOferta_GetUsers");
+    d->setUserName("kOf_GetUsers");
     d->setPassword(GET_PASS);
 
     LOGIN
@@ -167,7 +167,7 @@ QString cUser::dbName() const
 {
     QString s;
     s = _name->split(' ').last();
-    s.truncate(8);
+    s.truncate(12);
     s.replace("ł", "l");
     s.replace("ą", "a");
     s.replace("ę", "e");
@@ -177,7 +177,7 @@ QString cUser::dbName() const
     s.replace("ź", "z");
     s.replace("ć", "c");
     s.replace("ń", "n");
-    s = "kOferta_" + s;
+    s = "kOf_" + s;
     return s;
 }
 
