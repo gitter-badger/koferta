@@ -59,63 +59,67 @@ RCC_DIR =       temp/rcc
 
 DEPENDPATH += . res 
 
-HEADERS += Database.h \
-           EdycjaKlienta.h \
-           EdycjaTowaru.h \
-           LoadDialog.h \
-           Logowanie.h \
-           Macros.h \
-           MainWindow.h \
-           NowyKlient.h \
-           NowyTowar.h \
-           NowyUser.h \
-           SHA1.h \
-           SzukajKlienta.h \
-           SzukajOferty.h \
-           SzukajTowaru.h \
-           User.h \
-           WyborKlienta.h \
-           WyborTowaru.h \
-           EdycjaKombo.h \
-           Towar.h \
-           TowarModel.h
+HEADERS += \
+	Database.h \
+	EdycjaKlienta.h \
+	EdycjaTowaru.h \
+	LoadDialog.h \
+	Logowanie.h \
+	Macros.h \
+	MainWindow.h \
+	NowyKlient.h \
+	NowyTowar.h \
+	NowyUser.h \
+	SHA1.h \
+	SzukajKlienta.h \
+	SzukajOferty.h \
+	SzukajTowaru.h \
+	User.h \
+	WyborKlienta.h \
+	WyborTowaru.h \
+	EdycjaKombo.h \
+	Towar.h \
+	TowarModel.h \
+	TowarDelegate.h 
 
-
-FORMS += EdycjaKlienta.ui \
-         EdycjaTowaru.ui \
-         LoadDialog.ui \
-         Logowanie.ui \
-         MainWindow.ui \
-         NowyKlient.ui \
-         NowyTowar.ui \
-         NowyUser.ui \
-         SzukajKlienta.ui \
-         SzukajOferty.ui \
-         SzukajTowaru.ui \
-         WyborKlienta.ui \ 
-         WyborTowaru.ui \
-         EdycjaKombo.ui
+FORMS += \
+	EdycjaKlienta.ui \
+	EdycjaTowaru.ui \
+	LoadDialog.ui \
+	Logowanie.ui \
+	MainWindow.ui \
+	NowyKlient.ui \
+	NowyTowar.ui \
+	NowyUser.ui \
+	SzukajKlienta.ui \
+	SzukajOferty.ui \
+	SzukajTowaru.ui \
+	WyborKlienta.ui \ 
+	WyborTowaru.ui \
+	EdycjaKombo.ui 
          
-SOURCES += Database.cpp \
-           EdycjaKlienta.cpp \
-           EdycjaTowaru.cpp \
-           LoadDialog.cpp \
-           Logowanie.cpp \
-           Main.cpp \
-           MainWindow.cpp \
-           NowyKlient.cpp \
-           NowyTowar.cpp \
-           NowyUser.cpp \
-           SHA1.cpp \
-           SzukajKlienta.cpp \
-           SzukajOferty.cpp \
-           SzukajTowaru.cpp \
-           User.cpp \
-           WyborKlienta.cpp \        
-           WyborTowaru.cpp \
-           EdycjaKombo.cpp \
-           Towar.cpp \
-           TowarModel.cpp
+SOURCES += \
+	Database.cpp \
+	EdycjaKlienta.cpp \
+	EdycjaTowaru.cpp \
+	LoadDialog.cpp \
+	Logowanie.cpp \
+	Main.cpp \
+	MainWindow.cpp \
+	NowyKlient.cpp \
+	NowyTowar.cpp \
+	NowyUser.cpp \
+	SHA1.cpp \
+	SzukajKlienta.cpp \
+	SzukajOferty.cpp \
+	SzukajTowaru.cpp \
+	User.cpp \
+	WyborKlienta.cpp \        
+	WyborTowaru.cpp \
+	EdycjaKombo.cpp \
+	Towar.cpp \
+	TowarModel.cpp \
+	TowarDelegate.cpp
 
 RESOURCES += res/zasoby.qrc
 

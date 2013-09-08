@@ -17,14 +17,11 @@ Towar::Towar(const QSqlRecord &rec) :
     m_metr = (rec.value(3).toString() == "mb.");
 
 }
-/*
-Towar::Towar(QObject *parent, QString kod, QString nazwa, double cenaKat, double rabat, double ilosc, bool metr) :
-    QObject(parent),
-    m_kod(kod), m_nazwa()
-{
 
+double Towar::cenaPln(double kurs) const
+{
+    return m_cenaKat * kurs;
 }
-*/
 
 QString Towar::kod() const
 {
@@ -98,7 +95,7 @@ double Towar::wartosc() const
 
 double Towar::cena(double kurs) const
 {
-    return kurs * m_cenaKat * (100 - m_rabat) /100;
+    return cenaPln(kurs) * (100 - m_rabat) /100;
 }
 
 double Towar::wartosc(double kurs) const

@@ -1,16 +1,20 @@
 #ifndef TOWAR_H
 #define TOWAR_H
 
-#include <QtGui>
-#include <QListWidgetItem>
+#include <QString>
+
 class QSqlRecord;
 
+/*!
+ * \brief Klasa reprezentująca towar w ofercie
+ */
 class Towar
 {
 public:
     explicit Towar();
     Towar(const QSqlRecord& rec);
-//    Towar(QObject *parent = 0, QString kod, QString nazwa, double cenaKat, double rabat, double ilosc, bool metr);
+
+    double cenaPln(double kurs) const;
     
     QString kod() const;
     void setKod(const QString &kod);
@@ -30,16 +34,11 @@ public:
     bool metr() const;
     void setMetr(bool metr);
 
-signals:
-    void update();
-
-public slots:
     double cena() const;
     double wartosc() const;
 
     double cena(double kurs) const;
     double wartosc(double kurs) const;
-
 
 protected:
     QString m_kod;

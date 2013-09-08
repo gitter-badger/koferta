@@ -51,6 +51,7 @@
 #include "EdycjaKombo.h"
 #include "TowarModel.h"
 #include "Towar.h"
+#include "TowarDelegate.h"
 
 /*************************
 **      GŁÓWNE OKNO     **
@@ -70,6 +71,7 @@ MainWindow::~MainWindow()
     delete ofertaModel;
     delete klient;
     delete m_towarModel;
+   // delete m_towarDelegate;
 
     DEBUG << "destruktor mainwindow - koniec";
 }
@@ -85,73 +87,12 @@ MainWindow::MainWindow ():
     DEBUG << "inicjalizacja zmiennych";
 
     ui->setupUi(this);
-    pln = false;
 
     nr_oferty = new QString;
     data = new QString(QDate::currentDate().toString("dd.MM.yyyy"));
 
     calendarWidget = new QCalendarWidget;
     klient = NULL;
-/**
- connections
-**/
-    DEBUG << "połaczenia sygnałów i slotów";
-
-    /*menu:*/
-    //plik
-    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(nowa()));
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(popLoadDialog()));
-    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(zapisz()));
-    connect(ui->actionNR, SIGNAL(triggered()), this, SLOT(nowyNumer()));
-    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
-    //klient
-    connect(ui->klientNowy, SIGNAL(triggered()), this, SLOT(dodajKlient()));
-    connect(ui->klientEdycja, SIGNAL(triggered()), this, SLOT(edytujKlient()));
-    //towar
-    connect(ui->towarNowy, SIGNAL(triggered()), this, SLOT(dodajTowar()));
-    connect(ui->towarEdycja, SIGNAL(triggered()), this, SLOT(edytujTowar()));
-    //export
-    connect(ui->actionDo_HTML, SIGNAL(triggered()), this, SLOT(zapisz()));
-    connect(ui->actionDo_HTML, SIGNAL(triggered()), this, SLOT(printHtm()));
-    connect(ui->actionDo_PDF, SIGNAL(triggered()), this, SLOT(zapisz()));
-    connect(ui->actionDo_PDF, SIGNAL(triggered()), this, SLOT(printPdf()));
-    connect(ui->actionDruk, SIGNAL(triggered()), this, SLOT(zapisz()));
-    connect(ui->actionDruk, SIGNAL(triggered()), this, SLOT(printPrev()));
-    //info:
-    connect(ui->actionO_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect(ui->actionO_kOferta, SIGNAL(triggered()), this, SLOT(about()));
-
-    //opcje wydruku
-    connect(ui->pln, SIGNAL(pressed()), this, SLOT(pln_on()));
-    connect(ui->eur, SIGNAL(pressed()), this, SLOT(pln_off()));
-    connect(ui->kurs, SIGNAL(textChanged(QString)), this, SLOT(chKurs(QString)));
-
-    //buttony w tabach
-    connect(ui->addTowar, SIGNAL(clicked()), this, SLOT(popWyborTowaru()));
-    connect(ui->rabat, SIGNAL(clicked()), this, SLOT(rabat()));
-    connect(ui->delw, SIGNAL(clicked()), this, SLOT(del()));
-
-    //dodawanie opcji do kombosów
-    connect(ui->pushButton_dostawa, SIGNAL(clicked()), this, SLOT(dostawaNew()));
-    connect(ui->pushButton_oferta, SIGNAL(clicked()), this, SLOT(ofertaNew()));
-    connect(ui->pushButton_platnosc, SIGNAL(clicked()), this, SLOT(platnoscNew()));
-    connect(ui->pushButton_termin, SIGNAL(clicked()), this, SLOT(terminNew()));
-
-    //Pozostałe informacje - odświerzanie zawartości pól tekstowych
-    connect(ui->pushButton_wyborKlienta, SIGNAL(clicked()), this, SLOT(popWyborKlienta()));
-    connect(ui->comboBox_dostawa, SIGNAL(currentIndexChanged(int)), this, SLOT(dostawaRef(int)));
-    connect(ui->comboBox_oferta, SIGNAL(currentIndexChanged(int)), this, SLOT(ofertaRef(int)));
-    connect(ui->comboBox_platnosc, SIGNAL(currentIndexChanged(int)), this, SLOT(platnoscRef(int)));
-    connect(ui->comboBox_termin, SIGNAL(currentIndexChanged(int)), this, SLOT(terminRef(int)));
-    connect(calendarWidget, SIGNAL(clicked(QDate)), this, SLOT(calChanged(QDate)));
-    connect(ui->pushButton_zapytanieData, SIGNAL(clicked()), calendarWidget, SLOT(show()));
-    connect(ui->lineEdit_zapytanieData, SIGNAL(textChanged(QString)), this, SLOT(zapytanieRef()));
-    connect(ui->lineEdit_zapytanieNr, SIGNAL(textChanged(QString)), this, SLOT(zapytanieRef()));
-    connect(ui->checkBox_zapytanieData, SIGNAL(toggled(bool)), this, SLOT(checkData(bool)));
-    connect(ui->checkBox_zapytanieNr, SIGNAL(toggled(bool)), this, SLOT(checkNr(bool)));
-
-    //inne
-    //connect(ui->tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(change(QTableWidgetItem*)));
 
 /**
   ui
@@ -225,9 +166,71 @@ MainWindow::MainWindow ():
 
     m_towarModel = new TowarModel;
     ui->tableView->setModel(m_towarModel);
+    m_towarDelegate = new TowarDelegate(this);
+    ui->tableView->setItemDelegate(m_towarDelegate);
     ui->tableView->setDragDropMode(QAbstractItemView::InternalMove);
 
     ui->label_uwagi->setText(tr("Uwagi:"));
+    ui->kursSpinBox->setEnabled(false);
+
+    /**
+     connections
+    **/
+    DEBUG << "połaczenia sygnałów i slotów";
+
+    /*menu:*/
+    //plik
+    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(nowa()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(popLoadDialog()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(zapisz()));
+    connect(ui->actionNR, SIGNAL(triggered()), this, SLOT(nowyNumer()));
+    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    //klient
+    connect(ui->klientNowy, SIGNAL(triggered()), this, SLOT(dodajKlient()));
+    connect(ui->klientEdycja, SIGNAL(triggered()), this, SLOT(edytujKlient()));
+    //towar
+    connect(ui->towarNowy, SIGNAL(triggered()), this, SLOT(dodajTowar()));
+    connect(ui->towarEdycja, SIGNAL(triggered()), this, SLOT(edytujTowar()));
+    //export
+    connect(ui->actionDo_HTML, SIGNAL(triggered()), this, SLOT(zapisz()));
+    connect(ui->actionDo_HTML, SIGNAL(triggered()), this, SLOT(printHtm()));
+    connect(ui->actionDo_PDF, SIGNAL(triggered()), this, SLOT(zapisz()));
+    connect(ui->actionDo_PDF, SIGNAL(triggered()), this, SLOT(printPdf()));
+    connect(ui->actionDruk, SIGNAL(triggered()), this, SLOT(zapisz()));
+    connect(ui->actionDruk, SIGNAL(triggered()), this, SLOT(printPrev()));
+    //info:
+    connect(ui->actionO_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(ui->actionO_kOferta, SIGNAL(triggered()), this, SLOT(about()));
+
+    //opcje wydruku
+    connect(ui->pln, SIGNAL(pressed()), this, SLOT(pln_on()));
+    connect(ui->eur, SIGNAL(pressed()), this, SLOT(pln_off()));
+    connect(ui->kursSpinBox, SIGNAL(valueChanged(double)), m_towarModel, SLOT(setKurs(double)));
+
+    //buttony w tabach
+    connect(ui->addTowar, SIGNAL(clicked()), this, SLOT(popWyborTowaru()));
+    connect(ui->rabat, SIGNAL(clicked()), this, SLOT(rabat()));
+    connect(ui->delw, SIGNAL(clicked()), this, SLOT(del()));
+
+    //dodawanie opcji do kombosów
+    connect(ui->pushButton_dostawa, SIGNAL(clicked()), this, SLOT(dostawaNew()));
+    connect(ui->pushButton_oferta, SIGNAL(clicked()), this, SLOT(ofertaNew()));
+    connect(ui->pushButton_platnosc, SIGNAL(clicked()), this, SLOT(platnoscNew()));
+    connect(ui->pushButton_termin, SIGNAL(clicked()), this, SLOT(terminNew()));
+
+    //Pozostałe informacje - odświerzanie zawartości pól tekstowych
+    connect(ui->pushButton_wyborKlienta, SIGNAL(clicked()), this, SLOT(popWyborKlienta()));
+    connect(ui->comboBox_dostawa, SIGNAL(currentIndexChanged(int)), this, SLOT(dostawaRef(int)));
+    connect(ui->comboBox_oferta, SIGNAL(currentIndexChanged(int)), this, SLOT(ofertaRef(int)));
+    connect(ui->comboBox_platnosc, SIGNAL(currentIndexChanged(int)), this, SLOT(platnoscRef(int)));
+    connect(ui->comboBox_termin, SIGNAL(currentIndexChanged(int)), this, SLOT(terminRef(int)));
+    connect(calendarWidget, SIGNAL(clicked(QDate)), this, SLOT(calChanged(QDate)));
+    connect(ui->pushButton_zapytanieData, SIGNAL(clicked()), calendarWidget, SLOT(show()));
+    connect(ui->lineEdit_zapytanieData, SIGNAL(textChanged(QString)), this, SLOT(zapytanieRef()));
+    connect(ui->lineEdit_zapytanieNr, SIGNAL(textChanged(QString)), this, SLOT(zapytanieRef()));
+    connect(ui->checkBox_zapytanieData, SIGNAL(toggled(bool)), this, SLOT(checkData(bool)));
+    connect(ui->checkBox_zapytanieNr, SIGNAL(toggled(bool)), this, SLOT(checkNr(bool)));
+
 }
 
 void MainWindow::about()
@@ -278,106 +281,10 @@ void MainWindow::setTitle(QString* nr)
 
 void MainWindow::rabat()
 {
-    /*
-    uint rows = ui->tableWidget->rowCount();
-    if(rows < 2)return;
-
     bool ok;
     double d = QInputDialog::getDouble(this, "Rabat", "Podaj domyślny rabat [%]:", 0, 0, 100, 2, &ok);
-    if (ok)
-       for(uint i=0; i<rows-1; i++){
-        ui->tableWidget->item(i, 3)->setText(QString::number(d, 'f', 2));
-           przelicz(i);
-       }
-    sum();
-    */
-}
-
-void MainWindow::sum()
-{
-    /*
-    double sum=0;
-    unsigned row = ui->tableWidget->rowCount()-1;
-    for(unsigned i=0; i<row; ++i){
-        sum += ev(i, 7);
-    }
-    ui->tableWidget->item(row, 7)->setText(QString::number(sum, 'f', 2));
-*/
-}
-
-void MainWindow::setTowar(const QSqlRecord& rec, int ile)
-{
-/*
-    QString id = rec.value("id").toString();
-    QList<QTableWidgetItem*> list = ui->tableWidget->findItems(id, Qt::MatchFixedString);
-
-    if(list.isEmpty())
-    {
-        DEBUG << "adding item to offer, id: " << id;
-        QTableWidgetItem* item;
-
-        int row = ui->tableWidget->rowCount()-1;
-        if(row < 0) row = 0;
-
-        ui->tableWidget->insertRow(row);
-
-        //kod
-        item = new QTableWidgetItem(id);
-        ui->tableWidget->setItem(row, 0, item);
-        //nazwa
-        item = new QTableWidgetItem(rec.value("nazwa").toString());
-        ui->tableWidget->setItem(row, 1, item);
-        //cena kat
-        double r = rec.value("cena").toDouble();
-        item = new QTableWidgetItem(QString::number(r, 'f', 2));
-        ui->tableWidget->setItem(row, 8, item);
-        if(pln) r *= kurs;
-        item = new QTableWidgetItem(QString::number(r, 'f', 2));
-        ui->tableWidget->setItem(row, 2, item);
-        //rabat
-        item = new QTableWidgetItem("0");
-        ui->tableWidget->setItem(row, 3, item);
-        //cana
-        item = new QTableWidgetItem(QString::number(r, 'f', 2));
-        ui->tableWidget->setItem(row, 4, item);
-        //ilosc
-        item = new QTableWidgetItem(QString::number(ile));
-        ui->tableWidget->setItem(row, 5, item);
-        //jednostka
-        item = new QTableWidgetItem(rec.value("jednostka").toString());
-        ui->tableWidget->setItem(row, 6, item);
-        //koszt
-        item = new QTableWidgetItem(QString::number(r, 'f', 2));
-        ui->tableWidget->setItem(row, 7, item);    
-    }
-    else
-    {
-        unsigned row = list[0]->row();
-        ui->tableWidget->item(row, 5)->setText(QString::number(ile));
-        przelicz(row);
-    }
-
-    sum();
-*/
-}
-
-double MainWindow::ev(unsigned row, unsigned col)
-{
-    return 0;
-  //  return ui->tableWidget->item(row, col)->text().toDouble();
-}
-void MainWindow::przelicz(unsigned row)
-{
-    /*
-    double r;
-    r = 100 - ev(row, 3);
-    r /= 100;
-    r *= ev(row, 2);
-    ui->tableWidget->item(row, 4)->setText(QString::number(r, 'f', 2));
-    r = ui->tableWidget->item(row, 4)->text().toDouble();
-    r *= ev(row, 5);
-    ui->tableWidget->item(row, 7)->setText(QString::number(r, 'f', 2));
-*/
+    if(ok)
+        m_towarModel->setGlobalRabat(d);
 }
 
 void MainWindow::del()
@@ -461,7 +368,7 @@ void MainWindow::popWyborTowaru()
     connect(pop, SIGNAL(itemSelected(QString)), m_towarModel, SLOT(ileTowaru(QString)));
     connect(m_towarModel, SIGNAL(iloscTowaru(int)), pop, SLOT(setItemCount(int)));
     connect(pop, SIGNAL(countChanged(QSqlRecord,int)), m_towarModel, SLOT(changeItemCount(QSqlRecord,int)));
-    pop->showMaximized();
+  //  pop->showMaximized();
     pop->exec();
     delete pop;
 }
@@ -489,63 +396,18 @@ void MainWindow::clientChanged(const QSqlRecord& rec)
 
 void MainWindow::pln_on()
 {
-    pln = true;
-
-    ui->kurs->setEnabled(true);
+    ui->kursSpinBox->setEnabled(true);
     ui->kurs_label->setEnabled(true);
-    ui->kurs->setText("4.00");
-/*
-    ui->tableWidget->horizontalHeaderItem(2)->setText("Cena kat. zł");
-    ui->tableWidget->horizontalHeaderItem(4)->setText("Cena zł");
-    ui->tableWidget->horizontalHeaderItem(7)->setText("Wartość zł");
-
-    tabupd();
-    */
-    m_towarModel->setPln(true);
+    m_towarModel->setKurs(ui->kursSpinBox->value());
 }
 
 void MainWindow::pln_off()
 {
-    kurs = 1;
-    pln = false;
-    ui->kurs->setEnabled(false);
+    ui->kursSpinBox->setEnabled(false);
     ui->kurs_label->setEnabled(false);
-
-    m_towarModel->setPln(false);
+    m_towarModel->setKurs(0);
 }
 
-void MainWindow::chKurs(QString sKurs)
-{
-    bool ok;
-    kurs = sKurs.toDouble(&ok);
-    if(!ok)
-    {
-        kurs = 0;
-    }
-    tabupd();
-}
-
-void MainWindow::tabupd()
-{
-    /*
-    double x;
-    for(int i=0; i<ui->tableWidget->rowCount()-1; ++i)
-    {
-        if(pln)
-        {
-            x = ev(i, 8);
-            x *= kurs;
-            ui->tableWidget->item(i, 2)->setText(QString::number(x, 'f', 2));
-        }
-        else
-        {
-            ui->tableWidget->item(i, 2)->setText(ui->tableWidget->item(i, 8)->text());
-        }
-        przelicz(i);
-    }
-    sum();
-    */
-}
 /*************************
 **      OFERTA          **
 *************************/
@@ -643,18 +505,9 @@ void MainWindow::loadOffer(const QSqlRecord& rec, const QSqlTableModel& mod)
 
     this->init();
     this->setTitle(nr_oferty);
-/*
-    QSqlQuery q;
-    QString s;
 
-    s = QString("SELECT DISTINCT id_klienta FROM zapisane WHERE nr_oferty = '%1'").arg(*nr_oferty);
-    EXEC(s);
-    q.next();
-*/
     QSqlQueryModel klientModel;
-    qDebug() << rec.value("id_klienta").toString();
-    klientModel.setQuery(QString("SELECT DISTINCT * FROM klient WHERE id = %1").arg(rec.value("id_klienta").toInt()));
-
+    klientModel.setQuery(QString("SELECT DISTINCT klient.* FROM klient, zapisane WHERE klient.id = zapisane.id_klienta AND zapisane.nr_oferty = '%1'").arg(rec.value("nr_oferty").toString()));
     clientChanged(klientModel.record(0));
 
     if(rec.value("zapytanie_data").isNull())

@@ -33,7 +33,7 @@ class cUser;
 class QSqlRecord;
 class QCalendarWidget;
 class QDate;
-
+class TowarDelegate;
 
 namespace Ui {
     class MainWindow;
@@ -51,7 +51,6 @@ public slots:
     void popWyborKlienta();
     void popWyborTowaru();
 
-    void setTowar(const QSqlRecord&, int);              //dodawanie towarów do tabeli (wywoływane przez sygnał z dialogu dodajTowar)
     void loadOffer(const QSqlRecord &rec, const QSqlTableModel &mod);              //wczytuje ofertę o połączone z dialogiem wczytywanie
 
     //dodawanie opcji do kombosów
@@ -80,7 +79,6 @@ public slots:
     //opcje wydruku
     void pln_on();                                      //włącza przeliczanie euro na pln
     void pln_off();                                     //wyłącza przeliczanie euro na pln
-    void chKurs(QString);                               //zmienia kurs wymiany euro->pln
 
     //wydruk
     void printPrev();                                   //podgląd wydruku
@@ -125,8 +123,6 @@ private:
     //wewnętrzne zmienne
     QString* nr_oferty;
     QString* data;
-    double kurs;
-    bool pln;
     bool htm;
 
     QSqlTableModel* dostawaModel;
@@ -135,9 +131,10 @@ private:
     QSqlTableModel* ofertaModel;
 
     TowarModel* m_towarModel;
+    TowarDelegate* m_towarDelegate;
 
     QCalendarWidget* calendarWidget;
-    QSqlRecord* klient;    
+    QSqlRecord* klient;
 };
 
 #endif // MAINWINDOW_H
