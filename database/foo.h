@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-#define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
+#define qDebug() qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
 enum actions
 {

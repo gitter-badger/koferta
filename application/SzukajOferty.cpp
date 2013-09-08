@@ -108,7 +108,7 @@ void SzukajOferty::refClient(const QString& client)
 void SzukajOferty::refDate(const QDate& date)
 {
     QString sd = date.toString("MM.yyyy");
-    DEBUG << "date: " << sd;
+    qDebug() << "date: " << sd;
     QString s;
     s = "data like '%";
     s += sd;

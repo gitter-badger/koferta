@@ -10,18 +10,18 @@ TEMPLATE = app
 
 DEFINES += GET_PASS=\\\"l4600QW197E3GAEP84PnV4SC5bz6YY1Q2f2CK4bN!56543R96\\\"
 
-LIBS += -L../ -lkCommon
+LIBS += -L../common -lcommon
 
 HEADERS += \
 	LoadDialog.h \
-	Macros.h \
 	MainWindow.h \
 	SzukajOferty.h \
 	WyborKlienta.h \
 	WyborTowaru.h \
 	Towar.h \
 	TowarModel.h \
-	TowarDelegate.h 
+	TowarDelegate.h \ 
+    Database.h
 
 FORMS += \
 	LoadDialog.ui \
@@ -39,5 +39,6 @@ SOURCES += \
 	WyborTowaru.cpp \
 	Towar.cpp \
 	TowarModel.cpp \
-	TowarDelegate.cpp
+	TowarDelegate.cpp \
+    Database.cpp
 

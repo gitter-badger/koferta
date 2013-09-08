@@ -11,3 +11,4 @@ stats
 *.autosave
 *.pdf
 *.log
+libcommon*

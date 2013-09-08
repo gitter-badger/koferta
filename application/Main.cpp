@@ -21,43 +21,9 @@
 #include <exception>
 #include <QDate>
 #include "MainWindow.h"
-#include "Logowanie.h"
-#include "User.h"
-#include "Macros.h"
+#include <QtDebug>
 
-//#define QT_NO_DEBUG_OUTPUT
-
-cUser* currentUser = NULL;
-
-#ifndef QT_NO_DEBUG_OUTPUT
-
-QTextStream *out = 0;
-
-void logOutput(QtMsgType type, const char *msg)
-{
-    QString debugdate = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss");
-    switch (type)
-    {
-    case QtDebugMsg:
-        debugdate += "[D]";
-        break;
-    case QtWarningMsg:
-        debugdate += "[W]";
-        break;
-    case QtCriticalMsg:
-        debugdate += "[C]";
-        break;
-    case QtFatalMsg:
-        debugdate += "[F]";
-    }
-    (*out) << debugdate << " " << msg << endl;
-
-    if (QtFatalMsg == type)
-    {
-        abort();
-    }
-}
-#endif
+#define QT_NO_DEBUG_OUTPUT
 
 int main(int argc, char *argv[])
 {
@@ -84,55 +50,27 @@ int main(int argc, char *argv[])
         qDebug() << "Error opening log file '" << fileName << "'. All debug output redirected to console.";
     }
 #endif
-
-    Logowanie* logw;
-    logw = new Logowanie;
-
     int result;
+
+    MainWindow w;
+    w.showMaximized();
+
+    qDebug() << "wchodzę do głównej pętli";
+
     try
     {
-        result = logw->exec();
+        result = a.exec();
     }
     catch (std::exception& e)
     {
-        DEBUG << "[Logowanie] Standard exception: " << e.what();
+        qCritical() << "[Mainwindow] Standard exception: " << e.what();
     }
     catch(...)
     {
-        DEBUG << "[Logowanie] Unknown exception";
+        qCritical() << "[Mainwindow] Unknown exception";
     }
 
-    DEBUG << "logw result: " << result;
-    delete logw;
+    qDebug() << "koniec programu, status: " << result;
 
-    if(result == QDialog::Accepted)
-    {
-
-        DEBUG << "Zalogowano jako uzytkownik " << currentUser->name();
-
-        MainWindow w;
-        w.showMaximized();
-
-        DEBUG << "wchodzę do głównej pętli";
-
-        try
-        {
-            result = a.exec();
-        }
-        catch (std::exception& e)
-        {
-            DEBUG << "[Mainwindow] Standard exception: " << e.what();
-        }
-        catch(...)
-        {
-            DEBUG << "[Mainwindow] Unknown exception";
-        }
-    }
-    else
-        DEBUG << "Zamknieto okno logowanie - wychodzę";
-
-    DEBUG << "koniec programu, status: " << result;
-
-    delete currentUser;
     return result;
 }

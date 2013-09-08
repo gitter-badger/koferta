@@ -16,10 +16,11 @@ CONFIG   += console
 
 TEMPLATE = app
 
-LIBS += -L../ -lkCommon
+LIBS += -L../common -lcommon
 
 HEADERS += \
     foo.h \
+	Macros.h \
 	Database.h \
 	Logowanie.h \
 	NowyKlient.h \

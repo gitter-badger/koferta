@@ -3,7 +3,7 @@ DEFINES += VER=3.0
 QT       = core sql gui
 
 INCLUDEPATH += . ..
-WARNINGS += -Wall
+#WARNINGS += -Wall
 
 win32 { #nmake & M$ compiler
     QMAKE_CXXFLAGS += /nologo /O2 #/Wall
@@ -24,7 +24,6 @@ win32 { #nmake & M$ compiler
 }
 
 unix {
-#    QMAKE_CXXFLAGS += -Wall -Werror -Wextra
     LIBS += -L/usr/lib/mysql -lmysqlclient
     #DEFINES += NOSSL
  #   DEFINES += RELEASE
@@ -34,9 +33,9 @@ unix {
 
 # The following keeps the generated files at least somewhat separate 
 # from the source files.
-OBJECTS_DIR = temp
-UI_DIR 		= temp
-MOC_DIR 	= temp
-RCC_DIR 	= temp
+OBJECTS_DIR = ../temp
+UI_DIR      = ../temp
+MOC_DIR     = ../temp
+RCC_DIR     = ../temp
 
 

@@ -22,7 +22,7 @@
 
 void insert_towar(const QString& id, const QString& nazwa, double cena, const QString& jednostka)
 {
-    DEBUG <<  "Wstawianie towaru, id: " << id;
+    qDebug() <<  "Wstawianie towaru, id: " << id;
 
     QSqlQuery q;
     QString s;
@@ -32,7 +32,7 @@ void insert_towar(const QString& id, const QString& nazwa, double cena, const QS
 
     if(q.next())
     {
-        DEBUG <<  "Towar o id: " << id << " istnieje w bazie, nastapi jego nadpisanie!";
+        qDebug() <<  "Towar o id: " << id << " istnieje w bazie, nastapi jego nadpisanie!";
         s = QString("DELETE FROM towar WHERE id='%1'").arg(id);
         EXEC(s);
     }
@@ -44,7 +44,7 @@ void insert_towar(const QString& id, const QString& nazwa, double cena, const QS
 
 void insert_klient(const QString& skrot, const QString& full, const QString& tytul, const QString& imie, const QString& nazwisko, const QString& adres)
 {
-    DEBUG <<  "Wstawianie klienta, nazwisko: " << nazwisko;
+    qDebug() <<  "Wstawianie klienta, nazwisko: " << nazwisko;
 
     QString s;
     QSqlQuery q;
@@ -55,7 +55,7 @@ void insert_klient(const QString& skrot, const QString& full, const QString& tyt
 
 void insert_zapisane(const QString& nr_oferty, int id_klienta, const QString& data, int uid, const QString& zapytanie_data, const QString& zapytanie_nr, int dostawa, int termin, int platnosc, int oferta, const QString& uwagi)
 {
-    DEBUG <<  "Zapisywanie ofery nr: " << nr_oferty;
+    qDebug() <<  "Zapisywanie ofery nr: " << nr_oferty;
 
     QString s;
     QSqlQuery q;

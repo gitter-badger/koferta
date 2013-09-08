@@ -18,7 +18,6 @@
 #include "SzukajKlienta.h"
 #include "ui_SzukajKlienta.h"
 #include <QSqlTableModel>
-#include "Macros.h"
 #include <QSqlRecord>
 
 SzukajKlienta::SzukajKlienta(QWidget *parent) :

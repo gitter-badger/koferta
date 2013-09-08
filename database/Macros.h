@@ -9,11 +9,8 @@
 #include <QSqlQuery>
 #include <QFile>
 
-class cUser;
-extern cUser* currentUser;
-
 #ifdef RELEASE
-    #define DEBUG qDebug()
+    #define qDebug() qDebug()
 
 #define EXEC_SILENT(s) EXEC(x)
 
@@ -21,7 +18,7 @@ extern cUser* currentUser;
         do{ \
             if(q.exec(s) == false) \
             { \
-                DEBUG << "Zapytanie mysql zkonczone niepowodzeniem!"; \
+                qDebug() << "Zapytanie mysql zkonczone niepowodzeniem!"; \
                 qDebug()  << "\tZapytanie mysql: " << s; \
                 qDebug()  << "\tError text: " <<  q.lastError().text(); \
                 QMessageBox::warning(NULL, "error", "Wystąpił błąd połączenia z bazą danych. Sprawdź połączenie i spróbuj ponownie"); \
@@ -53,19 +50,13 @@ extern cUser* currentUser;
         }
 
 #else
-inline QDebug debug()
-{
-    return qDebug() << __FILE__ << " (" << __LINE__ << "): ";
-}
-//#define DEBUG debug()
-    #define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
     #define EXEC(s) \
         do{ \
-            DEBUG << "zapytanie mysql: " << s; \
+            qDebug() << "zapytanie mysql: " << s; \
             if(q.exec(s) == false) \
                 { \
-                DEBUG << "Zapytanie mysql zkonczone niepowodzeniem!"; \
+                qDebug() << "Zapytanie mysql zkonczone niepowodzeniem!"; \
                 qDebug() << "\tError text: " <<  q.lastError().text(); \
                 QMessageBox::warning(NULL, "error", "Wystąpił błąd połączenia z bazą danych. Sprawdź połączenie i spróbuj ponownie"); \
                 return; \
@@ -76,7 +67,7 @@ inline QDebug debug()
         do{ \
             if(q.exec(s) == false) \
             { \
-                DEBUG << "Zapytanie mysql zkończone niepowodzeniem!"; \
+                qDebug() << "Zapytanie mysql zkończone niepowodzeniem!"; \
                 qDebug()  << "\tZapytanie mysql: " << s; \
                 qDebug()  << "\tError text: " <<  q.lastError().text(); \
                 QMessageBox::warning(NULL, "error", "Wystąpił błąd połączenia z bazą danych. Sprawdź połączenie i spróbuj ponownie"); \
@@ -87,7 +78,7 @@ inline QDebug debug()
     #define LOGIN \
         if (!d->open()) \
         { \
-            DEBUG << "Błąd: nie można się połączyć z bazą!"; \
+            qDebug() << "Błąd: nie można się połączyć z bazą!"; \
             qDebug() << "\t\t\t connName: " << d->connectionName(); \
             qDebug() << "\t\t\t driver: " << d->driverName(); \
             qDebug() << "\t\t\t opcje " << d->connectOptions(); \
@@ -100,7 +91,7 @@ inline QDebug debug()
     #define LOGIN_ \
         if (!d->open()) \
         { \
-            DEBUG << "Błąd: nie można się połączyć z bazą!"; \
+            qDebug() << "Błąd: nie można się połączyć z bazą!"; \
             qDebug() << "\t\t\t connName: " << d->connectionName(); \
             qDebug() << "\t\t\t driver: " << d->driverName(); \
             qDebug() << "\t\t\t opcje " << d->connectOptions(); \

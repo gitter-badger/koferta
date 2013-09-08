@@ -33,7 +33,7 @@ EdycjaKlienta::EdycjaKlienta(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EdycjaKlienta)
 {
-    DEBUG << "konstruktor";
+    qDebug() << "konstruktor";
 
     ui->setupUi(this);
 
@@ -91,7 +91,7 @@ void EdycjaKlienta::del()
     if(QMessageBox::warning(this, "Usuń klienta", "Czy na pewno chcesz usunąć tego klienta z bazy danych?", QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Cancel)
         return;
 
-    DEBUG <<  "usuwanie klienta id: " << id;
+    qDebug() <<  "usuwanie klienta id: " << id;
     QSqlQuery q;
     QString s;
     s = "DELETE FROM klient WHERE id=";

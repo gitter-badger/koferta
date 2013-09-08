@@ -32,7 +32,7 @@ cUser::cUser(QString name)
     QSqlQuery q;
     QString s;
 
-    DEBUG <<  "Pobieranie danych użytkownika " << name;
+    qDebug() <<  "Pobieranie danych użytkownika " << name;
 
     QSqlDatabase* d = new QSqlDatabase(QSqlDatabase::database(QSqlDatabase::connectionNames().at(0), false));
 
@@ -64,7 +64,7 @@ cUser::cUser(int uid)
     QSqlQuery q;
     QString s;
 
-    DEBUG << "Pobieranie danych użytkownika uid:" << uid;
+    qDebug() << "Pobieranie danych użytkownika uid:" << uid;
 
     s = "SELECT DISTINCT name, mail, adress, male, nrOferty  FROM users WHERE uid=";
     s += QString::number(uid);

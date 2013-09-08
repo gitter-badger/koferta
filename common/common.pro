@@ -5,7 +5,7 @@
 
 TEMPLATE = lib
 
-TARGET = ../kCommon
+#TARGET = ../kCommon
 
 HEADERS += \
 	SzukajKlienta.h \

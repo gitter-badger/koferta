@@ -54,7 +54,7 @@
 
 Logowanie::~Logowanie()
 {
-    DEBUG <<  "destruktor cLogowanie";
+    qDebug() <<  "destruktor cLogowanie";
     delete p;
     delete d;
     delete ui;
@@ -65,7 +65,7 @@ Logowanie::Logowanie() :
     QDialog(NULL),
     ui(new Ui::Logowanie)
 {
-    DEBUG << "Konstruktor cLogowanie";
+    qDebug() << "Konstruktor cLogowanie";
 
     ui->setupUi(this);
 
@@ -82,7 +82,7 @@ Logowanie::Logowanie() :
     d->setPort(3306);
 
 #ifdef NOSSL
-    DEBUG << "NOSSL defined, pomijam ustawianie bezpiecznego połączenia";
+    qDebug() << "NOSSL defined, pomijam ustawianie bezpiecznego połączenia";
 #else
     d->setConnectOptions("CLIENT_SSL=1;CLIENT_IGNORE_SPACE=1");
 
@@ -101,17 +101,17 @@ Logowanie::Logowanie() :
     {
         QStringList list;
         QMessageBox::critical(this, tr("Błąd"), tr("Bład sterownika bazy danych!\nNastąpi zamknięcie programu."));
-        DEBUG << "invalid driver";
+        qDebug() << "invalid driver";
 
-        DEBUG << "library paths: ";
+        qDebug() << "library paths: ";
         list = qApp->libraryPaths();
         for(int i=0; i<list.size(); i++)
-            DEBUG << "\t" << list[i];
+            qDebug() << "\t" << list[i];
 
-        DEBUG << "aviable drivers: ";
+        qDebug() << "aviable drivers: ";
         list = QSqlDatabase::drivers();
         for(int i=0; i<list.size(); i++)
-            DEBUG << "\t" << list[i];
+            qDebug() << "\t" << list[i];
         this->reject();
         return;
     }
@@ -123,7 +123,7 @@ Logowanie::Logowanie() :
     QFile file("host");
     if(file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        DEBUG << "otworzono plik host";
+        qDebug() << "otworzono plik host";
         QTextStream in(&file);
         in.setCodec("UTF-8");
         QString s;
@@ -131,10 +131,10 @@ Logowanie::Logowanie() :
             s = in.readLine();
             if(!s.isEmpty())hosts->append(s);
         }while(!s.isNull());
-        DEBUG << "hostów na liście: " << hosts->count();
+        qDebug() << "hostów na liście: " << hosts->count();
     }
     else
-        DEBUG << "otawrcie pliku host nie powiodło się";
+        qDebug() << "otawrcie pliku host nie powiodło się";
     ui->ip->addItems(*hosts);
 #else
     hosts = NULL;
@@ -146,7 +146,7 @@ Logowanie::Logowanie() :
 
 void Logowanie::hostChanged(QString ip)
 {
-    DEBUG << "Host został zmieniony na: " << ip;
+    qDebug() << "Host został zmieniony na: " << ip;
 
     QString s;
     QSqlQuery q;
@@ -176,14 +176,14 @@ void Logowanie::hostChanged(QString ip)
                                                                                   "Obecnie posiadasz wersję %1 a na serwerze dostępna jest wersja %2.\n"
                                                                                   "Pobrać ją teraz?").arg(QString::number(VER), QString::number(ver)), QMessageBox::Yes, QMessageBox::No))
         {
-            DEBUG << "Wybrano aktualizacje";
+            qDebug() << "Wybrano aktualizacje";
 
             manager = new QNetworkAccessManager;
             connect(manager, SIGNAL(finished(QNetworkReply*)), SLOT(downloadFinished(QNetworkReply*)));
 
             s = q.value(1).toString();
             QUrl url(s);
-            DEBUG << "qurl: " << url.toString();
+            qDebug() << "qurl: " << url.toString();
             QNetworkRequest req(url);
             manager->get(req);
 
@@ -192,7 +192,7 @@ void Logowanie::hostChanged(QString ip)
             ui->buttonBox->setEnabled(false);
         }
 
-        DEBUG << "koniec procedury sprawdzania wersji";
+        qDebug() << "koniec procedury sprawdzania wersji";
 
     }
 
@@ -201,13 +201,13 @@ void Logowanie::hostChanged(QString ip)
 
 void Logowanie::downloadFinished(QNetworkReply *reply)
 {
-    DEBUG << "pobieranie ukończone";
+    qDebug() << "pobieranie ukończone";
 
     if (reply->error())
     {
         QMessageBox::critical(this, tr("Błąd pobierania"), tr("Nastąpił błąd podczas pobierania aktualizacji. Prosimy spróbować aktualizacji w innym terminie lub skonsultować się z działem IT"), QMessageBox::Ok);
 
-        DEBUG << "reply error: " << reply->errorString();
+        qDebug() << "reply error: " << reply->errorString();
 
         ui->info->setText(tr("Aktualizacja nieudana!"));
         ui->ip->setEnabled(true);
@@ -225,7 +225,7 @@ void Logowanie::downloadFinished(QNetworkReply *reply)
     {
         QMessageBox::warning(this, tr("Błąd otwarcia pliku"), tr("Nie udało się otworzyć pliku do zapisu! Prosimy spróbować aktualizacji w innym terminie lub skonsultować się z działem IT"));
 
-        DEBUG << "Nie udane otwarcie pliku";
+        qDebug() << "Nie udane otwarcie pliku";
 
         ui->info->setText(tr("Aktualizacja nieudana!"));
         ui->ip->setEnabled(true);
@@ -267,7 +267,7 @@ void Logowanie::add()
     else
     {
         QMessageBox::warning(this, "error!", "Plik host niedostepny.");
-        DEBUG <<  "Plik host niedostepny.";
+        qDebug() <<  "Plik host niedostepny.";
     }
 
 }
@@ -275,11 +275,11 @@ void Logowanie::ok()
 {
     QString name;
     name = ui->comboBox->currentText();
-    DEBUG << "Logowanie jako " << name;
+    qDebug() << "Logowanie jako " << name;
 
     if(ui->lineEdit->text().isEmpty())
     {
-        DEBUG <<  "hasło nie wpisane";
+        qDebug() <<  "hasło nie wpisane";
         return;
     }
 

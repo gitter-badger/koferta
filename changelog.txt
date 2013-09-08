@@ -12,6 +12,13 @@ TODO:
 * przerobienie funkcji sha1 (?)
 -------------------------------------------------------------------------
 
+v. 3.0
+* zmiana organizacji plików i wdrożenie subdirs template
+* wydzielona aplikacja zarządzająca bazami danych - kDatabase
+* klasa towar rerezentująca linię w tabeli towarów
+* zastapienie qtablewidget przez pełnoprawny model/view w głownym oknie aplikacji
+
+
 v. 2.35
 * nowe certyfikaty SSL
 

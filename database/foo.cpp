@@ -16,7 +16,7 @@ bool connect(const QString &ip)
     QString pass(cPass);
     if(pass.isEmpty())
     {
-        DEBUG << "no password!";
+        qDebug() << "no password!";
         return false;
     }
 
@@ -42,13 +42,13 @@ bool connect(const QString &ip)
     else
     {
         QStringList list;
-        DEBUG << "invalid driver\n"
+        qDebug() << "invalid driver\n"
          << "library paths: ";
         list = qApp->libraryPaths();
         for(int i=0; i<list.size(); i++)
             qDebug() << "\t\t\t" << list[i];
 
-        DEBUG << "aviable drivers: ";
+        qDebug() << "aviable drivers: ";
         list = QSqlDatabase::drivers();
         for(int i=0; i<list.size(); i++)
             qDebug() << "\t\t\t" << list[i];
@@ -57,7 +57,7 @@ bool connect(const QString &ip)
 
     if (!d->open())
     {
-        DEBUG << "Błąd: nie można się połączyć z bazą!";
+        qDebug() << "Błąd: nie można się połączyć z bazą!";
         qDebug() << "\t\t\t connName: " << d->connectionName();
         qDebug() << "\t\t\t driver: " << d->driverName();
         qDebug() << "\t\t\t opcje " << d->connectOptions();
@@ -101,8 +101,8 @@ void importUser(const QString& fileName, QStringList& sl, bool dryRun)
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        if(!file.exists())DEBUG <<  "cennik nie iesnieje";
-        else DEBUG <<  "cennik niedostępny";
+        if(!file.exists())qDebug() <<  "cennik nie iesnieje";
+        else qDebug() <<  "cennik niedostępny";
         return;
     }
 
@@ -140,11 +140,11 @@ void importUser(const QString& fileName, QStringList& sl, bool dryRun)
 /*
         q.prepare(QString("CREATE USER '%1'@'%' IDENTIFIED BY '%2'").arg(s, list[1]));
         if(!q.exec())
-            DEBUG << q.lastError();
+            qDebug() << q.lastError();
 */
         q.prepare(QString("GRANT SELECT, INSERT, UPDATE, DELETE ON kOferta.* TO '%1'@'%' IDENTIFIED BY '%2' REQUIRE SSL").arg(s, list[1]));
         if(!q.exec())
-            DEBUG << q.lastError();
+            qDebug() << q.lastError();
 
         qDebug() << "Dodano użytkownika:\t" << s;
     }
@@ -167,8 +167,8 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        if(!file.exists())DEBUG <<  "cennik nie iesnieje";
-        else DEBUG <<  "cennik niedostępny";
+        if(!file.exists())qDebug() <<  "cennik nie iesnieje";
+        else qDebug() <<  "cennik niedostępny";
         return;
     }
 
@@ -239,7 +239,7 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
     int size = ids.size();
     if(size != nazwy.size() || size != ceny.size() || size != j.size())
     {
-        DEBUG << "Błąd długości wektorów danych, długości:";
+        qDebug() << "Błąd długości wektorów danych, długości:";
         qDebug() << QString("%1\t%2\t%3\t%4").arg(QString::number(size), QString::number(nazwy.size()), QString::number(ceny.size()), QString::number(j.size()));
         return;
     }
@@ -253,10 +253,10 @@ void importTowar(const QString& fileName, QStringList& sl, bool dryRun)
     qDebug() << "Wysyłanie zapytania do bazy danych...";
 
     if (!q.execBatch())
-         DEBUG << q.lastError();
+         qDebug() << q.lastError();
 
     if(q.numRowsAffected() == -1)
-        DEBUG << "Error?";
+        qDebug() << "Error?";
     else if(q.numRowsAffected() == 0)
         qDebug() << "Brak nowych wpisów";
     else
@@ -268,8 +268,8 @@ void importKlient(const QString& fileName, QStringList& sl, bool dryRun)
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        if(!file.exists()) DEBUG <<  "klienci nie iesnieje";
-        else DEBUG <<  "klienci niedostępny";
+        if(!file.exists()) qDebug() <<  "klienci nie iesnieje";
+        else qDebug() <<  "klienci niedostępny";
         return;
     }
 
@@ -326,9 +326,9 @@ void importKlient(const QString& fileName, QStringList& sl, bool dryRun)
     q.bindValue(":adres", adresy);
 
     if (!q.execBatch())
-         DEBUG << q.lastError();
+         qDebug() << q.lastError();
     if(q.numRowsAffected() == -1)
-        DEBUG << "Error?";
+        qDebug() << "Error?";
     else if(q.numRowsAffected() == 0)
         qDebug() << "Brak nowych wpisów";
     else

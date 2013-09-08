@@ -42,10 +42,10 @@ NowyUser::~NowyUser()
 
 void NowyUser::ok()
 {
-    DEBUG <<  "dodawanie użytkownika " << ui->name->text();
+    qDebug() <<  "dodawanie użytkownika " << ui->name->text();
     if(ui->pass->text().isEmpty())
     {
-        DEBUG <<  "puste pole hasła";
+        qDebug() <<  "puste pole hasła";
         QMessageBox::warning(this, "puste hasło", "Koniecznie wpisz hasło!");
         return;
     }
@@ -66,10 +66,10 @@ void NowyUser::ok()
     EXEC(s);
     if(q.next())
     {
-        DEBUG <<  "użytkownik " << u.name() << " istnieje";
+        qDebug() <<  "użytkownik " << u.name() << " istnieje";
         if(QMessageBox::question(this, "użytkownik istnieje", "użytkownik o podanym imieniu i nazwisku już istnieje.\nZastąpić go nowym?", QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
         {
-            DEBUG <<  "wybrano usunięcie starego";
+            qDebug() <<  "wybrano usunięcie starego";
 
             s = "DROP USER ";
             s += u.dbName();
@@ -81,7 +81,7 @@ void NowyUser::ok()
         }
         else
         {
-            DEBUG <<  "anulowano";
+            qDebug() <<  "anulowano";
             return;
         }
     }
@@ -120,11 +120,11 @@ void NowyUser::ok()
     EXEC(s);
 
     QMessageBox::information(this, "Pomyślnie dodano użytkownika", "Proces dodawania użytkownika zakończył się powodzeniem.");
-    DEBUG <<  "dodano użytkownika " << u.name();
+    qDebug() <<  "dodano użytkownika " << u.name();
     this->accept();
     return;
  /*
     QMessageBox::warning(this, "błąd", "Wystąpił błąd");
-    DEBUG <<  "błąd dodawania użytkownika";
+    qDebug() <<  "błąd dodawania użytkownika";
 */
 }

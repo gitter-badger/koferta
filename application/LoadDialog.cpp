@@ -19,8 +19,6 @@
 #include "LoadDialog.h"
 #include "ui_LoadDialog.h"
 
-#include <QSqlQuery>
-#include "Macros.h"
 #include "SzukajOferty.h"
 #include <QSqlRecord>
 #include <QSqlTableModel>

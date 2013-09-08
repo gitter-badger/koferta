@@ -29,7 +29,7 @@ EdycjaTowaru::EdycjaTowaru(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EdycjaTowaru)
 {
-    DEBUG << "Konstruktor cEdycjaTowaru";
+    qDebug() << "Konstruktor cEdycjaTowaru";
 
     ui->setupUi(this);
     ui->cena->setMaximum(99999);
@@ -53,7 +53,7 @@ void EdycjaTowaru::del()
     if(QMessageBox::warning(this, "Usuń towar", "Czy na pewno chcesz usunąć ten towar z bazy danych?", QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Cancel)
         return;
 
-    DEBUG << "usuwanie towaru, kod: " << ui->kod->text();
+    qDebug() << "usuwanie towaru, kod: " << ui->kod->text();
 
     s = "DELETE FROM towar WHERE id='";
     s += ui->kod->text();

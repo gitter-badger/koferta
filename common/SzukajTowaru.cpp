@@ -17,7 +17,6 @@
 **/
 
 #include <QSqlTableModel>
-#include "Macros.h"
 #include <QSqlRecord>
 
 #include "SzukajTowaru.h"

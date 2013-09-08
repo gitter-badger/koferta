@@ -35,19 +35,12 @@
 #include <QTextDocument>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QtDebug>
+#include <QMessageBox>
 
-#include "NowyKlient.h"
-#include "NowyTowar.h"
-#include "Database.h"
-#include "EdycjaTowaru.h"
-#include "EdycjaKlienta.h"
 #include "WyborTowaru.h"
 #include "WyborKlienta.h"
-#include "Logowanie.h"
 #include "LoadDialog.h"
-#include "User.h"
-#include "Macros.h"
-#include "EdycjaKombo.h"
 #include "TowarModel.h"
 #include "Towar.h"
 #include "TowarDelegate.h"
@@ -58,7 +51,7 @@
 
 MainWindow::~MainWindow()
 {
-    DEBUG << "destruktor mainwindow - start";
+    qDebug() << "destruktor mainwindow - start";
 
     delete ui;
     delete nr_oferty;
@@ -71,18 +64,18 @@ MainWindow::~MainWindow()
     delete klient;
     delete m_towarModel;
 
-    DEBUG << "destruktor mainwindow - koniec";
+    qDebug() << "destruktor mainwindow - koniec";
 }
 
 MainWindow::MainWindow ():
     QMainWindow(NULL),
     ui(new Ui::MainWindow)
 {
-    DEBUG << "konstruktor mainwindow";   
+    qDebug() << "konstruktor mainwindow";   
 /**
   zmienne
  **/
-    DEBUG << "inicjalizacja zmiennych";
+    qDebug() << "inicjalizacja zmiennych";
 
     ui->setupUi(this);
 
@@ -95,7 +88,7 @@ MainWindow::MainWindow ():
 /**
   ui
 **/
-    DEBUG << "user interface";
+    qDebug() << "user interface";
 
     ui->tabWidget->setCurrentIndex(0);
 
@@ -175,7 +168,7 @@ MainWindow::MainWindow ():
     /**
      connections
     **/
-    DEBUG << "połaczenia sygnałów i slotów";
+    qDebug() << "połaczenia sygnałów i slotów";
 
     /*menu:*/
     //plik
@@ -621,7 +614,7 @@ void MainWindow::printHtm()
 
     QFile file(s);
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        DEBUG << "plik " << s << " niedostępny";
+        qDebug() << "plik " << s << " niedostępny";
         QMessageBox::warning(NULL, "error", "Nie udało się uzyskać dostępu do pliku");
         return;
     }
