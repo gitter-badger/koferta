@@ -1,6 +1,7 @@
 #-----------------------------------------------------------------------------
 #
 #    kOferta - system usprawniajacy proces ofertowania
+#	 komponent kOferta - aplikacja kliencka
 #    Copyright (C) 2011  Kamil 'konserw' Strzempowicz, konserw@gmail.com
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -52,81 +53,53 @@ unix {
  #   DEFINES += RELEASE
 }
 
-OBJECTS_DIR =   temp/obj
-UI_DIR =        temp/ui
-MOC_DIR =       temp/moc
-RCC_DIR =       temp/rcc
+OBJECTS_DIR =   temp
+UI_DIR =        temp
+MOC_DIR =       temp
+RCC_DIR =       temp
 
-DEPENDPATH += . res 
+DEPENDPATH += . ../res 
 
 HEADERS += \
-	Database.h \
-	EdycjaKlienta.h \
-	EdycjaTowaru.h \
 	LoadDialog.h \
-	Logowanie.h \
 	Macros.h \
 	MainWindow.h \
-	NowyKlient.h \
-	NowyTowar.h \
-	NowyUser.h \
-	SHA1.h \
-	SzukajKlienta.h \
+	../SzukajKlienta.h \
 	SzukajOferty.h \
-	SzukajTowaru.h \
-	User.h \
+	../SzukajTowaru.h
 	WyborKlienta.h \
 	WyborTowaru.h \
-	EdycjaKombo.h \
 	Towar.h \
 	TowarModel.h \
 	TowarDelegate.h 
 
 FORMS += \
-	EdycjaKlienta.ui \
-	EdycjaTowaru.ui \
 	LoadDialog.ui \
-	Logowanie.ui \
 	MainWindow.ui \
-	NowyKlient.ui \
-	NowyTowar.ui \
-	NowyUser.ui \
-	SzukajKlienta.ui \
-	SzukajOferty.ui \
-	SzukajTowaru.ui \
+	../SzukajKlienta.ui \
+	../SzukajOferty.ui \
+	../SzukajTowaru.ui \
 	WyborKlienta.ui \ 
-	WyborTowaru.ui \
-	EdycjaKombo.ui 
+	WyborTowaru.ui
          
 SOURCES += \
-	Database.cpp \
-	EdycjaKlienta.cpp \
-	EdycjaTowaru.cpp \
 	LoadDialog.cpp \
-	Logowanie.cpp \
 	Main.cpp \
 	MainWindow.cpp \
-	NowyKlient.cpp \
-	NowyTowar.cpp \
-	NowyUser.cpp \
-	SHA1.cpp \
 	SzukajKlienta.cpp \
 	SzukajOferty.cpp \
-	SzukajTowaru.cpp \
-	User.cpp \
+	SzukajTowaru.cpp
 	WyborKlienta.cpp \        
 	WyborTowaru.cpp \
-	EdycjaKombo.cpp \
 	Towar.cpp \
 	TowarModel.cpp \
 	TowarDelegate.cpp
 
-RESOURCES += res/zasoby.qrc
+RESOURCES += ../res/zasoby.qrc
 
 OTHER_FILES += \
     changelog.txt \
     res/LICENSE \
     res/gpl-3.0.txt \
     res/gpl-3.0.html \
-    res/SHA1_LICENSE \
-    README.md
+    ../README.md
