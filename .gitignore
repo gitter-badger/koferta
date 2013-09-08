@@ -3,6 +3,8 @@
 temp/*
 Makefile
 kOferta
+kCommon.*
+kDatabase
 *.user*
 host
 stats
