@@ -17,7 +17,6 @@ EdycjaKombo::EdycjaKombo(const QString &typ, QWidget *parent) :
     ui->label_long->setText(tr("Drukowany tekst:"));
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(ok()));
-//    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 EdycjaKombo::~EdycjaKombo()

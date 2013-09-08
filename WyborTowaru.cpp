@@ -81,7 +81,6 @@ void WyborTowaru::refresh(const QSqlRecord& _rec)
 
     ui->spinBox->setEnabled(true);
     emit itemSelected(rec->value(0).toString());
-    //ui->spinBox->setValue(dynamic_cast<MainWindow*>(this->parent())->ileTowaru(rec->value(0).toString()));
 }
 
 void WyborTowaru::spin(int ile)

@@ -48,16 +48,16 @@ class SHA1
 		~SHA1();
 		void addBytes( const char* data, int num );
 		unsigned char* getDigest();
-		// utility methods
-                static Uint32 lrot( Uint32 x, int bits );
-                static void storeBigEndianUint32( unsigned char* byte, Uint32 num );
-                //added by konserw
-                QString toQstring();
-                void fromQstring(QString);
+
+        static Uint32 lrot( Uint32 x, int bits );
+        static void storeBigEndianUint32( unsigned char* byte, Uint32 num );
+
+        QString toQstring();
+        void fromQstring(QString);
 
 };
 
-QString hash(QString);                                  //convinient hash function, added by konserw
+QString hash(QString);
 
 #define SHA1_HEADER
 #endif

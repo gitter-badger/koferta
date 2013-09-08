@@ -48,9 +48,6 @@ protected:
 
     double  m_rabat;
     double  m_ilosc;    
-
-    //ui:
-
 };
 
 #endif // TOWAR_H

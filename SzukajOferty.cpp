@@ -84,7 +84,6 @@ void SzukajOferty::select(const QModelIndex& index)
 {
     int row = index.row();
     QSqlRecord rec = model->record(row);
-//    DEBUG << "selected row: " << row << "id: " << id;
     emit selectionChanged(rec);
 }
 

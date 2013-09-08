@@ -264,7 +264,7 @@ void TowarModel::setGlobalRabat(double r)
     {
         t->setRabat(r);
     }
-//    emit dataChanged(this->index(2, 0), this->index(m_list.count(), 8)); -- ?
+// potrzebne?   emit dataChanged(this->index(2, 0), this->index(m_list.count(), 8)); -- ?
 }
 
 void TowarModel::changeItemCount(const QSqlRecord &rec, int ile)

@@ -25,7 +25,7 @@
 #include "User.h"
 #include "Macros.h"
 
-#define QT_NO_DEBUG_OUTPUT
+//#define QT_NO_DEBUG_OUTPUT
 
 cUser* currentUser = NULL;
 

@@ -20,7 +20,6 @@
 #include "ui_MainWindow.h"
 
 #include <QDate>
-#include <QSqlQuery>
 #include <QInputDialog>
 #include <QList>
 #include <QTableWidget>
@@ -71,7 +70,6 @@ MainWindow::~MainWindow()
     delete ofertaModel;
     delete klient;
     delete m_towarModel;
-   // delete m_towarDelegate;
 
     DEBUG << "destruktor mainwindow - koniec";
 }
@@ -168,6 +166,7 @@ MainWindow::MainWindow ():
     ui->tableView->setModel(m_towarModel);
     m_towarDelegate = new TowarDelegate(this);
     ui->tableView->setItemDelegate(m_towarDelegate);
+    //------------------ co z tym: ??? --------------
     ui->tableView->setDragDropMode(QAbstractItemView::InternalMove);
 
     ui->label_uwagi->setText(tr("Uwagi:"));
@@ -368,7 +367,7 @@ void MainWindow::popWyborTowaru()
     connect(pop, SIGNAL(itemSelected(QString)), m_towarModel, SLOT(ileTowaru(QString)));
     connect(m_towarModel, SIGNAL(iloscTowaru(int)), pop, SLOT(setItemCount(int)));
     connect(pop, SIGNAL(countChanged(QSqlRecord,int)), m_towarModel, SLOT(changeItemCount(QSqlRecord,int)));
-  //  pop->showMaximized();
+    pop->showMaximized();
     pop->exec();
     delete pop;
 }
