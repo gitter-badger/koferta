@@ -38,6 +38,7 @@
 #include <QtDebug>
 #include <QMessageBox>
 
+#include "LocalDatabase.h"
 #include "WyborTowaru.h"
 #include "WyborKlienta.h"
 #include "LoadDialog.h"
@@ -69,7 +70,8 @@ MainWindow::~MainWindow()
 
 MainWindow::MainWindow ():
     QMainWindow(NULL),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_curUser(0) // <------- !!!!
 {
     qDebug() << "konstruktor mainwindow";   
 /**
@@ -409,11 +411,13 @@ void MainWindow::nowyNumer()
     QDate d = QDate::currentDate();
     *data = d.toString("dd.MM.yyyy");
     calendarWidget->setSelectedDate(d);
-
+/*
     *nr_oferty = QString::number(currentUser->nrOferty());
     nr_oferty->append("/");
     nr_oferty->append(d.toString("yyyy"));
-
+*/
+    LocalDatabase::instance()->setCurrentUser(m_curUser);
+    *nr_oferty = LocalDatabase::instance()->userOfferId();
     this->setTitle(nr_oferty);
 }
 

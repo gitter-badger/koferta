@@ -133,6 +133,8 @@ private:
 
     QCalendarWidget* calendarWidget;
     QSqlRecord* klient;
+
+    int m_curUser;
 };
 
 #endif // MAINWINDOW_H
