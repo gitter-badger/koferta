@@ -47,7 +47,7 @@ public:
     QHash<int, QString> userNames();
     void setCurrentUser(int id);
 
-    QList<QSqlRecord> optionsList(eOptionType type); //?
+    QHash<QString, QString> optionsList(eOptionType type);
 
     QSqlTableModel* merchandiseModel();
     QSqlTableModel* customerModel();

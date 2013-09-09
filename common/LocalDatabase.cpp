@@ -129,13 +129,16 @@ QSqlTableModel *LocalDatabase::customerModel()
     return m_customerModel;
 }
 
-QList<QSqlRecord> LocalDatabase::optionsList(eOptionType type)
+QHash<QString, QString> LocalDatabase::optionsList(eOptionType type)
 {
     m_optionsModel->setFilter(QString("type = %1").arg(type));
-    QList<QSqlRecord> list;
+    QHash<QString, QString> hash;
     for(int i=0; i<m_optionsModel->rowCount(); ++i)
-        list << m_optionsModel->record(i);
-    return list;
+    {
+        QSqlRecord rec = m_optionsModel->record(i);
+        hash.insert(rec.value("short").toString(), rec.value("long").toString());
+    }
+    return hash;
 }
 
 QSqlTableModel *LocalDatabase::usersModel()

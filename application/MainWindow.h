@@ -23,6 +23,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QHash>
 
 class TowarModel;
 class QSqlTableModel;
@@ -53,21 +54,15 @@ public slots:
 
     void loadOffer(const QSqlRecord &rec, const QSqlTableModel &mod);              //wczytuje ofertę o połączone z dialogiem wczytywanie
 
-    //dodawanie opcji do kombosów
-    void dostawaNew();
-    void platnoscNew();
-    void terminNew();
-    void ofertaNew();
-
     //obsługa głównej tabeli
     void rabat();                                       //ustawia rabat dla wszystkich pozycji jednocześnie
     void del();                                         //usuwanie wiersza z tabeli
 
     //odświerzanie texteditów drugiej zakładce
-    void dostawaRef(int);
-    void platnoscRef(int);
-    void terminRef(int);
-    void ofertaRef(int);
+    void dostawaRef(QString);
+    void platnoscRef(QString);
+    void terminRef(QString);
+    void ofertaRef(QString);
     void zapytanieRef();
     void calChanged(const QDate&);                      //zmiana nastąpiła w kalendarzu, wprowadzenie jej do dateedita
     void checkNr(bool);
@@ -93,14 +88,6 @@ public slots:
     void nowyNumer();
     //exit
 
-    //klient
-    void dodajKlient();                                 //wyświetla dialog dodający klienta - cDodajKlient
-    void edytujKlient();                                //wyświetla dialog edycji klientów
-
-    //towar
-    void dodajTowar();                                  //wyświetlenie dialogu  dodającego towar - cDodajTowar
-    void edytujTowar();                                 //wyświetla dialog edycji towarów
-
     //help
     void about();                                       //wyświetla informacje o programie
     //o qt - wbudowane
@@ -123,11 +110,6 @@ private:
     QString* data;
     bool htm;
 
-    QSqlTableModel* dostawaModel;
-    QSqlTableModel* platnoscModel;
-    QSqlTableModel* terminModel;
-    QSqlTableModel* ofertaModel;
-
     TowarModel* m_towarModel;
     TowarDelegate* m_towarDelegate;
 
@@ -135,6 +117,12 @@ private:
     QSqlRecord* klient;
 
     int m_curUser;
+
+    QHash<QString, QString> m_shippingOptions;
+    QHash<QString, QString> m_offerOptions;
+    QHash<QString, QString> m_paymentOptions;
+    QHash<QString, QString> m_deliveryOptions;
+
 };
 
 #endif // MAINWINDOW_H
