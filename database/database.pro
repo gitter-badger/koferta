@@ -8,7 +8,7 @@
     error( "Couldn't find the common.pri file!" )
 }
 
-
+QT += network
 
 TARGET 	  = ../kDatabase
 CONFIG   += console
@@ -30,7 +30,8 @@ HEADERS += \
 	EdycjaKlienta.h \
 	EdycjaTowaru.h \
 	User.h \
-	EdycjaKombo.h
+	EdycjaKombo.h \
+    dbDialog.h
 
 FORMS += \
 	Logowanie.ui \
@@ -39,7 +40,8 @@ FORMS += \
 	NowyKlient.ui \
 	NowyTowar.ui \
 	NowyUser.ui \
-	EdycjaKombo.ui 
+	EdycjaKombo.ui \ 
+    dbDialog.ui
 
 SOURCES += main.cpp \
     foo.cpp \
@@ -52,5 +54,6 @@ SOURCES += main.cpp \
 	EdycjaKlienta.cpp \
 	EdycjaTowaru.cpp \
 	User.cpp \
-	EdycjaKombo.cpp
+	EdycjaKombo.cpp \
+    dbDialog.cpp
 

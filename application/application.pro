@@ -4,8 +4,6 @@
 
 TARGET = ../kOferta
 
-QT += network
-
 TEMPLATE = app
 
 DEFINES += GET_PASS=\\\"l4600QW197E3GAEP84PnV4SC5bz6YY1Q2f2CK4bN!56543R96\\\"
