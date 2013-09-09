@@ -2,8 +2,9 @@ DEFINES += VER=3.0
 
 QT       = core sql gui
 
-INCLUDEPATH += . ..
+INCLUDEPATH += . .. ../common
 #WARNINGS += -Wall
+QMAKE_CXXFLAGS += -std=c++0x
 
 win32 { #nmake & M$ compiler
     QMAKE_CXXFLAGS += /nologo /O2 #/Wall

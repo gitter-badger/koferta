@@ -8,6 +8,7 @@ TEMPLATE = lib
 #TARGET = ../kCommon
 
 HEADERS += \
+	LocalDatabase.h \
 	SzukajKlienta.h \
 	SzukajTowaru.h
 
@@ -16,6 +17,7 @@ FORMS += \
 	SzukajTowaru.ui \
          
 SOURCES += \
+	LocalDatabase.cpp \
 	SzukajKlienta.cpp \
 	SzukajTowaru.cpp
 

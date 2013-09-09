@@ -21,7 +21,6 @@ HEADERS += \
 	Towar.h \
 	TowarModel.h \
 	TowarDelegate.h \ 
-    Database.h
 
 FORMS += \
 	LoadDialog.ui \
@@ -39,6 +38,5 @@ SOURCES += \
 	WyborTowaru.cpp \
 	Towar.cpp \
 	TowarModel.cpp \
-	TowarDelegate.cpp \
-    Database.cpp
+	TowarDelegate.cpp 
 

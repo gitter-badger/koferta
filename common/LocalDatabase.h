@@ -14,31 +14,37 @@ class QSqlTableModel;
  * publicznie je udostępnia. Implementacja wykorzystuje wzorzec singleton.
  */
 
-class Database : public QObject
+class LocalDatabase : public QObject
 {
     Q_OBJECT
 
 public:
     ///Zwraca wskaźnik na instancję obiektu bazy danych, w przypadku gdy instancja nie istnieje, wywouje konstruktor.
-    static Database* instance();
-
+    static LocalDatabase* instance();
+/*
     QString userName(int id) const;
     QString userMail(int id) const;
     QString userAdress(int id) const;
     QString userOfferNumber(int id) const;
+*/
+    QString userName() const;
+    QString userMail() const;
+    QString userAdress() const;
+    QString userOfferNumber() const;
 
 protected:
     QSqlDatabase* m_db;
 
-    QSqlTableModel* userModel() const;
+    QSqlTableModel* userModel();
     QSqlTableModel* m_userModel;
 private:
     ///Blokuje konstrukcję obiektu z zewnątrz
-    Database();
+    LocalDatabase();
     ///Blokuje konstrukcję obiektu z zewnątrz
-    Database(const Database&){}
+    LocalDatabase(const LocalDatabase&):QObject(){}
 
-    static Database* m_instance;
+    static LocalDatabase* m_instance;
+    int m_currentUserId;
 };
 
 #endif // DATABASE_H

@@ -1,8 +1,8 @@
-#include "Database.h"
+#include "LocalDatabase.h"
 #include <QtSql>
 #include <QSqlTableModel>
 
-Database* Database::m_instance = nullptr;
+LocalDatabase* LocalDatabase::m_instance = nullptr;
 
 /*!
  * \brief filePath wyznacza bezwzględną ścieżka do pliku o nazwie jak plik wykonywalny z rozszerzeniem podanym jako parametr
@@ -20,34 +20,34 @@ QString filePath(const char* suffix)
     return QDir::toNativeSeparators(path);
 }
 
-Database::Database() :
+LocalDatabase::LocalDatabase() :
     m_userModel(nullptr)
 {
-    m_db = new QSqlDatabase("QSQLITE");
-    m_db.setDatabaseName(path(".sqlite"));
+    m_db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
+    m_db->setDatabaseName(filePath(".sqlite"));
 
     if(m_db->open())
     {
-        qDebug() << "SQLite database file open";
+        qDebug() << "SQLite Local Database file open";
     }
     else
     {
-        qFatal("Cannot open SQLite database");
+        qFatal("Cannot open SQLite Local Database");
     }
 }
 
-Database* Database::instance()
+LocalDatabase* LocalDatabase::instance()
 {
     if(m_instance == nullptr)
-        m_instance = new Database();
+        m_instance = new LocalDatabase();
     return m_instance;
 }
 
-QSqlTableModel *Database::userModel() const
+QSqlTableModel *LocalDatabase::userModel()
 {
     if(m_userModel == nullptr)
     {
-        m_userModel = new QSqlTableModel(this);
+        m_userModel = new QSqlTableModel();
         m_userModel->setTable("users");
         m_userModel->select();
     }

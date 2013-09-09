@@ -20,7 +20,6 @@
 #include "ui_SzukajOferty.h"
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>
-#include "Macros.h"
 
 SzukajOferty::SzukajOferty(QWidget *parent) :
   QWidget(parent),
