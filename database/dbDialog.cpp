@@ -9,6 +9,14 @@ dbDialog::dbDialog(QWidget *parent) :
     ui(new Ui::dbDialog)
 {
     ui->setupUi(this);
+
+    ui->tab->setWindowTitle(tr("Towar"));
+    ui->tab_2->setWindowTitle(tr("Klient"));
+
+//    ui->merch_tableView->setModel(); <-- foreign database!
+
+    connect(ui->merch_add, SIGNAL(clicked()), this, SLOT(dodajTowar()));
+    connect(ui->customer_add, SIGNAL(clicked()), this, SLOT(dodajKlient()));
 }
 
 dbDialog::~dbDialog()
