@@ -20,6 +20,8 @@
 #include "ui_SzukajOferty.h"
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>
+#include "LocalDatabase.h"
+#include <QtDebug>
 
 SzukajOferty::SzukajOferty(QWidget *parent) :
   QWidget(parent),
@@ -27,27 +29,21 @@ SzukajOferty::SzukajOferty(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QString s;
-    QSqlQuery q;
-    QStringList sl;
-
     ui->label_wybierz->setText(tr("Wybierz ofertę do wczytania:"));
     ui->label_filtruj->setText(tr("Filtr:"));
     ui->dateEdit->setDisplayFormat("MMMM yy");
     ui->dateEdit->setDate(QDate::currentDate());
 
-    s = "SELECT name FROM users";
-    EXEC(s);
-    while(q.next())
-        sl << q.value(0).toString();
-    ui->comboBox->insertItems(0, sl);
+    m_names = LocalDatabase::instance()->userNames();
+    ui->comboBox->insertItems(0, m_names.values());
+    //ui->comboBox->insertItems(static_cast<QStringList>(m_names.values()));
 
-    sl.clear();
+    QStringList sl;
     sl << tr("Nr oferty") << tr("Klient") << tr("Data") << tr("Oferent");
     for(int i=0; i<sl.size(); ++i)
         ui->tabWidget->setTabText(i, sl[i]);
 
-    model = new QSqlRelationalTableModel(this);
+    model = new QSqlRelationalTableModel(this, *LocalDatabase::instance()->db());
     model->setTable("zapisane");
     model->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
     model->setRelation(1, QSqlRelation("klient", "id", "short"));

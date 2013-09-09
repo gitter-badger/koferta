@@ -20,6 +20,7 @@
 #define SZUKAJOFERTY_H
 
 #include <QWidget>
+#include <QHash>
 
 class QSqlRelationalTableModel;
 class QModelIndex;
@@ -51,6 +52,8 @@ signals:
 private:
     QSqlRelationalTableModel* model;
     Ui::SzukajOferty *ui;
+
+    QHash<int, QString> m_names;
 };
 
 #endif // SZUKAJOFERTY_H
