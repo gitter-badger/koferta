@@ -20,10 +20,14 @@
 #include <QTextCodec>
 #include <exception>
 #include <QDate>
-#include "MainWindow.h"
 #include <QtDebug>
+#include "MainWindow.h"
+#include "functions.h"
+#include "logger.h"
 
-#define QT_NO_DEBUG_OUTPUT
+
+
+//#define QT_NO_DEBUG_OUTPUT
 
 int main(int argc, char *argv[])
 {
@@ -33,23 +37,12 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 #ifndef QT_NO_DEBUG_OUTPUT
-#ifdef WIN32
-    QString fileName = QCoreApplication::applicationFilePath().replace(".exe", ".log");
-#else
-    QString fileName = QCoreApplication::applicationFilePath() + ".log";
-#endif
-    QFile *log = new QFile(fileName);
-    if (log->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-    {
-        out = new QTextStream(log);
-     //   out->setCodec(QTextCodec::codecForName("UTF-8"));
-        qInstallMsgHandler(logOutput);
-    }
+if(Logger::instance()->setFilePath(filePath(".log")))
+        qInstallMessageHandler(Logger::logHandler);
     else
-    {
-        qDebug() << "Error opening log file '" << fileName << "'. All debug output redirected to console.";
-    }
+        qDebug() << "Unable to create log file! Logging to std::cerr.";
 #endif
+
     int result;
 
     MainWindow w;
