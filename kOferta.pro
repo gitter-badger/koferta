@@ -21,11 +21,18 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS = \
-	common 
-     
-# build must be last:
+# common must be first:
 CONFIG += ordered
 SUBDIRS += \
-	application \
-	database
+    common \
+    application \
+    database
+
+
+OTHER_FILES += \
+    changelog.txt \
+    res/LICENSE \
+    res/gpl-3.0.txt \
+    res/gpl-3.0.html \
+    res/SHA1_LICENSE \
+    README.md

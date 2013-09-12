@@ -16,8 +16,11 @@ v. 3.0
 * zmiana organizacji plików i wdrożenie subdirs template
 * wydzielona aplikacja zarządzająca bazami danych - kDatabase
 * klasa towar rerezentująca linię w tabeli towarów
-* zastapienie qtablewidget przez pełnoprawny model/view w głownym oknie aplikacji
-
+* zastapienie qtablewidget w głownym oknie aplikacji przez pełnoprawny model/view wykorzystujace klase towar
+* oparcie aplikacji klienckiej o lokalna baze dany sqlite, synchronizacja przez program kDatabase
+* zmiana struktury bazy danych
+* klasa singleton odpowiadajaca za zapis loga
+* migracja do wersji 5.1 Qt
 
 v. 2.35
 * nowe certyfikaty SSL
