@@ -28,6 +28,7 @@ SUBDIRS += \
     application \
     database
 
+RESOURCES += zasoby.qrc
 
 OTHER_FILES += \
     changelog.txt \

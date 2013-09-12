@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/certs">
+        <file alias="ca-cert">res/cacert.pem</file>
+        <file alias="client-cert">res/client-cert.pem</file>
+        <file alias="client-key">res/client-key.pem</file>
+    </qresource>
+    <qresource prefix="/gui">
+        <file alias="ico">res/kico.png</file>
+        <file alias="klog">res/klog.png</file>
+        <file alias="log">res/logo.jpg</file>
+        <file alias="calendar">res/schedule.png</file>
+    </qresource>
+</RCC>
