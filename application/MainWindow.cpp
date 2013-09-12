@@ -115,22 +115,22 @@ MainWindow::MainWindow ():
     ui->checkBox_zapytanieNr->setChecked(false);
     ui->plainTextEdit_zapytanie->setReadOnly(true);
 
-    m_shippingOptions = LocalDatabase::instance()->optionsList(optShipping);
+    m_shippingOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optShipping);
     ui->comboBox_dostawa->insertItems(0, m_shippingOptions.keys());
     ui->plainTextEdit_dostawa->setReadOnly(true);
     ui->label_dostawa->setText(tr("Warunki dostawy:"));
 
-    m_deliveryOptions = LocalDatabase::instance()->optionsList(optDelivery);
+    m_deliveryOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optDelivery);
     ui->comboBox_termin->insertItems(0, m_deliveryOptions.keys());
     ui->plainTextEdit_termin->setReadOnly(true);
     ui->label_termin->setText(tr("Termin dostawy:"));
 
-    m_paymentOptions = LocalDatabase::instance()->optionsList(optPayment);
+    m_paymentOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optPayment);
     ui->comboBox_platnosc->insertItems(0, m_paymentOptions.keys());
     ui->plainTextEdit_platnosc->setReadOnly(true);
     ui->label_platnosc->setText(tr("Warunki płatności:"));
 
-    m_offerOptions = LocalDatabase::instance()->optionsList(optOffer);
+    m_offerOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optOffer);
     ui->comboBox_oferta->insertItems(0, m_offerOptions.keys());
     ui->plainTextEdit_oferta->setReadOnly(true);
     ui->label_oferta->setText(tr("Warunki Oferty:"));

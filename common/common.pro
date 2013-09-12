@@ -12,7 +12,8 @@ HEADERS += \
     SzukajKlienta.h \
     SzukajTowaru.h \
     functions.h \
-    logger.h
+    logger.h \
+    AbstractDatabase.h
 
 FORMS += \
     SzukajKlienta.ui \
@@ -23,5 +24,6 @@ SOURCES += \
     SzukajKlienta.cpp \
     SzukajTowaru.cpp \
     functions.cpp \
-    logger.cpp
+    logger.cpp \
+    AbstractDatabase.cpp
 

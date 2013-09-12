@@ -1,20 +1,14 @@
 #include "LocalDatabase.h"
 #include "functions.h"
+
 #include <QtSql>
-#include <QSqlTableModel>
 #include <QDate>
+#include <QtDebug>
 
 LocalDatabase* LocalDatabase::m_instance = nullptr;
 
-LocalDatabase::LocalDatabase() :
-    m_merchandiseModel(nullptr),
-    m_customerModel(nullptr),
-    m_usersModel(nullptr),
-    m_optionsModel(nullptr),
-    m_savedModel(nullptr),
-    m_savedOptionsModel(nullptr),
-    m_savedMerchandiseModel(nullptr),
-    m_infoModel(nullptr)
+LocalDatabase::LocalDatabase(QObject *parent) :
+    AbstractDatabase(parent)
 {
     m_db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
     m_db->setDatabaseName(filePath(".sqlite"));
@@ -36,23 +30,63 @@ LocalDatabase* LocalDatabase::instance()
     return m_instance;
 }
 
+QHash<QString, QString> LocalDatabase::optionsList(eOptionType type)
+{
+    optionsModel()->setFilter(QString("type = %1").arg(type));
+    QHash<QString, QString> hash;
+    for(int i=0; i < optionsModel()->rowCount(); ++i)
+    {
+        QSqlRecord rec = optionsModel()->record(i);
+        hash.insert(rec.value("short").toString(), rec.value("long").toString());
+    }
+    return hash;
+}
+
+/*******************************
+ *      User related
+ */
+
 QString LocalDatabase::userName()
 {
+    if(usersModel()->filter().isEmpty())
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
     return usersModel()->record(0).value("name").toString();
 }
 
 QString LocalDatabase::userMail()
 {
+    if(usersModel()->filter().isEmpty())
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
     return usersModel()->record(0).value("mail").toString();
 }
 
 QString LocalDatabase::userAdress()
 {
+    if(usersModel()->filter().isEmpty())
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
     return usersModel()->record(0).value("address").toString();
 }
 
 int LocalDatabase::userOfferNumber()
 {
+    if(usersModel()->filter().isEmpty())
+    {
+        qWarning() << "No user selected!";
+        return -1;
+    }
+
     QSqlRecord rec = usersModel()->record(0);
     if(rec.value("lastOfferYear").toInt() != QDate::currentDate().year())
     {
@@ -66,142 +100,15 @@ int LocalDatabase::userOfferNumber()
 
 QString LocalDatabase::userOfferId()
 {
+    if(usersModel()->filter().isEmpty())
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
     QSqlRecord rec = usersModel()->record(0);
     return QString("%1%2/%3")
             .arg(rec.value("id").toInt()+1)
             .arg(QString::number(userOfferNumber()).rightJustified(3, '0'))
             .arg(QDate::currentDate().year());
-}
-
-QHash<int, QString> LocalDatabase::userNames()
-{
-    usersModel()->setFilter("");
-    QHash<int, QString> hash;
-    for(int i=0; i < m_usersModel->rowCount(); ++i)
-    {
-        QSqlRecord rec = m_usersModel->record(i);
-        hash.insert(rec.value("id").toInt(), rec.value("name").toString());
-    }
-    return hash;
-}
-
-void LocalDatabase::setCurrentUser(int id)
-{
-    usersModel()->setFilter(QString("id = %1").arg(id));
-}
-
-QSqlDatabase *LocalDatabase::db()
-{
-    return m_db;
-}
-
-QHash<QString, QString> LocalDatabase::optionsList(eOptionType type)
-{
-    optionsModel()->setFilter(QString("type = %1").arg(type));
-    QHash<QString, QString> hash;
-    for(int i=0; i < m_optionsModel->rowCount(); ++i)
-    {
-        QSqlRecord rec = m_optionsModel->record(i);
-        hash.insert(rec.value("short").toString(), rec.value("long").toString());
-    }
-    return hash;
-}
-
-/********************************
- *      Modele
- */
-
-QSqlTableModel *LocalDatabase::merchandiseModel()
-{
-    if(m_merchandiseModel == nullptr)
-    {
-        m_merchandiseModel = new QSqlTableModel(this, *m_db);
-        m_merchandiseModel->setTable("merchandise");
-        m_merchandiseModel->select();
-    }
-
-    return m_merchandiseModel;
-}
-
-QSqlTableModel *LocalDatabase::customerModel()
-{
-    if(m_customerModel == nullptr)
-    {
-        m_customerModel = new QSqlTableModel(this, *m_db);
-        m_customerModel->setTable("customer");
-        m_customerModel->select();
-    }
-
-    return m_customerModel;
-}
-
-QSqlTableModel *LocalDatabase::usersModel()
-{
-    if(m_usersModel == nullptr)
-    {
-        m_usersModel = new QSqlTableModel(this, *m_db);
-        m_usersModel->setTable("users");
-        m_usersModel->select();
-    }
-
-    return m_usersModel;
-}
-QSqlTableModel *LocalDatabase::infoModel()
-{
-    if(m_infoModel == nullptr)
-    {
-        m_infoModel = new QSqlTableModel(this, *m_db);
-        m_infoModel->setTable("info");
-        m_infoModel->select();
-    }
-
-    return m_infoModel;
-}
-
-QSqlTableModel *LocalDatabase::savedMerchandiseModel()
-{
-    if(m_savedMerchandiseModel == nullptr)
-    {
-        m_savedMerchandiseModel = new QSqlTableModel(this, *m_db);
-        m_savedMerchandiseModel->setTable("saveMerchandise");
-        m_savedMerchandiseModel->select();
-    }
-
-    return m_savedMerchandiseModel;
-}
-
-QSqlTableModel *LocalDatabase::savedOptionsModel()
-{
-    if(m_savedOptionsModel == nullptr)
-    {
-        m_savedOptionsModel = new QSqlTableModel(this, *m_db);
-        m_savedOptionsModel->setTable("savedOptions");
-        m_savedOptionsModel->select();
-    }
-
-    return m_savedOptionsModel;
-}
-
-QSqlTableModel *LocalDatabase::savedModel()
-{
-    if(m_savedModel == nullptr)
-    {
-        m_savedModel = new QSqlTableModel(this, *m_db);
-        m_savedModel->setTable("saved");
-        m_savedModel->select();
-    }
-
-    return m_savedModel;
-}
-
-QSqlTableModel *LocalDatabase::optionsModel()
-{
-    if(m_optionsModel == nullptr)
-    {
-        m_optionsModel = new QSqlTableModel(this, *m_db);
-        m_optionsModel->setTable("options");
-        m_optionsModel->select();
-    }
-
-    return m_optionsModel;
 }

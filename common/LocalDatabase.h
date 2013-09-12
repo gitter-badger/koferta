@@ -1,21 +1,9 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QObject>
-#include <QHash>
+#include "AbstractDatabase.h"
 
-class QSqlDatabase;
-class QString;
-class QSqlTableModel;
-class QSqlRecord;
 
-enum eOptionType
-{
-    optShipping = 0,
-    optOffer,
-    optPayment,
-    optDelivery
-};
 
 /*!
  * \brief Klasa stanowiąca interface do lokalnej bazy danych SQLite.
@@ -24,13 +12,13 @@ enum eOptionType
  * publicznie je udostępnia. Implementacja wykorzystuje wzorzec singleton.
  */
 
-class LocalDatabase : public QObject
+class LocalDatabase : public AbstractDatabase
 {
     Q_OBJECT
 
 public:
-    ///Zwraca wskaźnik na instancję obiektu bazy danych, w przypadku gdy instancja nie istnieje, wywouje konstruktor.
     static LocalDatabase* instance();
+
 /*
     QString userName(int id) const;
     QString userMail(int id) const;
@@ -44,39 +32,14 @@ public:
     int userOfferNumber();
     QString userOfferId();
 
-    QHash<int, QString> userNames();
-    void setCurrentUser(int id);
-
     QHash<QString, QString> optionsList(eOptionType type);
 
-    QSqlTableModel* merchandiseModel();
-    QSqlTableModel* customerModel();
-    QSqlTableModel* usersModel();
-    QSqlTableModel* optionsModel();
-    QSqlTableModel* savedModel();
-    QSqlTableModel* savedOptionsModel();
-    QSqlTableModel* savedMerchandiseModel();
-    QSqlTableModel* infoModel();
-
-    QSqlDatabase* db();
-
-protected:
-    QSqlDatabase* m_db;
-
-    QSqlTableModel* m_merchandiseModel;
-    QSqlTableModel* m_customerModel;
-    QSqlTableModel* m_usersModel;
-    QSqlTableModel* m_optionsModel;
-    QSqlTableModel* m_savedModel;
-    QSqlTableModel* m_savedOptionsModel;
-    QSqlTableModel* m_savedMerchandiseModel;
-    QSqlTableModel* m_infoModel;
 
 private:
     ///Blokuje konstrukcję obiektu z zewnątrz
-    LocalDatabase();
+    explicit LocalDatabase(QObject *parent = 0);
     ///Blokuje konstrukcję obiektu z zewnątrz
-    LocalDatabase(const LocalDatabase&):QObject(){}
+    LocalDatabase(const LocalDatabase&):AbstractDatabase(){}
 
     static LocalDatabase* m_instance;
 };
