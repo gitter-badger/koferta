@@ -6,6 +6,9 @@
 #include <QTextCodec>
 #include <unistd.h>
 
+#include <QDebug>
+#include <QtDebug>
+
 bool connect(const QString &ip)
 {
     QString pp;

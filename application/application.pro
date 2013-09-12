@@ -6,6 +6,8 @@ TARGET = ../kOferta
 
 TEMPLATE = app
 
+QT += printsupport
+
 LIBS += -L../common -lcommon
 
 HEADERS += \

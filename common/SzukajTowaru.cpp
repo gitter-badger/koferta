@@ -18,6 +18,8 @@
 
 #include <QSqlTableModel>
 #include <QSqlRecord>
+#include <QTableView>
+#include <QHeaderView>
 
 #include "SzukajTowaru.h"
 #include "ui_SzukajTowaru.h"
@@ -55,7 +57,7 @@ SzukajTowaru::SzukajTowaru(QWidget *parent) :
 
     QHeaderView* hdr = ui->tableView->horizontalHeader();
  //   hdr->setResizeMode(0, QHeaderView::ResizeToContents);
-    hdr->setResizeMode(1, QHeaderView::Stretch);
+    hdr->setSectionResizeMode(1, QHeaderView::Stretch);
 
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);

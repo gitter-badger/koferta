@@ -178,7 +178,7 @@ QModelIndex TowarModel::index(int row, int column, const QModelIndex & /*parent*
     if(row > m_list.count())
         return QModelIndex();
     else if(row == m_list.count())
-        return QAbstractTableModel::createIndex(row, column, 0);
+        return QAbstractTableModel::createIndex(row, column, nullptr);
     return QAbstractTableModel::createIndex(row, column, m_list[row]);
 }
 

@@ -1,17 +1,19 @@
-#include <QtCore/QCoreApplication>
+#include <QApplication>
 #include <QString>
 #include <QTextCodec>
 #include <QStringList>
 #include "foo.h"
+#include <QtDebug>
+#include "logger.h"
 #include <QDirIterator>
 
 const QString ip = "localhost";// "192.168.1.90";
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-
+    QApplication a(argc, argv);
+    //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     //parsing args
 
     actions action;

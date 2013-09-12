@@ -15,7 +15,7 @@ DEFINES += GET_PASS=\\\"l4600QW197E3GAEP84PnV4SC5bz6YY1Q2f2CK4bN!56543R96\\\"
 
 TARGET 	  = ../kDatabase
 CONFIG   += console
-#CONFIG   += app_bundle
+CONFIG   += app_bundle
 
 TEMPLATE = app
 

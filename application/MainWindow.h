@@ -35,6 +35,7 @@ class QSqlRecord;
 class QCalendarWidget;
 class QDate;
 class TowarDelegate;
+class QPrinter;
 
 namespace Ui {
     class MainWindow;

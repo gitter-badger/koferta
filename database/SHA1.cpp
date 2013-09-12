@@ -223,7 +223,7 @@ QString SHA1::toQstring()
 void SHA1::fromQstring(QString in)
 {
     char* ch;
-    ch = in.toAscii().data();
+    ch = in.toLatin1().data();
     addBytes(ch, in.size());
 }
 
@@ -235,7 +235,7 @@ QString hash(QString in)
     QString s, t;
     SHA1* h = new SHA1;
 
-    ch = in.toAscii().data();
+    ch = in.toLatin1().data();
     h->addBytes(ch, in.size());
     c = h->getDigest();
     while( l > 0 )

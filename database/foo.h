@@ -1,9 +1,8 @@
 #ifndef FOO_H
 #define FOO_H
 
-#include <QDebug>
-
-#define qDebug() qDebug() << __FILE__ << " (" << __LINE__ << "): "
+class QString;
+class QStringList;
 
 enum actions
 {
