@@ -17,10 +17,10 @@ public:
 
     enum eOptionType
     {
-        optShipping = 0,
-        optOffer,
-        optPayment,
-        optDelivery
+        optShipping = 0,//dostawa
+        optOffer = 1,   //oferta
+        optPayment = 2, //platnosc
+        optDelivery = 3 //termin
     };
 
     QString psqlPass();
