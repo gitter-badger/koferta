@@ -17,6 +17,14 @@ dbDialog::dbDialog(QWidget *parent) :
 
     connect(ui->merch_add, SIGNAL(clicked()), this, SLOT(dodajTowar()));
     connect(ui->customer_add, SIGNAL(clicked()), this, SLOT(dodajKlient()));
+
+/*
+    //dodawanie opcji do kombosów
+    connect(ui->pushButton_dostawa, SIGNAL(clicked()), this, SLOT(dostawaNew()));
+    connect(ui->pushButton_oferta, SIGNAL(clicked()), this, SLOT(ofertaNew()));
+    connect(ui->pushButton_platnosc, SIGNAL(clicked()), this, SLOT(platnoscNew()));
+    connect(ui->pushButton_termin, SIGNAL(clicked()), this, SLOT(terminNew()));
+*/
 }
 
 dbDialog::~dbDialog()

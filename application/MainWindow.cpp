@@ -184,12 +184,6 @@ MainWindow::MainWindow ():
     connect(ui->rabat, SIGNAL(clicked()), this, SLOT(rabat()));
     connect(ui->delw, SIGNAL(clicked()), this, SLOT(del()));
 
-    //dodawanie opcji do kombosów
-    connect(ui->pushButton_dostawa, SIGNAL(clicked()), this, SLOT(dostawaNew()));
-    connect(ui->pushButton_oferta, SIGNAL(clicked()), this, SLOT(ofertaNew()));
-    connect(ui->pushButton_platnosc, SIGNAL(clicked()), this, SLOT(platnoscNew()));
-    connect(ui->pushButton_termin, SIGNAL(clicked()), this, SLOT(terminNew()));
-
     //Pozostałe informacje - odświerzanie zawartości pól tekstowych
     connect(ui->pushButton_wyborKlienta, SIGNAL(clicked()), this, SLOT(popWyborKlienta()));
     connect(ui->comboBox_dostawa, SIGNAL(currentIndexChanged(QString)), this, SLOT(dostawaRef(QString)));
