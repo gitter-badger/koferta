@@ -307,10 +307,8 @@ void Logowanie::ok()
         return;
     }
 
-    delete currentUser;
-    currentUser = new cUser(name);
 
-    d->setUserName(currentUser->dbName());
+  //  d->setUserName(currentUser->dbName());
     d->setPassword(hash(ui->lineEdit->text()));
 
     LOGIN

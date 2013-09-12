@@ -31,13 +31,14 @@ bool connect(const QString &ip)
     QVariant v = d->driver()->handle();
     if (v.isValid() && qstrcmp(v.typeName(), "MYSQL*")==0)
     {
-        MYSQL *handle = static_cast<MYSQL *>(v.data());
+   /*     MYSQL *handle = static_cast<MYSQL *>(v.data());
         if (handle != NULL)
         {
             mysql_ssl_set(handle, ":/client-key",
                 ":/client-cert", ":/ca-cacert",
                 NULL, NULL);
         }
+        */
     }
     else
     {

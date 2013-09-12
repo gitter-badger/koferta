@@ -14,19 +14,19 @@ win32 { #nmake & M$ compiler
 
     CONFIG += qt windows release
 
-    INCLUDEPATH += C:\\mysql\\include
+#    INCLUDEPATH += C:\\mysql\\include
     INCLUDEPATH += C:\\koferta_src
 
-    LIBS += -L"C:\\Program Files\\Microsoft SDKs\\Windows\\v7.0A\\Lib" -lUser32 -lAdvAPI32
-    LIBS += -LC:\\mysql\\lib -lmysqlclient -llibmysql
+#    LIBS += -L"C:\\Program Files\\Microsoft SDKs\\Windows\\v7.0A\\Lib" -lUser32 -lAdvAPI32
+#    LIBS += -LC:\\mysql\\lib -lmysqlclient -llibmysql
 
     DEFINES += WIN32
     DEFINES += RELEASE
 }
 
 unix {
-    LIBS += -L/usr/lib/mysql -lmysqlclient
-    #DEFINES += NOSSL
+  #  LIBS += -L/usr/lib/mysql -lmysqlclient
+    DEFINES += NOSSL
  #   DEFINES += RELEASE
 }
 

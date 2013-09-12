@@ -18,11 +18,11 @@ public:
 public slots:
     //klient
     void dodajKlient();                                 //wyświetla dialog dodający klienta - cDodajKlient
-    void edytujKlient();                                //wyświetla dialog edycji klientów
+ //   void edytujKlient();                                //wyświetla dialog edycji klientów
 
     //towar
     void dodajTowar();                                  //wyświetlenie dialogu  dodającego towar - cDodajTowar
-    void edytujTowar();                                 //wyświetla dialog edycji towarów
+  //  void edytujTowar();                                 //wyświetla dialog edycji towarów
 
 private:
     Ui::dbDialog *ui;
