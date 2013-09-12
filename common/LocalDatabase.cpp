@@ -75,7 +75,7 @@ QString LocalDatabase::userOfferId()
 
 QHash<int, QString> LocalDatabase::userNames()
 {
-    m_usersModel->setFilter("");
+    usersModel()->setFilter("");
     QHash<int, QString> hash;
     for(int i=0; i < m_usersModel->rowCount(); ++i)
     {
@@ -89,6 +89,27 @@ void LocalDatabase::setCurrentUser(int id)
 {
     usersModel()->setFilter(QString("id = %1").arg(id));
 }
+
+QSqlDatabase *LocalDatabase::db()
+{
+    return m_db;
+}
+
+QHash<QString, QString> LocalDatabase::optionsList(eOptionType type)
+{
+    optionsModel()->setFilter(QString("type = %1").arg(type));
+    QHash<QString, QString> hash;
+    for(int i=0; i < m_optionsModel->rowCount(); ++i)
+    {
+        QSqlRecord rec = m_optionsModel->record(i);
+        hash.insert(rec.value("short").toString(), rec.value("long").toString());
+    }
+    return hash;
+}
+
+/********************************
+ *      Modele
+ */
 
 QSqlTableModel *LocalDatabase::merchandiseModel()
 {
@@ -114,18 +135,6 @@ QSqlTableModel *LocalDatabase::customerModel()
     return m_customerModel;
 }
 
-QHash<QString, QString> LocalDatabase::optionsList(eOptionType type)
-{
-    m_optionsModel->setFilter(QString("type = %1").arg(type));
-    QHash<QString, QString> hash;
-    for(int i=0; i<m_optionsModel->rowCount(); ++i)
-    {
-        QSqlRecord rec = m_optionsModel->record(i);
-        hash.insert(rec.value("short").toString(), rec.value("long").toString());
-    }
-    return hash;
-}
-
 QSqlTableModel *LocalDatabase::usersModel()
 {
     if(m_usersModel == nullptr)
@@ -147,11 +156,6 @@ QSqlTableModel *LocalDatabase::infoModel()
     }
 
     return m_infoModel;
-}
-
-QSqlDatabase *LocalDatabase::db()
-{
-    return m_db;
 }
 
 QSqlTableModel *LocalDatabase::savedMerchandiseModel()

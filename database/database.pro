@@ -46,7 +46,8 @@ FORMS += \
     EdycjaKombo.ui \
     dbDialog.ui
 
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     foo.cpp \
     Database.cpp \
     Logowanie.cpp \

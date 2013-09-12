@@ -47,18 +47,19 @@ SzukajTowaru::SzukajTowaru(QWidget *parent) :
         model->setHeaderData(i, Qt::Horizontal, sl[i]);
 
     ui->tableView->setModel(model);
+    ui->tableView->hideColumn(2);
+    ui->tableView->hideColumn(3);
+/*
     ui->tableView->setSortingEnabled(true);
-
 
     ui->tableView->resizeColumnToContents(0);
  //   ui->tableView->resizeColumnToContents(1);
-    ui->tableView->hideColumn(2);
-    ui->tableView->hideColumn(3);
+
 
     QHeaderView* hdr = ui->tableView->horizontalHeader();
  //   hdr->setResizeMode(0, QHeaderView::ResizeToContents);
     hdr->setSectionResizeMode(1, QHeaderView::Stretch);
-
+*/
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
