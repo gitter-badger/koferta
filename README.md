@@ -2,21 +2,20 @@
 
 ##Wstęp
 
-    kOferta jest to kompletny system wspomagający tworzenie ofert handlowych
+kOferta jest to kompletny system wspomagający tworzenie ofert handlowych
 
 ##Co to jest oferta
 
-    Oferta jest to formalna propozycja dokonania transakcji. Zawiera listę i ilość
+Oferta jest to formalna propozycja dokonania transakcji. Zawiera listę i ilość
 towarów ich ceny, dane klienta i sprzedającego. Dodatkowymi elementami mogą być
 informacje o sposobie płatności, czy terminie dostawy.
 
 ##Cel i zakres projektu
 
-    Projekt kOferta ma ułatwić sprzedającemu tworzenie ofert handlowych poprzez
-dostęp do bazy danych z klientami i produktami. System umożliwia również
-archiwizowanie stworzonych już wcześniej ofert.
+Projekt kOferta ma ułatwić sprzedającemu tworzenie ofert handlowych poprzez dostęp do bazy danych z klientami i produktami.
+System umożliwia również archiwizowanie stworzonych już wcześniej ofert.
 
-    Celem projektu jest stworzenie systemu składającego się z trzech zasadniczych części:
+Celem projektu jest stworzenie systemu składającego się z trzech zasadniczych części:
 
 1. Serwer przechowujący dane klientów firmy, oferowanych towarów, zarchiwizowanych ofert i danych sprzedawców.
 
@@ -28,7 +27,8 @@ możliwe jest szybkie uzupełnienie bazy importując dane klientów i towarów z
 
 ##Wykorzystanie
 
-    System ten wykorzystywany jest aktualnie przez przedstawicieli handlowych firmy Marley.
+System ten wykorzystywany jest aktualnie przez przedstawicieli handlowych firmy Marley.
 W czasie projektowania, systemu przeprowadzane były konsultacje z jej pracownikami.
-    Podczas testów i wdrażania systemu wykorzystano issue tracker platformy bitbucklet.com
+
+Podczas testów i wdrażania systemu wykorzystano issue tracker platformy bitbucklet.com
 
