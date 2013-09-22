@@ -34,21 +34,20 @@ class SzukajKlienta : public QWidget
     Q_OBJECT
     
 public:
-    explicit SzukajKlienta(QWidget *parent = 0);
+    explicit SzukajKlienta(QSqlTableModel* model, QWidget *parent = 0);
     ~SzukajKlienta();
 
 public slots:
     void ref(const QString&);
     void ref2();
-    void select(const QModelIndex&);
 
 signals:
-    void selectionChanged(const QSqlRecord&);
+    void selectionChanged(const QModelIndex &);
 
 private:
-    QSqlTableModel* model;
+    QSqlTableModel* m_model;
+
     Ui::SzukajKlienta *ui;
-    int id;
 };
 
 #endif // SZUKAJKLIENTA_H

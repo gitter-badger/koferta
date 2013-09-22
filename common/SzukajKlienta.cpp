@@ -20,29 +20,20 @@
 #include <QSqlTableModel>
 #include <QSqlRecord>
 
-SzukajKlienta::SzukajKlienta(QWidget *parent) :
-  QWidget(parent),
+SzukajKlienta::SzukajKlienta(QSqlTableModel *model, QWidget *parent) :
+    QWidget(parent),
+    m_model(model),
     ui(new Ui::SzukajKlienta)
 {
     ui->setupUi(this);
-
-    id = -1;
 
     ui->radioButton_nazwa->setText(tr("Filtruj po nazwie"));
     ui->radioButton_nazwa->setChecked(true);
     ui->radioButton_nazwisko->setText(tr("Filtruj po nazwisku"));
 
-    model = new QSqlTableModel(this);
-    model->setTable("klient");
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->select();
+    m_model->setFilter("");
 
-    QStringList sl;
-    sl << tr("Id") << tr("Nazwa") << tr("Nazwisko");
-    for(int i=0; i<sl.size(); ++i)
-        model->setHeaderData(i, Qt::Horizontal, sl[i]);
-
-    ui->tableView->setModel(model);
+    ui->tableView->setModel(m_model);
     ui->tableView->hideColumn(0);
     for(int i=2; i<5; ++i)
         ui->tableView->hideColumn(i);
@@ -54,7 +45,7 @@ SzukajKlienta::SzukajKlienta(QWidget *parent) :
     connect(ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(ref(const QString&)));
     connect(ui->radioButton_nazwa, SIGNAL(clicked()), this, SLOT(ref2()));
     connect(ui->radioButton_nazwisko, SIGNAL(clicked()), this, SLOT(ref2()));
-    connect(ui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(select(const QModelIndex&)));
+    connect(ui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(selectionChanged(const QModelIndex&)));
 }
 
 SzukajKlienta::~SzukajKlienta()
@@ -67,11 +58,6 @@ void SzukajKlienta::ref2()
     ref(ui->lineEdit->text());
 }
 
-void SzukajKlienta::select(const QModelIndex &idx)
-{
-    emit selectionChanged(model->record(idx.row()));
-}
-
 void SzukajKlienta::ref(const QString& in)
 {
     QString s;
@@ -81,5 +67,5 @@ void SzukajKlienta::ref(const QString& in)
         s = "nazwisko like '";
     s += in;
     s += "%'";
-    model->setFilter(s);
+    m_model->setFilter(s);
 }
