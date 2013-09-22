@@ -52,7 +52,7 @@ public:
 
 private:
     ///Blokuje konstrukcję obiektu z zewnątrz
-    explicit LocalDatabase(QObject *parent = 0);
+    explicit LocalDatabase();
     ///Blokuje konstrukcję obiektu z zewnątrz
     LocalDatabase(const LocalDatabase&)
     { qFatal("Singleton copy?!"); }

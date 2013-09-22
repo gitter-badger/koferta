@@ -34,7 +34,7 @@ class SzukajTowaru : public QWidget
     Q_OBJECT
     
 public:
-    explicit SzukajTowaru(QWidget *parent = 0);
+    explicit SzukajTowaru(QSqlTableModel* model, QWidget *parent = 0);
     ~SzukajTowaru();
 
 public slots:
@@ -48,7 +48,7 @@ signals:
 
 private:
     Ui::SzukajTowaru *ui;
-    QSqlTableModel* model;
+    QSqlTableModel* m_model;
 };
 
 #endif // SZUKAJTOWARU_H

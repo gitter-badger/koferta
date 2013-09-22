@@ -2,8 +2,8 @@
 #include <QtDebug>
 #include <QtSql>
 
-PsqlDatabase::PsqlDatabase(QObject *parent) :
-    AbstractDatabase(parent)
+PsqlDatabase::PsqlDatabase() :
+    AbstractDatabase()
 {
 }
 

@@ -5,16 +5,8 @@
 
 class SQLiteDatabase : public AbstractDatabase
 {
-    Q_OBJECT
 public:
-    explicit SQLiteDatabase(QObject *parent = 0);
-
-    QString dbUserName();
-    QString dbPass();
-    
-signals:
-    
-public slots:
+    explicit SQLiteDatabase();
     
 };
 

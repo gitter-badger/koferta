@@ -3,8 +3,8 @@
 #include <QtSql>
 #include <QtDebug>
 
-SQLiteDatabase::SQLiteDatabase(QObject *parent) :
-    AbstractDatabase(parent)
+SQLiteDatabase::SQLiteDatabase() :
+    AbstractDatabase()
 {
     m_db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
     m_db->setDatabaseName(filePath(".sqlite"));
@@ -18,16 +18,3 @@ SQLiteDatabase::SQLiteDatabase(QObject *parent) :
         qFatal("Cannot open SQLite Local Database");
     }
 }
-
-QString SQLiteDatabase::dbUserName()
-{
-    return QString();
-}
-
-QString SQLiteDatabase::dbPass()
-{
-    return QString();
-}
-
-
-

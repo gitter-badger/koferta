@@ -1,4 +1,5 @@
 #include "LocalDatabase.h"
+#include <QtDebug>
 
 template<class dbType>
 AbstractDatabase* LocalDatabase<dbType>::m_instance = nullptr;
@@ -7,7 +8,10 @@ template<class dbType>
 AbstractDatabase* LocalDatabase<dbType>::instance()
 {
     if(m_instance == nullptr)
+    {
+        qDebug() << "making new instance of local database";
         m_instance = new dbType();
+    }
     return m_instance;
 }
 

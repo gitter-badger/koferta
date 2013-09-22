@@ -24,9 +24,10 @@
 #include "SzukajTowaru.h"
 #include "ui_SzukajTowaru.h"
 
-SzukajTowaru::SzukajTowaru(QWidget *parent) :
-  QWidget(parent),
-    ui(new Ui::SzukajTowaru)
+SzukajTowaru::SzukajTowaru(QSqlTableModel* model, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::SzukajTowaru),
+    m_model(model)
 {
     ui->setupUi(this);
 
@@ -39,12 +40,6 @@ SzukajTowaru::SzukajTowaru(QWidget *parent) :
     model->setTable("towar");
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model->select();
-
-    QStringList sl;
-    sl << tr("Id") << tr("Nazwa");// << tr("Cena Katalogowa");
-    //model->setHorizontalHeaderLabels(sl);
-    for(int i=0; i<sl.size(); ++i)
-        model->setHeaderData(i, Qt::Horizontal, sl[i]);
 
     ui->tableView->setModel(model);
     ui->tableView->hideColumn(2);
@@ -80,7 +75,7 @@ SzukajTowaru::~SzukajTowaru()
 
 void SzukajTowaru::select(const QModelIndex& idx)
 {
-    QSqlRecord r = model->record(idx.row());
+    QSqlRecord r = m_model->record(idx.row());
     if(!r.isEmpty())
         emit selectionChanged(r);
 }
@@ -91,7 +86,7 @@ void SzukajTowaru::ref2()
 }
 
 void SzukajTowaru::ref(const QString & in)
-{
+{/*
     QString s;
     if(ui->radioButton_id->isChecked())
         s = "id like '";
@@ -99,7 +94,8 @@ void SzukajTowaru::ref(const QString & in)
         s = "nazwa like '";
     s += in;
     s += "%'";
-    model->setFilter(s);
+    */
+    m_model->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
 }
 
 void SzukajTowaru::currentRowChanged(const QModelIndex &cur, const QModelIndex &prev)

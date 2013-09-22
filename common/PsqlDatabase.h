@@ -5,14 +5,8 @@
 
 class PsqlDatabase : public AbstractDatabase
 {
-    Q_OBJECT
 public:
-    explicit PsqlDatabase(QObject *parent = 0);
-
-
-signals:
-    
-public slots:
+    explicit PsqlDatabase();
     
 };
 

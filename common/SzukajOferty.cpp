@@ -21,6 +21,7 @@
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>
 #include "LocalDatabase.h"
+#include "sqlitedatabase.h"
 #include <QtDebug>
 
 SzukajOferty::SzukajOferty(QWidget *parent) :
@@ -34,7 +35,7 @@ SzukajOferty::SzukajOferty(QWidget *parent) :
     ui->dateEdit->setDisplayFormat("MMMM yy");
     ui->dateEdit->setDate(QDate::currentDate());
 
-    m_names = LocalDatabase::instance()->userNames();
+    m_names = localDatabase::userNames();
     ui->comboBox->insertItems(0, m_names.values());
     //ui->comboBox->insertItems(static_cast<QStringList>(m_names.values()));
 
@@ -43,7 +44,7 @@ SzukajOferty::SzukajOferty(QWidget *parent) :
     for(int i=0; i<sl.size(); ++i)
         ui->tabWidget->setTabText(i, sl[i]);
 
-    model = new QSqlRelationalTableModel(this, *LocalDatabase::instance()->db());
+    model = new QSqlRelationalTableModel(this, *localDatabase::db());
     model->setTable("zapisane");
     model->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
     model->setRelation(1, QSqlRelation("klient", "id", "short"));

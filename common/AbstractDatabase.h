@@ -1,7 +1,6 @@
 #ifndef ABSTRACTDATABASE_H
 #define ABSTRACTDATABASE_H
 
-#include <QObject>
 #include <QHash>
 
 class QSqlDatabase;
@@ -9,10 +8,8 @@ class QString;
 class QSqlTableModel;
 class QSqlRecord;
 
-class AbstractDatabase : public QObject
+class AbstractDatabase
 {
-    Q_OBJECT
-
 public:
 
     enum eOptionType
@@ -23,7 +20,8 @@ public:
         optDelivery = 3 //termin
     };
 
-    explicit AbstractDatabase(QObject *parent = 0);
+    explicit AbstractDatabase();
+    virtual ~AbstractDatabase();
 
     //remote database login information
     virtual QString remoteDbUserName();
@@ -55,17 +53,12 @@ public:
     //table options
     QHash<QString, QString> optionsList(eOptionType type);
     
-signals:
-    
-public slots:
 
 protected:
-
-    AbstractDatabase(const AbstractDatabase& /*other*/):QObject(nullptr){}
+    AbstractDatabase(const AbstractDatabase& /*other*/);
+    //operator =
 
     QSqlDatabase* m_db;
-
-  //  static AbstractDatabase* m_instance;
 
 private:
     QSqlTableModel* m_merchandiseModel;
