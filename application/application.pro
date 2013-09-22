@@ -13,7 +13,6 @@ LIBS += -L../common -lcommon
 HEADERS += \
 	LoadDialog.h \
 	MainWindow.h \
-	SzukajOferty.h \
 	WyborKlienta.h \
 	WyborTowaru.h \
 	Towar.h \
@@ -23,7 +22,6 @@ HEADERS += \
 FORMS += \
 	LoadDialog.ui \
 	MainWindow.ui \
-	SzukajOferty.ui \
 	WyborKlienta.ui \ 
 	WyborTowaru.ui
          
@@ -31,7 +29,6 @@ SOURCES += \
 	LoadDialog.cpp \
 	Main.cpp \
 	MainWindow.cpp \
-	SzukajOferty.cpp \
 	WyborKlienta.cpp \        
 	WyborTowaru.cpp \
 	Towar.cpp \

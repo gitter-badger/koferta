@@ -10,6 +10,7 @@ TEMPLATE = lib
 HEADERS += \
     LocalDatabase.h \
     SzukajKlienta.h \
+    SzukajOferty.h \
     SzukajTowaru.h \
     functions.h \
     logger.h \
@@ -17,11 +18,13 @@ HEADERS += \
 
 FORMS += \
     SzukajKlienta.ui \
+    SzukajOferty.ui \
     SzukajTowaru.ui \
          
 SOURCES += \
     LocalDatabase.cpp \
     SzukajKlienta.cpp \
+    SzukajOferty.cpp \
     SzukajTowaru.cpp \
     functions.cpp \
     logger.cpp \
