@@ -1,4 +1,4 @@
-DEFINES += VER=3.0
+DEFINES += VER=2.9
 
 QT       = core sql gui widgets
 
