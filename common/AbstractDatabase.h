@@ -23,12 +23,17 @@ public:
         optDelivery = 3 //termin
     };
 
-    QString psqlPass();
-    QString psqlName();
-    QHash<int, QString> userNames();
-    void setCurrentUser(int id);
+    explicit AbstractDatabase(QObject *parent = 0);
 
+    //remote database login information
+    virtual QString remoteDbUserName();
+    virtual QString remoteDbUserPass();
 
+    //database
+    QSqlDatabase* db() const
+    { return m_db; }
+
+    //models
     QSqlTableModel* merchandiseModel();
     QSqlTableModel* customerModel();
     QSqlTableModel* usersModel();
@@ -38,18 +43,29 @@ public:
     QSqlTableModel* savedMerchandiseModel();
     QSqlTableModel* infoModel();
 
-    QSqlDatabase* db() const
-    { return m_db; }
+    //table user
+    void setCurrentUser(int id);
+    QString userName();
+    QString userMail();
+    QString userAdress();
+    int userOfferNumber();
+    QString userOfferId();
+    QHash<int, QString> userNames();
+
+    //table options
+    QHash<QString, QString> optionsList(eOptionType type);
     
 signals:
     
 public slots:
 
 protected:
-    explicit AbstractDatabase(QObject *parent = 0);
+
     AbstractDatabase(const AbstractDatabase& /*other*/):QObject(nullptr){}
 
     QSqlDatabase* m_db;
+
+  //  static AbstractDatabase* m_instance;
 
 private:
     QSqlTableModel* m_merchandiseModel;

@@ -2,46 +2,64 @@
 #define DATABASE_H
 
 #include "AbstractDatabase.h"
-
-
+#include "sqlitedatabase.h"
+#include <QHash>
 
 /*!
- * \brief Klasa stanowiąca interface do lokalnej bazy danych SQLite.
+ * \brief Klasa stanowiąca interface do lokalnej bazy danych.
  *
- * Klasa ta konstruuje odpowiednie modele na podstawie informacji z lokalnej bazy danych i
- * publicznie je udostępnia. Implementacja wykorzystuje wzorzec singleton.
+ * Implementacja wykorzystuje wzorzec singleton.
+ * Typ bazy danych jest przekazywany jako parametr szablonu.
  */
-
-class LocalDatabase : public AbstractDatabase
+template<class dbType>
+class LocalDatabase
 {
-    Q_OBJECT
-
 public:
-    static LocalDatabase* instance();
 
+    static AbstractDatabase* instance();
+
+    //models
 /*
-    QString userName(int id) const;
-    QString userMail(int id) const;
-    QString userAdress(int id) const;
-    QString userOfferNumber(int id) const;
+    static QSqlTableModel* merchandiseModel();
+    static QSqlTableModel* customerModel();
+    static QSqlTableModel* usersModel();
+    static QSqlTableModel* optionsModel();
+    static QSqlTableModel* savedModel();
+    static QSqlTableModel* savedOptionsModel();
+    static QSqlTableModel* savedMerchandiseModel();
+    static QSqlTableModel* infoModel();
 */
-    //table user
-    QString userName();
-    QString userMail();
-    QString userAdress();
-    int userOfferNumber();
-    QString userOfferId();
 
-    QHash<QString, QString> optionsList(eOptionType type);
+    //remote database login information
+    static QString remoteDbUserPass();
+    static QString remoteDbUserName();
+
+    //database
+    static QSqlDatabase* db();
+
+    //table user
+    static void setCurrentUser(int id);
+    static QString userName();
+    static QString userMail();
+    static QString userAdress();
+    static int userOfferNumber();
+    static QString userOfferId();
+    static QHash<int, QString> userNames();
+
+    //table options
+    static QHash<QString, QString> optionsList(AbstractDatabase::eOptionType type);
 
 
 private:
     ///Blokuje konstrukcję obiektu z zewnątrz
     explicit LocalDatabase(QObject *parent = 0);
     ///Blokuje konstrukcję obiektu z zewnątrz
-    LocalDatabase(const LocalDatabase&):AbstractDatabase(){}
+    LocalDatabase(const LocalDatabase&)
+    { qFatal("Singleton copy?!"); }
 
-    static LocalDatabase* m_instance;
+    static AbstractDatabase* m_instance;
 };
+
+typedef LocalDatabase<SQLiteDatabase> localDatabase;
 
 #endif // DATABASE_H
