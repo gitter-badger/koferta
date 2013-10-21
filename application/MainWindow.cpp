@@ -108,29 +108,29 @@ MainWindow::MainWindow ():
     ui->plainTextEdit_klient->setReadOnly(true);
 
     ui->label_zapytanie->setText(tr("Zapytanie:"));
-    ui->pushButton_zapytanieData->setText(tr("Kalendarz"));
+  //  ui->pushButton_zapytanieData->setText(tr("Kalendarz"));
     ui->checkBox_zapytanieData->setText(tr("Data zapytania:"));
     ui->checkBox_zapytanieData->setChecked(true);
     ui->checkBox_zapytanieNr->setText(tr("Numer zapytania:"));
     ui->checkBox_zapytanieNr->setChecked(false);
     ui->plainTextEdit_zapytanie->setReadOnly(true);
 
-    m_shippingOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optShipping);
+    m_shippingOptions = localDatabase::optionsList(AbstractDatabase::optShipping);
     ui->comboBox_dostawa->insertItems(0, m_shippingOptions.keys());
     ui->plainTextEdit_dostawa->setReadOnly(true);
     ui->label_dostawa->setText(tr("Warunki dostawy:"));
 
-    m_deliveryOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optDelivery);
+    m_deliveryOptions = localDatabase::optionsList(AbstractDatabase::optDelivery);
     ui->comboBox_termin->insertItems(0, m_deliveryOptions.keys());
     ui->plainTextEdit_termin->setReadOnly(true);
     ui->label_termin->setText(tr("Termin dostawy:"));
 
-    m_paymentOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optPayment);
+    m_paymentOptions = localDatabase::optionsList(AbstractDatabase::optPayment);
     ui->comboBox_platnosc->insertItems(0, m_paymentOptions.keys());
     ui->plainTextEdit_platnosc->setReadOnly(true);
     ui->label_platnosc->setText(tr("Warunki płatności:"));
 
-    m_offerOptions = LocalDatabase::instance()->optionsList(AbstractDatabase::optOffer);
+    m_offerOptions = localDatabase::optionsList(AbstractDatabase::optOffer);
     ui->comboBox_oferta->insertItems(0, m_offerOptions.keys());
     ui->plainTextEdit_oferta->setReadOnly(true);
     ui->label_oferta->setText(tr("Warunki Oferty:"));
@@ -201,10 +201,8 @@ MainWindow::MainWindow ():
 
 void MainWindow::about()
 {
-    QString s;
-    s = "System wspomagający ofertowanie kOferta v. ";
-    s += QString::number(VER);
-    s += "\n"
+    QString s = "System wspomagający ofertowanie kOferta v. %1"
+         "\n"
          "Głównym elementem systemu jest aplikacja kliencka stanowiąca front-end dla danych znajdujących się w bazie danych. "
          "Baza ta przechowuje nie tylko dane klientów i towarów przedsiębiorstwa, ale także utworzone do tej pory oferty. "
          "Aplikacja kliencka ma także możliwość edycji bazy danych.\n\n"
@@ -228,7 +226,7 @@ void MainWindow::about()
          "W programie wykorzystano klasę implementującą szyfrowanie SHA1 "
          "autorstwa Michael D. Leonhard na warunkach licencyjnych opisanych w pliku SHA1_LICENSE\n"
          "\n\n\t\t\tBuild date: " __DATE__;
-    QMessageBox::about(this, "O kOferta", s);
+    QMessageBox::about(this, "O kOferta", s.arg(VER, 2, 'f'));
 }
 
 void MainWindow::setTitle(QString* nr)
@@ -388,8 +386,8 @@ void MainWindow::nowyNumer()
     nr_oferty->append("/");
     nr_oferty->append(d.toString("yyyy"));
 */
-    LocalDatabase::instance()->setCurrentUser(m_curUser);
-    *nr_oferty = LocalDatabase::instance()->userOfferId();
+    SQLiteDatabase::instance()->setCurrentUser(m_curUser);
+    *nr_oferty = SQLiteDatabase::instance()->userOfferId();
     this->setTitle(nr_oferty);
 }
 
