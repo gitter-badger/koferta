@@ -7,18 +7,19 @@ INCLUDEPATH += . .. ../common
 QMAKE_CXXFLAGS += -std=c++0x
 
 win32 { #nmake & M$ compiler
-    QMAKE_CXXFLAGS += /nologo /O2 #/Wall
-
-    QMAKE_LFLAGS_RELEASE += /NODEFAULTLIB:LIBCMT
-    QMAKE_LFLAGS_DEBUG += /NODEFAULTLIB:LIBCMT
 
     CONFIG += qt windows release
 
-#    INCLUDEPATH += C:\\mysql\\include
+    QMAKE_CXXFLAGS += /nologo /O2 #/Wall
+
+    QMAKE_LFLAGS_RELEASE += /NODEFAULTLIB:LIBCMT
+    #   QMAKE_LFLAGS_DEBUG += /NODEFAULTLIB:LIBCMT
+
+    #    INCLUDEPATH += C:\\mysql\\include
     INCLUDEPATH += C:\\koferta_src
 
-#    LIBS += -L"C:\\Program Files\\Microsoft SDKs\\Windows\\v7.0A\\Lib" -lUser32 -lAdvAPI32
-#    LIBS += -LC:\\mysql\\lib -lmysqlclient -llibmysql
+    #    LIBS += -L"C:\\Program Files\\Microsoft SDKs\\Windows\\v7.0A\\Lib" -lUser32 -lAdvAPI32
+    #    LIBS += -LC:\\mysql\\lib -lmysqlclient -llibmysql
 
     DEFINES += WIN32
     DEFINES += RELEASE

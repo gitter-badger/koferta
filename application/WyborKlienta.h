@@ -1,7 +1,4 @@
 /**
-  Dialog cWyborKlienta umożliwiający wybór klienta z bazy dla którego adresowana jest oferta
-  **/
-/**
     kOferta - system usprawniajacy proces ofertowania
     Copyright (C) 2011  Kamil 'konserw' Strzempowicz, konserw@gmail.com
 
@@ -29,16 +26,20 @@ namespace Ui {
     class WyborKlienta;
 }
 
+/*! Dialog WyborKlienta umożliwiający wybór klienta z bazy dla którego adresowana jest oferta
+*/
 class WyborKlienta : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit WyborKlienta(QWidget *parent = 0);         //inicjacja ui
+    ///inicjacja ui
+    explicit WyborKlienta(QWidget *parent = 0);
     ~WyborKlienta();
 
 signals:
-    void selectionChanged(const QSqlRecord&);           //sygnał przekazujący wybranego lienta do MainWindow
+    ///sygnał przekazujący wybranego lienta do MainWindow
+    void selectionChanged(const QSqlRecord&);
 
 private:
     Ui::WyborKlienta *ui;

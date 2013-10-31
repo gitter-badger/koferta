@@ -386,8 +386,8 @@ void MainWindow::nowyNumer()
     nr_oferty->append("/");
     nr_oferty->append(d.toString("yyyy"));
 */
-    SQLiteDatabase::instance()->setCurrentUser(m_curUser);
-    *nr_oferty = SQLiteDatabase::instance()->userOfferId();
+    localDatabase::setCurrentUser(m_curUser);
+    *nr_oferty = localDatabase::userOfferId();
     this->setTitle(nr_oferty);
 }
 

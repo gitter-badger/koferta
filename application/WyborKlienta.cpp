@@ -19,7 +19,7 @@
 #include "WyborKlienta.h"
 #include "ui_WyborKlienta.h"
 
-#include <QSqlQuery>
+//#include <QSqlQuery>
 
 
 WyborKlienta::WyborKlienta(QWidget *parent) :
