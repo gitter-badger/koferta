@@ -15,8 +15,9 @@ template<class dbType>
 class LocalDatabase
 {
 public:
-
     static AbstractDatabase* instance();
+    //database
+    static QSqlDatabase* db();
 
     //models
     static QSqlTableModel* customerModel();
@@ -34,15 +35,12 @@ public:
     static QString remoteDbUserPass();
     static QString remoteDbUserName();
 
-    //database
-    static QSqlDatabase* db();
-
     //table user
     static void setCurrentUser(int id);
     static QString userName();
     static QString userMail();
     static QString userAdress();
-    static int userOfferNumber();
+//    static int userOfferNumber();
     static QString userOfferId();
     static QHash<int, QString> userNames();
 

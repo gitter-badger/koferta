@@ -16,6 +16,16 @@ AbstractDatabase* LocalDatabase<dbType>::instance()
 }
 
 template<class dbType>
+QSqlDatabase *LocalDatabase<dbType>::db()
+{
+    return instance()->db();
+}
+
+/**************************
+ *  modele
+ */
+
+template<class dbType>
 QSqlTableModel *LocalDatabase<dbType>::customerModel()
 {
     return instance()->customerModel();
@@ -26,6 +36,10 @@ QSqlTableModel *LocalDatabase<dbType>::merchandiseModel()
 {
     return instance()->merchandiseModel();
 }
+
+/**************************
+ *  tabela user
+ */
 
 template<class dbType>
 QString LocalDatabase<dbType>::remoteDbUserName()
@@ -46,10 +60,38 @@ void LocalDatabase<dbType>::setCurrentUser(int id)
 }
 
 template<class dbType>
+QString LocalDatabase<dbType>::userName()
+{
+    return instance()->userName();
+}
+
+template<class dbType>
+QString LocalDatabase<dbType>::userMail()
+{
+    return instance()->userMail();
+}
+
+template<class dbType>
+QString LocalDatabase<dbType>::userAdress()
+{
+    return instance()->userAdress();
+}
+
+template<class dbType>
 QString LocalDatabase<dbType>::userOfferId()
 {
     return instance()->userOfferId();
 }
+
+template<class dbType>
+QHash<int, QString> LocalDatabase<dbType>::userNames()
+{
+    return instance()->userNames();
+}
+
+/**************************
+ *  tabela options
+ */
 
 template<class dbType>
 QHash<QString, QString> LocalDatabase<dbType>::optionsList(AbstractDatabase::eOptionType type)
