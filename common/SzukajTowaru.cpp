@@ -20,14 +20,13 @@
 #include <QSqlRecord>
 #include <QTableView>
 #include <QHeaderView>
-
+#include "LocalDatabase.h"
 #include "SzukajTowaru.h"
 #include "ui_SzukajTowaru.h"
 
-SzukajTowaru::SzukajTowaru(QSqlTableModel* model, QWidget *parent) :
+SzukajTowaru::SzukajTowaru(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SzukajTowaru),
-    m_model(model)
+    ui(new Ui::SzukajTowaru)
 {
     ui->setupUi(this);
 
@@ -36,12 +35,9 @@ SzukajTowaru::SzukajTowaru(QSqlTableModel* model, QWidget *parent) :
     ui->radioButton_id->setChecked(true);
     ui->radioButton_name->setText(tr("Nazwa produktu"));
 
-    model = new QSqlTableModel(this);
-    model->setTable("towar");
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->select();
+    localDatabase::merchandiseModel()->setFilter("");
 
-    ui->tableView->setModel(model);
+    ui->tableView->setModel(localDatabase::merchandiseModel());
     ui->tableView->hideColumn(2);
     ui->tableView->hideColumn(3);
 /*
@@ -94,7 +90,7 @@ void SzukajTowaru::ref(const QString & in)
     s += in;
     s += "%'";
     */
-    m_model->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
+    localDatabase::merchandiseModel()->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
 }
 
 void SzukajTowaru::currentRowChanged(const QModelIndex &cur, const QModelIndex &prev)

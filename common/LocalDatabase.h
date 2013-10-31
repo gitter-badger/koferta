@@ -20,9 +20,8 @@ public:
 
     //models
     static QSqlTableModel* customerModel();
-/*
     static QSqlTableModel* merchandiseModel();
-
+/*
     static QSqlTableModel* usersModel();
     static QSqlTableModel* optionsModel();
     static QSqlTableModel* savedModel();
