@@ -32,5 +32,6 @@ SOURCES += \
     logger.cpp \
     AbstractDatabase.cpp \
     sqlitedatabase.cpp \
-    PsqlDatabase.cpp
+    PsqlDatabase.cpp \
+    TemplateInstantations.cpp
 

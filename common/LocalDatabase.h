@@ -60,6 +60,8 @@ private:
     static AbstractDatabase* m_instance;
 };
 
+
+
 typedef LocalDatabase<SQLiteDatabase> localDatabase;
 
 #endif // DATABASE_H

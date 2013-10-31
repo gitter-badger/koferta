@@ -27,7 +27,6 @@ QSqlTableModel *LocalDatabase<dbType>::merchandiseModel()
     return instance()->merchandiseModel();
 }
 
-
 template<class dbType>
 QString LocalDatabase<dbType>::remoteDbUserName()
 {
@@ -40,11 +39,16 @@ QString LocalDatabase<dbType>::remoteDbUserPass()
     return instance()->remoteDbUserPass();
 }
 
-
 template<class dbType>
 void LocalDatabase<dbType>::setCurrentUser(int id)
 {
     return instance()->setCurrentUser(id);
+}
+
+template<class dbType>
+QString LocalDatabase<dbType>::userOfferId()
+{
+    return instance()->userOfferId();
 }
 
 template<class dbType>
