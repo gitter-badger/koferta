@@ -19,10 +19,10 @@
 #include "ui_SzukajKlienta.h"
 #include <QSqlTableModel>
 #include <QSqlRecord>
+#include "LocalDatabase.h"
 
-SzukajKlienta::SzukajKlienta(QSqlTableModel *model, QWidget *parent) :
+SzukajKlienta::SzukajKlienta(QWidget *parent) :
     QWidget(parent),
-    m_model(model),
     ui(new Ui::SzukajKlienta)
 {
     ui->setupUi(this);
@@ -31,6 +31,7 @@ SzukajKlienta::SzukajKlienta(QSqlTableModel *model, QWidget *parent) :
     ui->radioButton_nazwa->setChecked(true);
     ui->radioButton_nazwisko->setText(tr("Filtruj po nazwisku"));
 
+    m_model = localDatabase::customerModel();
     m_model->setFilter("");
 
     ui->tableView->setModel(m_model);

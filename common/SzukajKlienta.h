@@ -34,7 +34,7 @@ class SzukajKlienta : public QWidget
     Q_OBJECT
     
 public:
-    explicit SzukajKlienta(QSqlTableModel* model, QWidget *parent = 0);
+    explicit SzukajKlienta(QWidget *parent = 0);
     ~SzukajKlienta();
 
 public slots:

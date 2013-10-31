@@ -64,8 +64,7 @@ SzukajTowaru::SzukajTowaru(QSqlTableModel* model, QWidget *parent) :
     connect(ui->tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(select(QModelIndex)));
 
     QItemSelectionModel *sm = ui->tableView->selectionModel();
-    connect(sm, SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-                this, SLOT(currentRowChanged(QModelIndex,QModelIndex)));
+    connect(sm, SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged(QModelIndex,QModelIndex)));
 }
 
 SzukajTowaru::~SzukajTowaru()
