@@ -1,6 +1,6 @@
 DEFINES += VER=2.9
 
-QT       = core sql gui widgets
+QT       = core sql widgets
 
 INCLUDEPATH += . .. ../common
 #WARNINGS += -Wall

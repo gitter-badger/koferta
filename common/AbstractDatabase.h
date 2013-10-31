@@ -2,6 +2,7 @@
 #define ABSTRACTDATABASE_H
 
 #include <QHash>
+#include <cassert>
 
 class QSqlDatabase;
 class QString;
@@ -21,7 +22,7 @@ public:
     };
 
     explicit AbstractDatabase();
-    virtual ~AbstractDatabase();
+    virtual ~AbstractDatabase() = 0;
 
     //remote database login information
     virtual QString remoteDbUserName();
@@ -66,9 +67,11 @@ protected:
     QSqlTableModel* m_savedMerchandiseModel;
     QSqlTableModel* m_infoModel;
 
-private:
-    AbstractDatabase(const AbstractDatabase& /*other*/);
-    virtual AbstractDatabase& operator=(const AbstractDatabase& /*other*/) = 0;
+//private:
+    AbstractDatabase(const AbstractDatabase& /*other*/)
+    { assert(!"Database object copying not implemented"); }
+    AbstractDatabase& operator=(const AbstractDatabase& /*other*/)
+    { assert(!"Database object copying not implemented"); }
 };
 
 #endif // ABSTRACTDATABASE_H

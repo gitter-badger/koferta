@@ -36,11 +36,6 @@ AbstractDatabase::~AbstractDatabase()
     delete m_infoModel;
 }
 
-AbstractDatabase::AbstractDatabase(const AbstractDatabase &)
-{
-    qWarning() << "database object copy not implemented";
-}
-
 /*******************************
  *      Database user related
  */
