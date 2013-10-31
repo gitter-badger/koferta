@@ -15,6 +15,12 @@ AbstractDatabase* LocalDatabase<dbType>::instance()
     return m_instance;
 }
 
+template<class dbType>
+QSqlTableModel *LocalDatabase<dbType>::customerModel()
+{
+    return instance()->customerModel();
+}
+
 
 template<class dbType>
 QString LocalDatabase<dbType>::remoteDbUserName()

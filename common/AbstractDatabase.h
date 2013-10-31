@@ -32,35 +32,31 @@ public:
     { return m_db; }
 
     //models
-    QSqlTableModel* merchandiseModel();
-    QSqlTableModel* customerModel();
-    QSqlTableModel* usersModel();
-    QSqlTableModel* optionsModel();
-    QSqlTableModel* savedModel();
-    QSqlTableModel* savedOptionsModel();
-    QSqlTableModel* savedMerchandiseModel();
-    QSqlTableModel* infoModel();
+    virtual QSqlTableModel* merchandiseModel();
+    virtual QSqlTableModel* customerModel();
+    virtual QSqlTableModel* usersModel();
+    virtual QSqlTableModel* optionsModel();
+    virtual QSqlTableModel* savedModel();
+    virtual QSqlTableModel* savedOptionsModel();
+    virtual QSqlTableModel* savedMerchandiseModel();
+    virtual QSqlTableModel* infoModel();
 
     //table user
-    void setCurrentUser(int id);
-    QString userName();
-    QString userMail();
-    QString userAdress();
-    int userOfferNumber();
-    QString userOfferId();
-    QHash<int, QString> userNames();
+    virtual void setCurrentUser(int id);
+    virtual QString userName();
+    virtual QString userMail();
+    virtual QString userAdress();
+    virtual int userOfferNumber();
+    virtual QString userOfferId();
+    virtual QHash<int, QString> userNames();
 
     //table options
-    QHash<QString, QString> optionsList(eOptionType type);
+    virtual QHash<QString, QString> optionsList(eOptionType type);
     
 
 protected:
-    AbstractDatabase(const AbstractDatabase& /*other*/);
-    //operator =
-
     QSqlDatabase* m_db;
 
-private:
     QSqlTableModel* m_merchandiseModel;
     QSqlTableModel* m_customerModel;
     QSqlTableModel* m_usersModel;
@@ -69,6 +65,10 @@ private:
     QSqlTableModel* m_savedOptionsModel;
     QSqlTableModel* m_savedMerchandiseModel;
     QSqlTableModel* m_infoModel;
+
+private:
+    AbstractDatabase(const AbstractDatabase& /*other*/);
+    virtual AbstractDatabase& operator=(const AbstractDatabase& /*other*/) = 0;
 };
 
 #endif // ABSTRACTDATABASE_H

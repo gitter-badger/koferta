@@ -19,9 +19,10 @@ public:
     static AbstractDatabase* instance();
 
     //models
+    static QSqlTableModel* customerModel();
 /*
     static QSqlTableModel* merchandiseModel();
-    static QSqlTableModel* customerModel();
+
     static QSqlTableModel* usersModel();
     static QSqlTableModel* optionsModel();
     static QSqlTableModel* savedModel();

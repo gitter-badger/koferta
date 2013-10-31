@@ -38,9 +38,15 @@ AbstractDatabase::~AbstractDatabase()
 
 AbstractDatabase::AbstractDatabase(const AbstractDatabase &)
 {
-    qWarning() << "database copy not implemented";
+    qWarning() << "database object copy not implemented";
 }
-
+/*
+AbstractDatabase &AbstractDatabase::operator=(const AbstractDatabase &)
+{
+    qWarning() << "database object copy not implemented";
+    return AbstractDatabase;
+}
+*/
 /*******************************
  *      Database user related
  */
