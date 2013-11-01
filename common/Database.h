@@ -32,10 +32,10 @@ public:
     virtual QSqlTableModel* merchandiseModel();
 
     //table user
-    virtual const QHash<int, QString>& userNames();
+    virtual QHash<int, QString> userNames();
 
     //table options
-    virtual const QHash<QString, QString>& optionsList(eOptionType type);
+    virtual QHash<QString, QString> optionsList(eOptionType type);
 
 protected:
     /// Funkcja powinna zwracać wskaźnik na implementację bazy

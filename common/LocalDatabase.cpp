@@ -29,6 +29,10 @@ LocalDatabase* LocalDatabase::instance()
     return m_instance;
 }
 
+AbstractDatabase *LocalDatabase::db()
+{
+    return m_db;
+}
 
 /*******************************
  *      Users table

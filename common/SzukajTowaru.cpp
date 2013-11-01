@@ -35,9 +35,9 @@ SzukajTowaru::SzukajTowaru(QWidget *parent) :
     ui->radioButton_id->setChecked(true);
     ui->radioButton_name->setText(tr("Nazwa produktu"));
 
-    localDatabase::merchandiseModel()->setFilter("");
+    localDatabase()->merchandiseModel()->setFilter("");
 
-    ui->tableView->setModel(localDatabase::merchandiseModel());
+    ui->tableView->setModel(localDatabase()->merchandiseModel());
     ui->tableView->hideColumn(2);
     ui->tableView->hideColumn(3);
 /*
@@ -90,7 +90,7 @@ void SzukajTowaru::ref(const QString & in)
     s += in;
     s += "%'";
     */
-    localDatabase::merchandiseModel()->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
+    localDatabase()->merchandiseModel()->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
 }
 
 void SzukajTowaru::currentRowChanged(const QModelIndex &cur, const QModelIndex &prev)

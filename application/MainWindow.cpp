@@ -18,6 +18,14 @@
 
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include "LocalDatabase.h"
+#include "WyborTowaru.h"
+#include "WyborKlienta.h"
+#include "LoadDialog.h"
+#include "TowarModel.h"
+#include "Towar.h"
+#include "TowarDelegate.h"
+
 
 #include <QDate>
 #include <QInputDialog>
@@ -37,14 +45,6 @@
 #include <QPrintDialog>
 #include <QtDebug>
 #include <QMessageBox>
-
-#include "LocalDatabase.h"
-#include "WyborTowaru.h"
-#include "WyborKlienta.h"
-#include "LoadDialog.h"
-#include "TowarModel.h"
-#include "Towar.h"
-#include "TowarDelegate.h"
 
 /*************************
 **      GŁÓWNE OKNO     **
@@ -115,22 +115,22 @@ MainWindow::MainWindow ():
     ui->checkBox_zapytanieNr->setChecked(false);
     ui->plainTextEdit_zapytanie->setReadOnly(true);
 
-    m_shippingOptions = localDatabase::optionsList(AbstractDatabase::optShipping);
+    m_shippingOptions = localDatabase()->optionsList(Database::optShipping);
     ui->comboBox_dostawa->insertItems(0, m_shippingOptions.keys());
     ui->plainTextEdit_dostawa->setReadOnly(true);
     ui->label_dostawa->setText(tr("Warunki dostawy:"));
 
-    m_deliveryOptions = localDatabase::optionsList(AbstractDatabase::optDelivery);
+    m_deliveryOptions = localDatabase()->optionsList(Database::optDelivery);
     ui->comboBox_termin->insertItems(0, m_deliveryOptions.keys());
     ui->plainTextEdit_termin->setReadOnly(true);
     ui->label_termin->setText(tr("Termin dostawy:"));
 
-    m_paymentOptions = localDatabase::optionsList(AbstractDatabase::optPayment);
+    m_paymentOptions = localDatabase()->optionsList(Database::optPayment);
     ui->comboBox_platnosc->insertItems(0, m_paymentOptions.keys());
     ui->plainTextEdit_platnosc->setReadOnly(true);
     ui->label_platnosc->setText(tr("Warunki płatności:"));
 
-    m_offerOptions = localDatabase::optionsList(AbstractDatabase::optOffer);
+    m_offerOptions = localDatabase()->optionsList(Database::optOffer);
     ui->comboBox_oferta->insertItems(0, m_offerOptions.keys());
     ui->plainTextEdit_oferta->setReadOnly(true);
     ui->label_oferta->setText(tr("Warunki Oferty:"));
@@ -386,8 +386,8 @@ void MainWindow::nowyNumer()
     nr_oferty->append("/");
     nr_oferty->append(d.toString("yyyy"));
 */
-    localDatabase::setCurrentUser(m_curUser);
-    *nr_oferty = localDatabase::userOfferId();
+    localDatabase()->setCurrentUser(m_curUser);
+    *nr_oferty = localDatabase()->userOfferId();
     this->setTitle(nr_oferty);
 }
 

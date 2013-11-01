@@ -1,5 +1,7 @@
 #include "Database.h"
 #include "AbstractDatabase.h"
+#include <QSqlTableModel>
+#include <QSqlRecord>
 
 Database::Database()
 {

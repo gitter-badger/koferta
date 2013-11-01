@@ -44,7 +44,7 @@ SzukajOferty::SzukajOferty(QWidget *parent) :
     for(int i=0; i<sl.size(); ++i)
         ui->tabWidget->setTabText(i, sl[i]);
 
-    model = new QSqlRelationalTableModel(this, *localDatabase::db());
+    model = new QSqlRelationalTableModel;//(this, *localDatabase::db());
     model->setTable("zapisane");
     model->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
     model->setRelation(1, QSqlRelation("klient", "id", "short"));
