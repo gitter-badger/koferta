@@ -1,65 +1,48 @@
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef LOCALDATABASE_H
+#define LOCALDATABASE_H
 
-#include "AbstractDatabase.h"
-#include "sqlitedatabase.h"
+class SQLiteDatabase;
+class QSqlRecord;
+
+#include "Database.h"
 #include <QHash>
 
 /*!
- * \brief Klasa stanowiąca interface do lokalnej bazy danych.
- *
- * Implementacja wykorzystuje wzorzec singleton.
- * Typ bazy danych jest przekazywany jako parametr szablonu.
+ * \brief Klasa reprezentująca lokalną bazę danych wykorzystująca wzorzec singleton
  */
-template<class dbType>
-class LocalDatabase
+class LocalDatabase : public Database
 {
 public:
-    static AbstractDatabase* instance();
-    //database
-    static QSqlDatabase* db();
-
-    //models
-    static QSqlTableModel* customerModel();
-    static QSqlTableModel* merchandiseModel();
-/*
-    static QSqlTableModel* usersModel();
-    static QSqlTableModel* optionsModel();
-    static QSqlTableModel* savedModel();
-    static QSqlTableModel* savedOptionsModel();
-    static QSqlTableModel* savedMerchandiseModel();
-    static QSqlTableModel* infoModel();
-*/
-
-    //remote database login information
-    static QString remoteDbUserPass();
-    static QString remoteDbUserName();
-
     //table user
-    static void setCurrentUser(int id);
-    static QString userName();
-    static QString userMail();
-    static QString userAdress();
-//    static int userOfferNumber();
-    static QString userOfferId();
-    static QHash<int, QString> userNames();
+    QString remoteDbUserPass();
+    QString remoteDbUserName();
+    virtual void setCurrentUser(int id);
+    virtual QString userName();
+    virtual QString userMail();
+    virtual QString userAdress();
+    virtual QString userOfferId();
 
-    //table options
-    static QHash<QString, QString> optionsList(AbstractDatabase::eOptionType type);
-
-
-private:
+protected:
     ///Blokuje konstrukcję obiektu z zewnątrz
     explicit LocalDatabase();
-    ///Blokuje konstrukcję obiektu z zewnątrz
-    LocalDatabase(const LocalDatabase&)
-    { qFatal("Singleton copy?!"); }
+    ///Blokuje kopiowanie obiektu bazy
+    LocalDatabase(const LocalDatabase& other) : Database(other)
+    { static_assert(1, "Singleton copy?!"); }
+    ///Blokuje kopiowanie obiektu bazy
+    LocalDatabase& operator=(const LocalDatabase&)
+    { static_assert(1, "Singleton copy?!"); }
 
-    static AbstractDatabase* m_instance;
+    friend LocalDatabase* localDatabase();
+    static LocalDatabase* instance();
+    static LocalDatabase* m_instance;
+
+    SQLiteDatabase* m_db;
+    virtual AbstractDatabase* db();
+
+    int userOfferNumber();
+    QSqlRecord* m_curUsr;
 };
 
+LocalDatabase* localDatabase();
 
-
-typedef LocalDatabase<SQLiteDatabase> localDatabase;
-
-#endif // DATABASE_H
+#endif

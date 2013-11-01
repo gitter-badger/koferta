@@ -16,7 +16,8 @@ HEADERS += \
     logger.h \
     AbstractDatabase.h \
     sqlitedatabase.h \
-    PsqlDatabase.h
+    PsqlDatabase.h \
+    Database.h
 
 FORMS += \
     SzukajKlienta.ui \
@@ -33,5 +34,5 @@ SOURCES += \
     AbstractDatabase.cpp \
     sqlitedatabase.cpp \
     PsqlDatabase.cpp \
-    TemplateInstantations.cpp
+    Database.cpp
 

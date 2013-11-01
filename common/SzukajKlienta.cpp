@@ -31,7 +31,7 @@ SzukajKlienta::SzukajKlienta(QWidget *parent) :
     ui->radioButton_nazwa->setChecked(true);
     ui->radioButton_nazwisko->setText(tr("Filtruj po nazwisku"));
 
-    m_model = localDatabase::customerModel();
+    m_model = localDatabase()->customerModel();
     m_model->setFilter("");
 
     ui->tableView->setModel(m_model);

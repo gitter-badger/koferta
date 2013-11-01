@@ -1,13 +1,9 @@
 #include "AbstractDatabase.h"
 
 #include <QSqlTableModel>
-//#include <QSqlRecord>
 #include <QtDebug>
 #include <QDate>
 #include <QtSql>
-
-// AbstractDatabase* AbstractDatabase::m_instance = nullptr;
-
 
 AbstractDatabase::AbstractDatabase() :
     m_db(nullptr),
@@ -34,32 +30,6 @@ AbstractDatabase::~AbstractDatabase()
     delete m_savedOptionsModel;
     delete m_savedMerchandiseModel;
     delete m_infoModel;
-}
-
-/*******************************
- *      Database user related
- */
-
-QString AbstractDatabase::remoteDbUserName()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return QString();
-    }
-
-    return usersModel()->record(0).value("remoteName").toString();
-}
-
-QString AbstractDatabase::remoteDbUserPass()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return QString();
-    }
-
-    return usersModel()->record(0).value("remotePass").toString();
 }
 
 /********************************
@@ -172,108 +142,3 @@ QSqlTableModel *AbstractDatabase::optionsModel()
 
     return m_optionsModel;
 }
-
-/*******************************
- *      Users table
- */
-
-void AbstractDatabase::setCurrentUser(int id)
-{
-    usersModel()->setFilter(QString("id = %1").arg(id));
-}
-
-QString AbstractDatabase::userName()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return QString();
-    }
-
-    return usersModel()->record(0).value("name").toString();
-}
-
-QString AbstractDatabase::userMail()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return QString();
-    }
-
-    return usersModel()->record(0).value("mail").toString();
-}
-
-QString AbstractDatabase::userAdress()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return QString();
-    }
-
-    return usersModel()->record(0).value("address").toString();
-}
-
-int AbstractDatabase::userOfferNumber()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return -1;
-    }
-
-    QSqlRecord rec = usersModel()->record(0);
-    if(rec.value("lastOfferYear").toInt() != QDate::currentDate().year())
-    {
-        rec.field("lastOfferNumber").setValue(QVariant(0));
-        rec.field("lastOfferYear").setValue(QVariant(QDate::currentDate().year()));
-        //rec.replace(rec.indexOf("lastOfferNumber"), QSqlField());
-     //   usersModel()->setRecord(0, rec);
-    }
-    return rec.value("lastOfferNumber").toInt();
-}
-
-QString AbstractDatabase::userOfferId()
-{
-    if(usersModel()->filter().isEmpty())
-    {
-        qWarning() << "No user selected!";
-        return QString();
-    }
-
-    QSqlRecord rec = usersModel()->record(0);
-    return QString("%1%2/%3")
-            .arg(rec.value("id").toInt()+1)
-            .arg(QString::number(userOfferNumber()).rightJustified(3, '0'))
-            .arg(QDate::currentDate().year());
-}
-
-QHash<int, QString> AbstractDatabase::userNames()
-{
-    usersModel()->setFilter("");
-    QHash<int, QString> hash;
-    for(int i=0; i < m_usersModel->rowCount(); ++i)
-    {
-        QSqlRecord rec = m_usersModel->record(i);
-        hash.insert(rec.value("id").toInt(), rec.value("name").toString());
-    }
-    return hash;
-}
-
-/*******************************
- *      Options table
- */
-
-QHash<QString, QString> AbstractDatabase::optionsList(eOptionType type)
-{
-    optionsModel()->setFilter(QString("type = %1").arg(type));
-    QHash<QString, QString> hash;
-    for(int i=0; i < optionsModel()->rowCount(); ++i)
-    {
-        QSqlRecord rec = optionsModel()->record(i);
-        hash.insert(rec.value("short").toString(), rec.value("long").toString());
-    }
-    return hash;
-}
-

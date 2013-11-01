@@ -35,7 +35,7 @@ SzukajOferty::SzukajOferty(QWidget *parent) :
     ui->dateEdit->setDisplayFormat("MMMM yy");
     ui->dateEdit->setDate(QDate::currentDate());
 
-    m_names = localDatabase::userNames();
+    m_names = localDatabase()->userNames();
     ui->comboBox->insertItems(0, m_names.values());
     //ui->comboBox->insertItems(static_cast<QStringList>(m_names.values()));
 

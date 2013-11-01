@@ -1,101 +1,126 @@
 #include "LocalDatabase.h"
+#include "sqlitedatabase.h"
 #include <QtDebug>
+#include <QSqlField>
+#include <QSqlRecord>
+#include <QSqlTableModel>
+#include <QDate>
 
-template<class dbType>
-AbstractDatabase* LocalDatabase<dbType>::m_instance = nullptr;
+LocalDatabase* LocalDatabase::m_instance = nullptr;
 
-template<class dbType>
-AbstractDatabase* LocalDatabase<dbType>::instance()
+LocalDatabase* localDatabase()
+{
+    return LocalDatabase::instance();
+}
+
+LocalDatabase::LocalDatabase()
+{
+    m_db = new SQLiteDatabase();
+    m_curUsr = nullptr;
+}
+
+LocalDatabase* LocalDatabase::instance()
 {
     if(m_instance == nullptr)
     {
         qDebug() << "making new instance of local database";
-        m_instance = new dbType();
+        m_instance = new LocalDatabase;
     }
     return m_instance;
 }
 
-template<class dbType>
-QSqlDatabase *LocalDatabase<dbType>::db()
-{
-    return instance()->db();
-}
 
-/**************************
- *  modele
+/*******************************
+ *      Users table
  */
 
-template<class dbType>
-QSqlTableModel *LocalDatabase<dbType>::customerModel()
+QString LocalDatabase::remoteDbUserName()
 {
-    return instance()->customerModel();
+    if(!m_curUsr)
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
+    return m_curUsr->value("remoteName").toString();
 }
 
-template<class dbType>
-QSqlTableModel *LocalDatabase<dbType>::merchandiseModel()
+QString LocalDatabase::remoteDbUserPass()
 {
-    return instance()->merchandiseModel();
+    if(!m_curUsr)
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
+    return m_curUsr->value("remotePass").toString();
 }
 
-/**************************
- *  tabela user
- */
 
-template<class dbType>
-QString LocalDatabase<dbType>::remoteDbUserName()
+
+void LocalDatabase::setCurrentUser(int id)
 {
-    return instance()->remoteDbUserName();
+    m_db->usersModel()->setFilter(QString("id = %1").arg(id));
+    delete m_curUsr;
+    m_curUsr = new QSqlRecord(m_db->usersModel()->record(0));
+    m_db->usersModel()->setFilter("");
 }
 
-template<class dbType>
-QString LocalDatabase<dbType>::remoteDbUserPass()
+QString LocalDatabase::userName()
 {
-    return instance()->remoteDbUserPass();
+    if(!m_curUsr)
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
+    return m_curUsr->value("name").toString();
 }
 
-template<class dbType>
-void LocalDatabase<dbType>::setCurrentUser(int id)
+QString LocalDatabase::userMail()
 {
-    return instance()->setCurrentUser(id);
+    if(!m_curUsr)
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
+    return m_curUsr->value("mail").toString();
 }
 
-template<class dbType>
-QString LocalDatabase<dbType>::userName()
+QString LocalDatabase::userAdress()
 {
-    return instance()->userName();
+    if(!m_curUsr)
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
+    return m_curUsr->value("address").toString();
 }
 
-template<class dbType>
-QString LocalDatabase<dbType>::userMail()
+int LocalDatabase::userOfferNumber()
 {
-    return instance()->userMail();
+    if(m_curUsr->value("lastOfferYear").toInt() != QDate::currentDate().year())
+    {
+        m_curUsr->field("lastOfferNumber").setValue(QVariant(0));
+        m_curUsr->field("lastOfferYear").setValue(QVariant(QDate::currentDate().year()));
+        //rec.replace(rec.indexOf("lastOfferNumber"), QSqlField());
+     //   usersModel()->setRecord(0, rec);
+    }
+    return m_curUsr->value("lastOfferNumber").toInt();
 }
 
-template<class dbType>
-QString LocalDatabase<dbType>::userAdress()
+QString LocalDatabase::userOfferId()
 {
-    return instance()->userAdress();
+    if(!m_curUsr)
+    {
+        qWarning() << "No user selected!";
+        return QString();
+    }
+
+    return QString("%1%2/%3")
+            .arg(m_curUsr->value("id").toInt()+1)
+            .arg(QString::number(userOfferNumber()).rightJustified(3, '0'))
+            .arg(QDate::currentDate().year());
 }
-
-template<class dbType>
-QString LocalDatabase<dbType>::userOfferId()
-{
-    return instance()->userOfferId();
-}
-
-template<class dbType>
-QHash<int, QString> LocalDatabase<dbType>::userNames()
-{
-    return instance()->userNames();
-}
-
-/**************************
- *  tabela options
- */
-
-template<class dbType>
-QHash<QString, QString> LocalDatabase<dbType>::optionsList(AbstractDatabase::eOptionType type)
-{
-    return instance()->optionsList(type);
-}
-

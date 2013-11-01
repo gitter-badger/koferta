@@ -11,9 +11,9 @@ public:
 
 private:
     SQLiteDatabase(const SQLiteDatabase& other): AbstractDatabase(other)
-    { assert(!"Database object copying not implemented"); }
+    { static_assert(1, "Database object copying not implemented"); }
     SQLiteDatabase& operator=(const SQLiteDatabase& /*other*/)
-    { assert(!"Database object copying not implemented"); }
+    { static_assert(1, "Database object copying not implemented"); }
 };
 
 #endif // SQLITEDATABASE_H

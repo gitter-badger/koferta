@@ -2,7 +2,6 @@
 #define ABSTRACTDATABASE_H
 
 #include <QHash>
-#include <cassert>
 
 class QSqlDatabase;
 class QString;
@@ -12,22 +11,13 @@ class QSqlRecord;
 class AbstractDatabase
 {
 public:
-
-    enum eOptionType
-    {
-        optShipping = 0,//dostawa
-        optOffer = 1,   //oferta
-        optPayment = 2, //platnosc
-        optDelivery = 3 //termin
-    };
-
     explicit AbstractDatabase();
     virtual ~AbstractDatabase() = 0;
-
+/*
     //remote database login information
     virtual QString remoteDbUserName();
     virtual QString remoteDbUserPass();
-
+*/
     //database
     QSqlDatabase* db() const
     { return m_db; }
@@ -41,7 +31,7 @@ public:
     virtual QSqlTableModel* savedOptionsModel();
     virtual QSqlTableModel* savedMerchandiseModel();
     virtual QSqlTableModel* infoModel();
-
+/*
     //table user
     virtual void setCurrentUser(int id);
     virtual QString userName();
@@ -53,7 +43,7 @@ public:
 
     //table options
     virtual QHash<QString, QString> optionsList(eOptionType type);
-    
+*/
 
 protected:
     QSqlDatabase* m_db;
@@ -69,9 +59,9 @@ protected:
 
 //private:
     AbstractDatabase(const AbstractDatabase& /*other*/)
-    { assert(!"Database object copying not implemented"); }
+    { static_assert(1, "Database object copying not implemented"); }
     AbstractDatabase& operator=(const AbstractDatabase& /*other*/)
-    { assert(!"Database object copying not implemented"); }
+    { static_assert(1, "Database object copying not implemented"); }
 };
 
 #endif // ABSTRACTDATABASE_H
