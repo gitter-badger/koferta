@@ -389,21 +389,6 @@
          </widget>
         </item>
        </layout>
-       <zorder>layoutWidget</zorder>
-       <zorder>layoutWidget</zorder>
-       <zorder>layoutWidget</zorder>
-       <zorder>plainTextEdit_klient</zorder>
-       <zorder>plainTextEdit_zapytanie</zorder>
-       <zorder>plainTextEdit_dostawa</zorder>
-       <zorder>plainTextEdit_termin</zorder>
-       <zorder>plainTextEdit_platnosc</zorder>
-       <zorder>plainTextEdit_oferta</zorder>
-       <zorder>plainTextEdit_uwagi</zorder>
-       <zorder>layoutWidget</zorder>
-       <zorder>label_uwagi</zorder>
-       <zorder>layoutWidget</zorder>
-       <zorder>layoutWidget</zorder>
-       <zorder>layoutWidget</zorder>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">

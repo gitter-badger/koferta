@@ -25,8 +25,8 @@ TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS += \
     common \
-    application \
-    database
+    application #\
+ #   database
 
 RESOURCES += zasoby.qrc
 

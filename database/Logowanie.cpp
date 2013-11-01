@@ -47,10 +47,8 @@
     #endif
 #endif
 
-#include "User.h"
 #include "SHA1.h"
 #include "Macros.h"
-#include "NowyUser.h"
 
 Logowanie::~Logowanie()
 {
