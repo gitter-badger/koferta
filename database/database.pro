@@ -28,11 +28,9 @@ HEADERS += \
     Logowanie.h \
     NowyKlient.h \
     NowyTowar.h \
-    NowyUser.h \
     SHA1.h \
     EdycjaKlienta.h \
     EdycjaTowaru.h \
-    User.h \
     EdycjaKombo.h \
     dbDialog.h
 
@@ -42,7 +40,6 @@ FORMS += \
     EdycjaTowaru.ui \
     NowyKlient.ui \
     NowyTowar.ui \
-    NowyUser.ui \
     EdycjaKombo.ui \
     dbDialog.ui
 
@@ -53,11 +50,9 @@ SOURCES += \
     Logowanie.cpp \
     NowyKlient.cpp \
     NowyTowar.cpp \
-    NowyUser.cpp \
     SHA1.cpp \
     EdycjaKlienta.cpp \
     EdycjaTowaru.cpp \
-    User.cpp \
     EdycjaKombo.cpp \
     dbDialog.cpp
 
