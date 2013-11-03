@@ -21,7 +21,6 @@
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>
 #include "LocalDatabase.h"
-#include "sqlitedatabase.h"
 #include <QtDebug>
 
 SzukajOferty::SzukajOferty(QWidget *parent) :

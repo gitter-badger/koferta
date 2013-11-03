@@ -1,4 +1,4 @@
-#include "sqlitedatabase.h"
+#include "SQLiteDatabase.h"
 #include "functions.h"
 #include <QtSql>
 #include <QtDebug>

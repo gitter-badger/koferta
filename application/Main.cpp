@@ -23,8 +23,7 @@
 #include <QtDebug>
 #include "MainWindow.h"
 #include "functions.h"
-#include "logger.h"
-
+#include "Logger.h"
 
 
 //#define QT_NO_DEBUG_OUTPUT

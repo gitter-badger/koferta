@@ -13,13 +13,13 @@ HEADERS += \
     SzukajOferty.h \
     SzukajTowaru.h \
     functions.h \
-    logger.h \
     AbstractDatabase.h \
-    sqlitedatabase.h \
     PsqlDatabase.h \
     Database.h \
     SzukajTowaruModel.h \
-    Merchandise.h
+    Merchandise.h \
+    SQLiteDatabase.h \
+    Logger.h
 
 FORMS += \
     SzukajKlienta.ui \
@@ -32,10 +32,10 @@ SOURCES += \
     SzukajOferty.cpp \
     SzukajTowaru.cpp \
     functions.cpp \
-    logger.cpp \
     AbstractDatabase.cpp \
-    sqlitedatabase.cpp \
     PsqlDatabase.cpp \
     Database.cpp \
     SzukajTowaruModel.cpp \
-    Merchandise.cpp
+    Merchandise.cpp \
+    SQLiteDatabase.cpp \
+    Logger.cpp

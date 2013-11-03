@@ -1,5 +1,5 @@
 #include "LocalDatabase.h"
-#include "sqlitedatabase.h"
+#include "SQLiteDatabase.h"
 #include <QtDebug>
 #include <QSqlField>
 #include <QSqlRecord>
