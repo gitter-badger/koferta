@@ -19,36 +19,39 @@
 #ifndef SZUKAJTOWARU_H
 #define SZUKAJTOWARU_H
 
-#include <QWidget>
+#include <QDialog>
 
-class QSqlTableModel;
+class SzukajTowaruModel;
 class QModelIndex;
 class QSqlRecord;
+class TowarModel;
 
 namespace Ui {
     class SzukajTowaru;
 }
 
-class SzukajTowaru : public QWidget
+class SzukajTowaru : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit SzukajTowaru(QWidget *parent = 0);
-    ~SzukajTowaru();
+    explicit SzukajTowaru(SzukajTowaruModel *model, QWidget *parent = 0);
+    virtual ~SzukajTowaru() = 0;
 
 public slots:
+   // virtual void select(const QModelIndex &) = 0;
+
+private slots:
     void ref(const QString&);
     void ref2();
-    void select(const QModelIndex &);
-    void currentRowChanged(const QModelIndex&, const QModelIndex &);
+  //  void currentRowChanged(const QModelIndex&, const QModelIndex &);
 
-signals:
-    void selectionChanged(const QSqlRecord&);
+protected:
+    SzukajTowaruModel* m_model;
 
 private:
     Ui::SzukajTowaru *ui;
-    QSqlTableModel* m_model;
+
 };
 
 #endif // SZUKAJTOWARU_H

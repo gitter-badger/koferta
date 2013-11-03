@@ -20,12 +20,13 @@
 #include <QSqlRecord>
 #include <QTableView>
 #include <QHeaderView>
-#include "LocalDatabase.h"
+#include "SzukajTowaruModel.h"
 #include "SzukajTowaru.h"
 #include "ui_SzukajTowaru.h"
 
-SzukajTowaru::SzukajTowaru(QWidget *parent) :
-    QWidget(parent),
+SzukajTowaru::SzukajTowaru(SzukajTowaruModel* model, QWidget *parent) :
+    QDialog(parent),
+    m_model(model),
     ui(new Ui::SzukajTowaru)
 {
     ui->setupUi(this);
@@ -34,13 +35,14 @@ SzukajTowaru::SzukajTowaru(QWidget *parent) :
     ui->radioButton_id->setText(tr("Id produktu"));
     ui->radioButton_id->setChecked(true);
     ui->radioButton_name->setText(tr("Nazwa produktu"));
-
+/*
     localDatabase()->merchandiseModel()->setFilter("");
 
     ui->tableView->setModel(localDatabase()->merchandiseModel());
+
     ui->tableView->hideColumn(2);
     ui->tableView->hideColumn(3);
-/*
+
     ui->tableView->setSortingEnabled(true);
 
     ui->tableView->resizeColumnToContents(0);
@@ -51,33 +53,38 @@ SzukajTowaru::SzukajTowaru(QWidget *parent) :
  //   hdr->setResizeMode(0, QHeaderView::ResizeToContents);
     hdr->setSectionResizeMode(1, QHeaderView::Stretch);
 */
+    m_model->setFilter("");
+    ui->tableView->setModel(m_model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableView->setEditTriggers(QAbstractItemView::AllEditTriggers);//:NoEditTriggers);
 
     connect(ui->radioButton_id, SIGNAL(clicked()), this, SLOT(ref2()));
     connect(ui->radioButton_name, SIGNAL(clicked()), this, SLOT(ref2()));
     connect(ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(ref(QString)));
-    connect(ui->tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(select(QModelIndex)));
-
+    connect(ui->pushButton_close, &QPushButton::clicked, this, &SzukajTowaru::close);
+/*
     QItemSelectionModel *sm = ui->tableView->selectionModel();
     connect(sm, SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged(QModelIndex,QModelIndex)));
+    connect(ui->tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(select(QModelIndex)));
+*/
 }
 
 SzukajTowaru::~SzukajTowaru()
 {
     delete ui;
+    delete m_model;
 }
-
+/*
 void SzukajTowaru::select(const QModelIndex& idx)
 {
     QSqlRecord r = m_model->record(idx.row());
     if(!r.isEmpty())
         emit selectionChanged(r);
 }
-
+*/
 void SzukajTowaru::ref2()
 {
-    this->ref(ui->lineEdit->text());
+    ref(ui->lineEdit->text());
 }
 
 void SzukajTowaru::ref(const QString & in)
@@ -90,11 +97,12 @@ void SzukajTowaru::ref(const QString & in)
     s += in;
     s += "%'";
     */
-    localDatabase()->merchandiseModel()->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
+    m_model->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
 }
-
+/*
 void SzukajTowaru::currentRowChanged(const QModelIndex &cur, const QModelIndex &prev)
 {
     Q_UNUSED(prev);
     select(cur);
 }
+*/

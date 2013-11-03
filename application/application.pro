@@ -17,13 +17,14 @@ HEADERS += \
 	WyborTowaru.h \
 	Towar.h \
 	TowarModel.h \
-	TowarDelegate.h \ 
+	TowarDelegate.h \  
+    WyborTowaruModel.h \
+    MerchendiseSelectionDelegate.h
 
 FORMS += \
 	LoadDialog.ui \
 	MainWindow.ui \
-	WyborKlienta.ui \ 
-	WyborTowaru.ui
+	WyborKlienta.ui  
          
 SOURCES += \
 	LoadDialog.cpp \
@@ -33,5 +34,7 @@ SOURCES += \
 	WyborTowaru.cpp \
 	Towar.cpp \
 	TowarModel.cpp \
-	TowarDelegate.cpp 
+	TowarDelegate.cpp \  
+    WyborTowaruModel.cpp \
+    MerchendiseSelectionDelegate.cpp
 
