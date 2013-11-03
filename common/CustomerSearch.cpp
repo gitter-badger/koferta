@@ -15,15 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-#include "SzukajKlienta.h"
-#include "ui_SzukajKlienta.h"
+#include "CustomerSearch.h"
+#include "ui_CustomerSearch.h"
 #include <QSqlTableModel>
 #include <QSqlRecord>
 #include "LocalDatabase.h"
 
-SzukajKlienta::SzukajKlienta(QWidget *parent) :
+CustomerSearch::CustomerSearch(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SzukajKlienta)
+    ui(new Ui::CustomerSearch)
 {
     ui->setupUi(this);
 
@@ -49,17 +49,17 @@ SzukajKlienta::SzukajKlienta(QWidget *parent) :
     connect(ui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(selectionChanged(const QModelIndex&)));
 }
 
-SzukajKlienta::~SzukajKlienta()
+CustomerSearch::~CustomerSearch()
 {
     delete ui;
 }
 
-void SzukajKlienta::ref2()
+void CustomerSearch::ref2()
 {
     ref(ui->lineEdit->text());
 }
 
-void SzukajKlienta::ref(const QString& in)
+void CustomerSearch::ref(const QString& in)
 {
     QString s;
     if(ui->radioButton_nazwa->isChecked())

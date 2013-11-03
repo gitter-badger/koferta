@@ -18,8 +18,8 @@
 
 #include "OfferSelection.h"
 #include "ui_OfferSelection.h"
+#include "OfferSearch.h"
 
-#include "SzukajOferty.h"
 #include <QSqlRecord>
 #include <QSqlTableModel>
 

@@ -20,7 +20,7 @@ QSqlTableModel* Database::customerModel()
 
 QSqlTableModel* Database::merchandiseModel()
 {
-    return db()->customerModel();
+    return db()->merchandiseModel();
 }
 
 /*******************************

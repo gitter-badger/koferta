@@ -15,43 +15,45 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
+       
+#ifndef SZUKAJOFERTY_H
+#define SZUKAJOFERTY_H
 
-#ifndef SZUKAJTOWARU_H
-#define SZUKAJTOWARU_H
+#include <QWidget>
+#include <QHash>
 
-#include <QDialog>
-
-class SzukajTowaruModel;
+class QSqlRelationalTableModel;
+class QModelIndex;
+class QDate;
+class QSqlRecord;
 
 namespace Ui {
-    class SzukajTowaru;
+    class OfferSearch;
 }
 
-/*!
- * \brief Abstrakcyjna klasa okna dialogowego do szukania towarów
- */
-class SzukajTowaru : public QDialog
+class OfferSearch : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit SzukajTowaru(SzukajTowaruModel *model, QWidget *parent = 0);
-    virtual ~SzukajTowaru() = 0;
+    explicit OfferSearch(QWidget *parent = 0);
+    ~OfferSearch();
 
 public slots:
-   // virtual void select(const QModelIndex &) = 0;
+    void select(const QModelIndex &);
+    void refId(const QString&);
+    void refClient(const QString &);
+    void refDate(const QDate&);
+    void refUser(const QString &);
 
-private slots:
-    void ref(const QString&);
-    void ref2();
-  //  void currentRowChanged(const QModelIndex&, const QModelIndex &);
+signals:
+    void selectionChanged(const QSqlRecord&);
 
-protected:
-    SzukajTowaruModel* m_model;
+private:
+    QSqlRelationalTableModel* model;
+    Ui::OfferSearch *ui;
 
-//private:
-    Ui::SzukajTowaru *ui;
-
+    QHash<int, QString> m_names;
 };
 
-#endif // SZUKAJTOWARU_H
+#endif // SZUKAJOFERTY_H

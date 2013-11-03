@@ -1,10 +1,10 @@
 #ifndef TOWARPROXY_H
 #define TOWARPROXY_H
 
-#include "SzukajTowaruModel.h"
+#include "MerchandiseSearchModel.h"
 #include <QHash>
 
-class MerchandiseSelectionModel : public SzukajTowaruModel
+class MerchandiseSelectionModel : public MerchandiseSearchModel
 {
     Q_OBJECT
 

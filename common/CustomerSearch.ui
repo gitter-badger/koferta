@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SzukajKlienta</class>
- <widget class="QWidget" name="SzukajKlienta">
+ <class>CustomerSearch</class>
+ <widget class="QWidget" name="CustomerSearch">
   <property name="geometry">
    <rect>
     <x>0</x>

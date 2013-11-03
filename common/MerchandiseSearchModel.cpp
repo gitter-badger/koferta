@@ -1,28 +1,28 @@
-#include "SzukajTowaruModel.h"
+#include "MerchandiseSearchModel.h"
 #include <QtDebug>
 #include <QDate>
 #include <QSqlTableModel>
 
-const QString SzukajTowaruModel::m_dateFmt = "dd.MM.yyyy";
+const QString MerchandiseSearchModel::m_dateFmt = "dd.MM.yyyy";
 
-SzukajTowaruModel::SzukajTowaruModel(QObject *parent) :
+MerchandiseSearchModel::MerchandiseSearchModel(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
 }
 
-bool SzukajTowaruModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool MerchandiseSearchModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     return d(left, 1).toString() < d(right, 1).toString();
 }
 
-bool SzukajTowaruModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool MerchandiseSearchModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QDate from = QDate::fromString(sourceModel()->data(sourceModel()->index(sourceRow, 5, sourceParent)).toString(), m_dateFmt);
     QDate to = QDate::fromString(sourceModel()->data(sourceModel()->index(sourceRow, 6, sourceParent)).toString(), m_dateFmt);
     return (QDate::currentDate() > from) && (QDate::currentDate() < to);
 }
 
-int SzukajTowaruModel::columnCount()
+int MerchandiseSearchModel::columnCount()
 {
     return 4;
 }
@@ -39,7 +39,7 @@ Qt::ItemFlags SzukajTowaruModel::flags(const QModelIndex &index) const
 }
 */
 
-QVariant SzukajTowaruModel::data(const QModelIndex &index, int role) const
+QVariant MerchandiseSearchModel::data(const QModelIndex &index, int role) const
 {
     if(!(role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) || !index.isValid())
         return QVariant();
@@ -64,7 +64,7 @@ QVariant SzukajTowaruModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant SzukajTowaruModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant MerchandiseSearchModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(!role == Qt::DisplayRole || orientation == Qt::Vertical)
         return QVariant();
@@ -81,14 +81,15 @@ QVariant SzukajTowaruModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-void SzukajTowaruModel::setFilter(const QString &filter)
+void MerchandiseSearchModel::setFilter(const QString &filter)
 {
     QSqlTableModel* t = qobject_cast<QSqlTableModel*>(sourceModel());
     if(t)
         t->setFilter(filter);
 }
 
-QVariant SzukajTowaruModel::d(const QModelIndex &index, int col) const
+QVariant MerchandiseSearchModel::d(const QModelIndex &index, int col) const
 {
-    return sourceModel()->data(sourceModel()->index(index.row(), col, index.parent()));
+    return sourceModel()->data(index.sibling(index.row(), col));
+   // return sourceModel()->data(sourceModel()->index(index.row(), col, index.parent()));
 }

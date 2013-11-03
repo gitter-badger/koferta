@@ -26,7 +26,6 @@
 #include "Merchandise.h"
 #include "MerchandiseListDelegate.h"
 
-
 #include <QDate>
 #include <QInputDialog>
 #include <QList>

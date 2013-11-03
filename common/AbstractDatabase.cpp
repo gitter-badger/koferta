@@ -44,11 +44,12 @@ QSqlTableModel *AbstractDatabase::merchandiseModel()
         m_merchandiseModel->setTable("merchandise");
         m_merchandiseModel->select();
         m_merchandiseModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-
+/*
         QStringList sl;
         sl << QObject::tr("Id") << QObject::tr("Nazwa");
         for(int i=0; i<sl.size(); ++i)
             m_merchandiseModel->setHeaderData(i, Qt::Horizontal, sl[i]);
+            */
     }
 
     return m_merchandiseModel;

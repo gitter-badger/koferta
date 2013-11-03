@@ -20,14 +20,14 @@
 #include <QSqlRecord>
 #include <QTableView>
 #include <QHeaderView>
-#include "SzukajTowaruModel.h"
-#include "SzukajTowaru.h"
-#include "ui_SzukajTowaru.h"
+#include "MerchandiseSearchModel.h"
+#include "MerchandiseSearch.h"
+#include "ui_MerchandiseSearch.h"
 
-SzukajTowaru::SzukajTowaru(SzukajTowaruModel* model, QWidget *parent) :
+MerchandiseSearch::MerchandiseSearch(MerchandiseSearchModel* model, QWidget *parent) :
     QDialog(parent),
     m_model(model),
-    ui(new Ui::SzukajTowaru)
+    ui(new Ui::MerchandiseSearch)
 {
     ui->setupUi(this);
 
@@ -61,7 +61,7 @@ SzukajTowaru::SzukajTowaru(SzukajTowaruModel* model, QWidget *parent) :
     connect(ui->radioButton_id, SIGNAL(clicked()), this, SLOT(ref2()));
     connect(ui->radioButton_name, SIGNAL(clicked()), this, SLOT(ref2()));
     connect(ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(ref(QString)));
-    connect(ui->pushButton_close, &QPushButton::clicked, this, &SzukajTowaru::close);
+    connect(ui->pushButton_close, &QPushButton::clicked, this, &MerchandiseSearch::close);
 /*
     QItemSelectionModel *sm = ui->tableView->selectionModel();
     connect(sm, SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged(QModelIndex,QModelIndex)));
@@ -69,7 +69,7 @@ SzukajTowaru::SzukajTowaru(SzukajTowaruModel* model, QWidget *parent) :
 */
 }
 
-SzukajTowaru::~SzukajTowaru()
+MerchandiseSearch::~MerchandiseSearch()
 {
     delete ui;
   //  delete m_model;
@@ -82,12 +82,12 @@ void SzukajTowaru::select(const QModelIndex& idx)
         emit selectionChanged(r);
 }
 */
-void SzukajTowaru::ref2()
+void MerchandiseSearch::ref2()
 {
     ref(ui->lineEdit->text());
 }
 
-void SzukajTowaru::ref(const QString & in)
+void MerchandiseSearch::ref(const QString & in)
 {/*
     QString s;
     if(ui->radioButton_id->isChecked())

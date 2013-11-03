@@ -15,45 +15,39 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-       
-#ifndef SZUKAJOFERTY_H
-#define SZUKAJOFERTY_H
+    
+#ifndef SZUKAJKLIENTA_H
+#define SZUKAJKLIENTA_H
 
 #include <QWidget>
-#include <QHash>
 
-class QSqlRelationalTableModel;
-class QModelIndex;
-class QDate;
+class QSqlTableModel;
 class QSqlRecord;
+class QModelIndex;
 
 namespace Ui {
-    class SzukajOferty;
+    class CustomerSearch;
 }
 
-class SzukajOferty : public QWidget
+class CustomerSearch : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit SzukajOferty(QWidget *parent = 0);
-    ~SzukajOferty();
+    explicit CustomerSearch(QWidget *parent = 0);
+    ~CustomerSearch();
 
 public slots:
-    void select(const QModelIndex &);
-    void refId(const QString&);
-    void refClient(const QString &);
-    void refDate(const QDate&);
-    void refUser(const QString &);
+    void ref(const QString&);
+    void ref2();
 
 signals:
-    void selectionChanged(const QSqlRecord&);
+    void selectionChanged(const QModelIndex &);
 
 private:
-    QSqlRelationalTableModel* model;
-    Ui::SzukajOferty *ui;
+    QSqlTableModel* m_model;
 
-    QHash<int, QString> m_names;
+    Ui::CustomerSearch *ui;
 };
 
-#endif // SZUKAJOFERTY_H
+#endif // SZUKAJKLIENTA_H

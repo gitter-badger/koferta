@@ -15,39 +15,43 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-    
-#ifndef SZUKAJKLIENTA_H
-#define SZUKAJKLIENTA_H
 
-#include <QWidget>
+#ifndef SZUKAJTOWARU_H
+#define SZUKAJTOWARU_H
 
-class QSqlTableModel;
-class QSqlRecord;
-class QModelIndex;
+#include <QDialog>
+
+class MerchandiseSearchModel;
 
 namespace Ui {
-    class SzukajKlienta;
+    class MerchandiseSearch;
 }
 
-class SzukajKlienta : public QWidget
+/*!
+ * \brief Abstrakcyjna klasa okna dialogowego do szukania towarów
+ */
+class MerchandiseSearch : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit SzukajKlienta(QWidget *parent = 0);
-    ~SzukajKlienta();
+    explicit MerchandiseSearch(MerchandiseSearchModel *model, QWidget *parent = 0);
+    virtual ~MerchandiseSearch() = 0;
 
 public slots:
+   // virtual void select(const QModelIndex &) = 0;
+
+private slots:
     void ref(const QString&);
     void ref2();
+  //  void currentRowChanged(const QModelIndex&, const QModelIndex &);
 
-signals:
-    void selectionChanged(const QModelIndex &);
+protected:
+    MerchandiseSearchModel* m_model;
 
-private:
-    QSqlTableModel* m_model;
+//private:
+    Ui::MerchandiseSearch *ui;
 
-    Ui::SzukajKlienta *ui;
 };
 
-#endif // SZUKAJKLIENTA_H
+#endif // SZUKAJTOWARU_H

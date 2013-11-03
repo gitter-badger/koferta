@@ -19,7 +19,7 @@
 #ifndef WYBORTOWARU_H
 #define WYBORTOWARU_H
 
-#include "SzukajTowaru.h"
+#include "MerchandiseSearch.h"
 
 class QSqlRecord;
 class QSqlTableModel;
@@ -28,7 +28,7 @@ class QModelIndex;
 /*!
  * \brief Klasa umożliwiająca dodanie towaru do oferty
  */
-class MerchandiseSelection : public SzukajTowaru
+class MerchandiseSelection : public MerchandiseSearch
 {
     Q_OBJECT
     

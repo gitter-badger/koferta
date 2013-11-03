@@ -2,7 +2,7 @@
 #include <QtDebug>
 
 MerchandiseSelectionModel::MerchandiseSelectionModel(const QHash<int, double> &hash, QObject *parent) :
-    SzukajTowaruModel(parent),
+    MerchandiseSearchModel(parent),
     m_hash(hash)
 {
 }

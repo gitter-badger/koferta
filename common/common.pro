@@ -9,33 +9,33 @@ TEMPLATE = lib
 
 HEADERS += \
     LocalDatabase.h \
-    SzukajKlienta.h \
-    SzukajOferty.h \
-    SzukajTowaru.h \
     functions.h \
     AbstractDatabase.h \
     PsqlDatabase.h \
     Database.h \
-    SzukajTowaruModel.h \
     Merchandise.h \
     SQLiteDatabase.h \
-    Logger.h
+    Logger.h \
+    MerchandiseSearchModel.h \
+    MerchandiseSearch.h \
+    CustomerSearch.h \
+    OfferSearch.h
 
 FORMS += \
-    SzukajKlienta.ui \
-    SzukajOferty.ui \
-    SzukajTowaru.ui \
+    MerchandiseSearch.ui \
+    CustomerSearch.ui \
+    OfferSearch.ui
          
 SOURCES += \
     LocalDatabase.cpp \
-    SzukajKlienta.cpp \
-    SzukajOferty.cpp \
-    SzukajTowaru.cpp \
     functions.cpp \
     AbstractDatabase.cpp \
     PsqlDatabase.cpp \
     Database.cpp \
-    SzukajTowaruModel.cpp \
     Merchandise.cpp \
     SQLiteDatabase.cpp \
-    Logger.cpp
+    Logger.cpp \
+    MerchandiseSearchModel.cpp \
+    MerchandiseSearch.cpp \
+    CustomerSearch.cpp \
+    OfferSearch.cpp

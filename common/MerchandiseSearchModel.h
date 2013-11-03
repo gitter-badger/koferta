@@ -3,11 +3,11 @@
 
 #include <QSortFilterProxyModel>
 
-class SzukajTowaruModel : public QSortFilterProxyModel
+class MerchandiseSearchModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    explicit SzukajTowaruModel(QObject *parent = 0);
+    explicit MerchandiseSearchModel(QObject *parent = 0);
 
     virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
     virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;

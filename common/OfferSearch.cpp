@@ -16,16 +16,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-#include "SzukajOferty.h"
-#include "ui_SzukajOferty.h"
+#include "OfferSearch.h"
+#include "ui_OfferSearch.h"
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>
 #include "LocalDatabase.h"
 #include <QtDebug>
 
-SzukajOferty::SzukajOferty(QWidget *parent) :
+OfferSearch::OfferSearch(QWidget *parent) :
   QWidget(parent),
-    ui(new Ui::SzukajOferty)
+    ui(new Ui::OfferSearch)
 {
     ui->setupUi(this);
 
@@ -70,19 +70,19 @@ SzukajOferty::SzukajOferty(QWidget *parent) :
     connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(refUser(const QString&)));
 }
 
-SzukajOferty::~SzukajOferty()
+OfferSearch::~OfferSearch()
 {
     delete ui;
 }
 
-void SzukajOferty::select(const QModelIndex& index)
+void OfferSearch::select(const QModelIndex& index)
 {
     int row = index.row();
     QSqlRecord rec = model->record(row);
     emit selectionChanged(rec);
 }
 
-void SzukajOferty::refId(const QString& id)
+void OfferSearch::refId(const QString& id)
 {
     QString s;
     s = "nr_oferty like '";
@@ -91,7 +91,7 @@ void SzukajOferty::refId(const QString& id)
     model->setFilter(s);
 }
 
-void SzukajOferty::refClient(const QString& client)
+void OfferSearch::refClient(const QString& client)
 {
     QString s;
     s = "short like '";
@@ -100,7 +100,7 @@ void SzukajOferty::refClient(const QString& client)
     model->setFilter(s);
 }
 
-void SzukajOferty::refDate(const QDate& date)
+void OfferSearch::refDate(const QDate& date)
 {
     QString sd = date.toString("MM.yyyy");
     qDebug() << "date: " << sd;
@@ -112,7 +112,7 @@ void SzukajOferty::refDate(const QDate& date)
 }
 
 
-void SzukajOferty::refUser(const QString& user)
+void OfferSearch::refUser(const QString& user)
 {
     QString s;
     s = "name = '";
