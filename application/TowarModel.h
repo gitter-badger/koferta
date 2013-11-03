@@ -44,18 +44,15 @@ public:
 
     QHash<int, double> hash() const;
 
-signals:
-    void iloscTowaru(int ile);
-
 public slots:
-    void ileTowaru(QString kod);
     void clear();
 
     void setKurs(double kurs);
-    void changeItemCount(const QSqlRecord& rec, int ile);//dodawanie towarów do tabeli (wywoływane przez sygnał z dialogu dodajTowar)
+
+    ///dodawanie towarów do tabeli (wywoływane przez sygnał z dialogu dodajTowar)
+    void changeItemCount(int id, double ile);
 
 protected:
-    QHash<QString, Towar*> m_hash;
     QList<Towar*> m_list;
 
     bool m_pln;

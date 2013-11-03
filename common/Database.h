@@ -8,6 +8,7 @@
 class QSqlTableModel;
 class QString;
 class AbstractDatabase;
+class Towar;
 
 /*!
  * \brief Klasa stanowiąca interface do bazy danych wykorzystując wzorzec most.
@@ -36,6 +37,9 @@ public:
 
     //table options
     virtual QHash<QString, QString> optionsList(eOptionType type);
+
+    //table merchandise
+    virtual Towar* merchandise(int id);
 
 protected:
     /// Funkcja powinna zwracać wskaźnik na implementację bazy

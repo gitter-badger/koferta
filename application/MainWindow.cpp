@@ -137,8 +137,7 @@ MainWindow::MainWindow ():
 
     m_towarModel = new TowarModel;
     ui->tableView->setModel(m_towarModel);
-    m_towarDelegate = new TowarDelegate(this);
-    ui->tableView->setItemDelegate(m_towarDelegate);
+    ui->tableView->setItemDelegate(new TowarDelegate(this));
     //------------------ co z tym: ??? --------------
     ui->tableView->setDragDropMode(QAbstractItemView::InternalMove);
 
@@ -328,11 +327,9 @@ void MainWindow::popWyborKlienta()
 
 void MainWindow::popWyborTowaru()
 {
-    WyborTowaru* pop = new WyborTowaru(this);
-    connect(pop, SIGNAL(itemSelected(QString)), m_towarModel, SLOT(ileTowaru(QString)));
-    connect(m_towarModel, SIGNAL(iloscTowaru(int)), pop, SLOT(setItemCount(int)));
-    connect(pop, SIGNAL(countChanged(QSqlRecord,int)), m_towarModel, SLOT(changeItemCount(QSqlRecord,int)));
-    pop->showMaximized();
+    WyborTowaru* pop = new WyborTowaru(m_towarModel->hash(), this);
+    connect(pop, &WyborTowaru::itemCountChanged, m_towarModel, &TowarModel::changeItemCount);
+//    pop->showMaximized();
     pop->exec();
     delete pop;
 }

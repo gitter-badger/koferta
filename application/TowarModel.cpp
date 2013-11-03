@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QSqlTableModel>
 #include <QSqlRecord>
+#include "LocalDatabase.h"
 
 TowarModel::TowarModel(QObject *parent) :
     QAbstractTableModel(parent), m_pln(false), m_kurs(1)
@@ -186,20 +187,11 @@ bool TowarModel::pln() const
     return m_pln;
 }
 
-void TowarModel::ileTowaru(QString kod)
-{
-    if(m_hash.contains(kod))
-        emit iloscTowaru(m_hash[kod]->ilosc());
-    else
-        emit iloscTowaru(0);
-}
-
 void TowarModel::clear()
 {
     beginRemoveRows(QModelIndex(), 0, m_list.count()-1);
     qDeleteAll(m_list);
     m_list.clear();
-    m_hash.clear();
     endRemoveRows();
 }
 double TowarModel::kurs() const
@@ -239,6 +231,17 @@ void TowarModel::setKurs(double kurs)
     }
 }
 
+void TowarModel::changeItemCount(int id, double ile)
+{
+    Towar* t = new Towar(id);
+    if(m_list.contains(t))
+        m_list[m_list.indexOf(t)]->setIlosc(ile);
+    else
+    {
+       localDatabase->
+    }
+}
+
 
 bool TowarModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
 {
@@ -248,7 +251,6 @@ bool TowarModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
     beginRemoveRows(QModelIndex(), row, row+count-1);
     for(int i=row; i < row+count; i++)
     {
-        m_hash.remove(m_list[i]->kod());
         delete m_list[i];
         m_list.removeAt(i);
     }
@@ -266,16 +268,6 @@ void TowarModel::setGlobalRabat(double r)
 // potrzebne?   emit dataChanged(this->index(2, 0), this->index(m_list.count(), 8)); -- ?
 }
 
-void TowarModel::changeItemCount(const QSqlRecord &rec, int ile)
-{
-    QString kod = rec.value("id").toString();
-    if(!m_hash.contains(kod))
-    {
-        addItem(new Towar(rec));
-    }
-
-    m_hash[kod]->setIlosc(ile);
-}
 QHash<int, double> TowarModel::hash() const
 {
     QHash<int, double> hash;
@@ -299,7 +291,6 @@ void TowarModel::addItem(Towar *towar)
     int numer = m_list.count();
     beginInsertRows(QModelIndex(), numer, numer);
     m_list.append(towar);
-    m_hash.insert(towar->kod(), towar);
     endInsertRows();
 }
 

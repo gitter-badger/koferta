@@ -112,7 +112,6 @@ private:
     bool htm;
 
     TowarModel* m_towarModel;
-    TowarDelegate* m_towarDelegate;
 
     QCalendarWidget* calendarWidget;
     QSqlRecord* klient;

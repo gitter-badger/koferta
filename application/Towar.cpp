@@ -4,19 +4,17 @@
 
 Towar::Towar() :
     m_rabat(0), m_ilosc(0)
-{
-
+{   
 }
 
-Towar::Towar(const QSqlRecord &rec) :
-    m_rabat(0), m_ilosc(0)
+Towar::Towar(int id) :
+    m_id(id)
 {
-    m_id = rec.value(0).toInt();
-    m_kod = rec.value(1).toString();
-    m_nazwa = rec.value(2).toString();
-    m_cenaKat = rec.value(3).toDouble();
-    m_metr = (rec.value(4).toString() == "mb.");
+}
 
+Towar::Towar(int id, const QString &kod, const QString &nazwa, double cena, bool metr, int ilosc) :
+    m_id(id), m_kod(kod), m_nazwa(nazwa), m_cenaKat(cena), m_metr(metr), m_rabat(0), m_ilosc(ilosc)
+{
 }
 
 double Towar::cenaPln(double kurs) const
@@ -111,6 +109,11 @@ int Towar::id() const
 void Towar::setId(int id)
 {
     m_id = id;
+}
+
+bool Towar::operator==(const Towar &other) const
+{
+    return other.m_id == m_id;
 }
 
 

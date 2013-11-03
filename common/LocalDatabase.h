@@ -14,13 +14,16 @@ class LocalDatabase : public Database
 {
 public:
     //table user
-    QString remoteDbUserPass();
-    QString remoteDbUserName();
+    virtual QString remoteDbUserPass();
+    virtual QString remoteDbUserName();
     virtual void setCurrentUser(int id);
     virtual QString userName();
     virtual QString userMail();
     virtual QString userAdress();
     virtual QString userOfferId();
+
+    //table merchandise
+   // virtual
 
 protected:
     ///Blokuje konstrukcję obiektu z zewnątrz

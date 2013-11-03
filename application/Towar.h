@@ -12,7 +12,9 @@ class Towar
 {
 public:
     explicit Towar();
-    Towar(const QSqlRecord& rec);
+    explicit Towar(int id);
+    Towar(int id, const QString& kod, const QString& nazwa, double cena, bool metr = false, int ilosc = 0);
+    //Towar(const QSqlRecord& rec);
 
     double cenaPln(double kurs) const;
     
@@ -42,6 +44,8 @@ public:
 
     int id() const;
     void setId(int id);
+
+    bool operator==(const Towar& other) const;
 
 protected:
     int     m_id;
