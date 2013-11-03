@@ -40,7 +40,11 @@ public:
     double cena(double kurs) const;
     double wartosc(double kurs) const;
 
+    int id() const;
+    void setId(int id);
+
 protected:
+    int     m_id;
     QString m_kod;
     QString m_nazwa;
     double  m_cenaKat;

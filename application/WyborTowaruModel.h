@@ -9,7 +9,7 @@ class WyborTowaruModel : public SzukajTowaruModel
     Q_OBJECT
 
 public:  
-    WyborTowaruModel(QObject *parent);
+    WyborTowaruModel(const QHash<int, double>& hash =  QHash<int, double>(), QObject *parent = nullptr);
 
     virtual int columnCount();
     virtual Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -18,10 +18,10 @@ public:
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    virtual void setHash(const QHash<QString, double>& hash);
+    virtual void setHash(const QHash<int, double>& hash);
 
 protected:
-    QHash<QString, double> m_hash;
+    QHash<int, double> m_hash;
 
 };
 

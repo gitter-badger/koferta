@@ -72,7 +72,7 @@ SzukajTowaru::SzukajTowaru(SzukajTowaruModel* model, QWidget *parent) :
 SzukajTowaru::~SzukajTowaru()
 {
     delete ui;
-    delete m_model;
+  //  delete m_model;
 }
 /*
 void SzukajTowaru::select(const QModelIndex& idx)

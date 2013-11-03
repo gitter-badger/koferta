@@ -11,10 +11,11 @@ Towar::Towar() :
 Towar::Towar(const QSqlRecord &rec) :
     m_rabat(0), m_ilosc(0)
 {
-    m_kod = rec.value(0).toString();
-    m_nazwa = rec.value(1).toString();
-    m_cenaKat = rec.value(2).toDouble();
-    m_metr = (rec.value(3).toString() == "mb.");
+    m_id = rec.value(0).toInt();
+    m_kod = rec.value(1).toString();
+    m_nazwa = rec.value(2).toString();
+    m_cenaKat = rec.value(3).toDouble();
+    m_metr = (rec.value(4).toString() == "mb.");
 
 }
 
@@ -102,4 +103,14 @@ double Towar::wartosc(double kurs) const
 {
     return m_ilosc * cena(kurs);
 }
+int Towar::id() const
+{
+    return m_id;
+}
+
+void Towar::setId(int id)
+{
+    m_id = id;
+}
+
 

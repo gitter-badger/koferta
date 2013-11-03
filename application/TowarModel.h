@@ -42,6 +42,8 @@ public:
     bool isRabat(const QModelIndex & i) const;
     bool isIlosc(const QModelIndex & i) const;
 
+    QHash<int, double> hash() const;
+
 signals:
     void iloscTowaru(int ile);
 

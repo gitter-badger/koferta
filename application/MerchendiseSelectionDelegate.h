@@ -2,6 +2,7 @@
 #define MERCHENDISESELECTIONDELEGATE_H
 
 #include <QItemDelegate>
+class QModelIndex;
 
 class MerchendiseSelectionDelegate : public QItemDelegate
 {
@@ -15,6 +16,9 @@ public:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+signals:
+    void itemCountChanged(int id, double count) const;
 };
 
 #endif // MERCHENDISESELECTIONDELEGATE_H

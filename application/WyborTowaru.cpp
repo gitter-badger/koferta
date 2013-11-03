@@ -15,81 +15,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-
+#include "ui_SzukajTowaru.h"
 #include "WyborTowaru.h"
-#include "ui_WyborTowaru.h"
-#include "MainWindow.h"
+#include "WyborTowaruModel.h"
+#include "MerchendiseSelectionDelegate.h"
+#include "LocalDatabase.h"
 #include <QSqlRecord>
+#include <QSqlTableModel>
 
-const QString WyborTowaru::m_info = tr("Wybierz towar z listy po lewej.");
-
-WyborTowaru::WyborTowaru(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::WyborTowaru)
+WyborTowaru::WyborTowaru(const QHash<int, double> &hash, QWidget *parent) :
+    SzukajTowaru(new WyborTowaruModel(hash, parent), parent)
 {
-    ui->setupUi(this);
+    m_merchandiseModel = localDatabase()->merchandiseModel();
+    m_model->setSourceModel(m_merchandiseModel);
+    MerchendiseSelectionDelegate* delegate = new MerchendiseSelectionDelegate(this);
+    ui->tableView->setItemDelegate(delegate);
 
-    ui->pushButton->setText(tr("Ok"));
-    ui->label_add->setText(tr("Dodaj:"));
-    ui->plainTextEdit->setPlainText(m_info);
-    ui->spinBox->setMinimum(0);
-    ui->spinBox->setSingleStep(1);
-    ui->spinBox->setMaximum(99999);
-    ui->spinBox->setEnabled(false);
-    rec = NULL;
-
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    ui->plainTextEdit->setFont(font);
-
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(ui->widget, SIGNAL(selectionChanged(const QSqlRecord&)), this, SLOT(refresh(const QSqlRecord&)));
-    connect(ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(spin(int)));
+    connect(delegate, &MerchendiseSelectionDelegate::itemCountChanged, this, &WyborTowaru::itemCountChanged);
 }
 
 WyborTowaru::~WyborTowaru()
 {
-    delete ui;
-}
 
-void WyborTowaru::refresh(const QSqlRecord& _rec)
-{
-    if(rec && *rec == _rec)
-        return;
-
-    delete rec;
-    rec = new QSqlRecord(_rec);
-
-    if(_rec.isEmpty() || rec->value(0).toString().isEmpty())
-    {
-        ui->plainTextEdit->setPlainText(m_info);
-        ui->spinBox->setValue(0);
-        ui->spinBox->setEnabled(false);
-        return;
-    }
-
-    QString s;
-    s = tr("Kod towaru:\t");
-    s += rec->value(0).toString();
-    s += tr("\n\nSpecyfikacja:\t");
-    s += rec->value(1).toString();
-    s += tr("\n\nCena katalogowa:\t");
-    s += rec->value(2).toString();
-    s += tr("\n\nJednostka:\t");
-    s += rec->value(3).toString();
-    ui->plainTextEdit->setPlainText(s);
-
-    ui->spinBox->setEnabled(true);
-    emit itemSelected(rec->value(0).toString());
-}
-
-void WyborTowaru::spin(int ile)
-{
-    if(ile != 0 && rec != NULL)
-        emit countChanged(*rec, ile);
-}
-
-void WyborTowaru::setItemCount(int amount)
-{
-    ui->spinBox->setValue(amount);
 }

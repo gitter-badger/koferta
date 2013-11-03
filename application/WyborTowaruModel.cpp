@@ -1,7 +1,9 @@
 #include "WyborTowaruModel.h"
+#include <QtDebug>
 
-WyborTowaruModel::WyborTowaruModel(QObject *parent) :
-    SzukajTowaruModel(parent)
+WyborTowaruModel::WyborTowaruModel(const QHash<int, double> &hash, QObject *parent) :
+    SzukajTowaruModel(parent),
+    m_hash(hash)
 {
 }
 
@@ -26,11 +28,11 @@ bool WyborTowaruModel::setData(const QModelIndex &index, const QVariant &value, 
     if(role != Qt::EditRole || index.column() != 0)
         return false;
 
-    QString id = d(index, 1).toString();
+    int id = d(index, 0).toInt();
     if(m_hash.contains(id))
         m_hash[id] = value.toDouble();
     else
-        m_hahs.insert(id, value.toDouble());
+        m_hash.insert(id, value.toDouble());
     return true;
 }
 
@@ -44,7 +46,7 @@ QVariant WyborTowaruModel::data(const QModelIndex &index, int role) const
 
     int section = index.column();
 
-    QString id = d(index, 1).toString();
+    int id = d(index, 0).toInt();
 
     switch(section)
     {
@@ -52,7 +54,7 @@ QVariant WyborTowaruModel::data(const QModelIndex &index, int role) const
         if(m_hash.contains(id))
             return m_hash[id];
         return 0;
-    case 1: return id;
+    case 1: return d(index, 1);
     case 2: return d(index, 2);
     case 3: return d(index, 3);
     case 4: return d(index, 4).toChar() == 'p' ? tr("szt.") : tr("m.b.");
@@ -80,7 +82,7 @@ QVariant WyborTowaruModel::headerData(int section, Qt::Orientation orientation, 
     return QVariant();
 }
 
-void WyborTowaruModel::setHash(const QHash<QString, int> &hash)
+void WyborTowaruModel::setHash(const QHash<int, double> &hash)
 {
     m_hash = hash;
 }

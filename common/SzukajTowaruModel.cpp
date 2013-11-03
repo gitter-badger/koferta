@@ -41,8 +41,11 @@ Qt::ItemFlags SzukajTowaruModel::flags(const QModelIndex &index) const
 
 QVariant SzukajTowaruModel::data(const QModelIndex &index, int role) const
 {
-    if(!(role == Qt::DisplayRole || role == Qt::EditRole) || !index.isValid())
+    if(!(role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) || !index.isValid())
         return QVariant();
+
+    if(role == Qt::UserRole)
+        return d(index, 0);
 
     if(role == Qt::EditRole && index.column() > 0)
         return QVariant();

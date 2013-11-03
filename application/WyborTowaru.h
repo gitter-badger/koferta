@@ -19,35 +19,28 @@
 #ifndef WYBORTOWARU_H
 #define WYBORTOWARU_H
 
-#include <QDialog>
+#include "SzukajTowaru.h"
 
 class QSqlRecord;
+class QSqlTableModel;
+class QModelIndex;
 
-namespace Ui {
-class WyborTowaru;
-}
-
-class WyborTowaru : public QDialog
+/*!
+ * \brief Klasa umożliwiająca dodanie towaru do oferty
+ */
+class WyborTowaru : public SzukajTowaru
 {
     Q_OBJECT
     
 public:
-    explicit WyborTowaru(QWidget *parent = 0);
+    explicit WyborTowaru(const QHash<int, double>& hash = QHash<int, double>(), QWidget *parent = 0);
     ~WyborTowaru();
 
-public slots:
-    void refresh(const QSqlRecord &);
-    void spin(int);
-    void setItemCount(int amount);
-
 signals:
-    void countChanged(const QSqlRecord &, int);
-    void itemSelected(QString kod);
-    
-private:
-    Ui::WyborTowaru *ui;
-    QSqlRecord* rec;
-    static const QString m_info;
+    void itemCountChanged(int id, double count);
+
+protected:
+    QSqlTableModel* m_merchandiseModel;
 };
 
 #endif // WYBORTOWARU_H

@@ -276,6 +276,15 @@ void TowarModel::changeItemCount(const QSqlRecord &rec, int ile)
 
     m_hash[kod]->setIlosc(ile);
 }
+QHash<int, double> TowarModel::hash() const
+{
+    QHash<int, double> hash;
+
+    foreach(Towar* t, m_list)
+        hash.insert(t->id(), t->ilosc());
+
+    return hash;
+}
 
 double TowarModel::przeliczSume() const
 {

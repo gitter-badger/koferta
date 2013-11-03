@@ -22,14 +22,14 @@
 #include <QDialog>
 
 class SzukajTowaruModel;
-class QModelIndex;
-class QSqlRecord;
-class TowarModel;
 
 namespace Ui {
     class SzukajTowaru;
 }
 
+/*!
+ * \brief Abstrakcyjna klasa okna dialogowego do szukania towarów
+ */
 class SzukajTowaru : public QDialog
 {
     Q_OBJECT
@@ -49,7 +49,7 @@ private slots:
 protected:
     SzukajTowaruModel* m_model;
 
-private:
+//private:
     Ui::SzukajTowaru *ui;
 
 };
