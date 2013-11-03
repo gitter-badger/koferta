@@ -1,4 +1,7 @@
-#include <QtGui>
+#include <QSize>
+#include <QDoubleSpinBox>
+#include <QModelIndex>
+
 #include "TowarDelegate.h"
 #include "TowarModel.h"
 
@@ -31,7 +34,7 @@ QWidget *TowarDelegate::createEditor(QWidget *parent,
         return editor;
     }
 
-    return new QWidget();
+    return new QWidget(parent);
 }
 
 void TowarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -39,7 +42,7 @@ void TowarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) con
     const TowarModel* m = static_cast<const TowarModel*>(index.model());
     if(m->isRabat(index) || m->isIlosc(index))
     {
-        QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(editor);
+        QDoubleSpinBox *spinBox = qobject_cast<QDoubleSpinBox*>(editor);
         spinBox->setValue(m->data(index, Qt::EditRole).toDouble());
     }
 }

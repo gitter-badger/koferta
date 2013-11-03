@@ -46,7 +46,7 @@ bool TowarModel::setData(const QModelIndex &index, const QVariant &value, int ro
 QVariant TowarModel::data(const QModelIndex &index, int role) const
 {
 
-    if(!(role == Qt::DisplayRole || role == Qt::EditRole) || (index.row() > m_list.count()))
+    if(!(role == Qt::DisplayRole || role == Qt::EditRole) || !index.isValid() || (index.row() > m_list.count()))
         return QVariant();
 
     Towar* t = static_cast<Towar*>(index.internalPointer());
@@ -158,13 +158,12 @@ QVariant TowarModel::headerData(int section, Qt::Orientation orientation, int ro
     }
 
     qWarning() << "View requested non-existant column, number:" << section;
-
     return QVariant();
 }
 
 Qt::ItemFlags TowarModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if(!index.isValid())
         return 0;
 
     if(isRabat(index) || isIlosc(index))

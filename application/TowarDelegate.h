@@ -42,10 +42,7 @@
 #define DELEGATE_H
 
 #include <QItemDelegate>
-#include <QModelIndex>
-#include <QObject>
-#include <QSize>
-#include <QSpinBox>
+//#include <QObject>
 
 class TowarDelegate : public QItemDelegate
 {
