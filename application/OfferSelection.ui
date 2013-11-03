@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LoadDialog</class>
- <widget class="QDialog" name="LoadDialog">
+ <class>OfferSelection</class>
+ <widget class="QDialog" name="OfferSelection">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -78,7 +78,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>LoadDialog</receiver>
+   <receiver>OfferSelection</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -94,7 +94,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>LoadDialog</receiver>
+   <receiver>OfferSelection</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

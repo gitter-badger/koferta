@@ -2,19 +2,19 @@
 #include <QDoubleSpinBox>
 #include <QModelIndex>
 
-#include "TowarDelegate.h"
-#include "TowarModel.h"
+#include "MerchandiseListDelegate.h"
+#include "MerchandiseListModel.h"
 
-TowarDelegate::TowarDelegate(QObject *parent)
+MerchandiseListDelegate::MerchandiseListDelegate(QObject *parent)
     : QItemDelegate(parent)
 {
 }
 
-QWidget *TowarDelegate::createEditor(QWidget *parent,
+QWidget *MerchandiseListDelegate::createEditor(QWidget *parent,
     const QStyleOptionViewItem &/* option */,
     const QModelIndex & index ) const
 {
-    const TowarModel* m = static_cast<const TowarModel*>(index.model());
+    const MerchandiseListModel* m = static_cast<const MerchandiseListModel*>(index.model());
 
     if(m->isIlosc(index))
     {
@@ -37,9 +37,9 @@ QWidget *TowarDelegate::createEditor(QWidget *parent,
     return new QWidget(parent);
 }
 
-void TowarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+void MerchandiseListDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    const TowarModel* m = static_cast<const TowarModel*>(index.model());
+    const MerchandiseListModel* m = static_cast<const MerchandiseListModel*>(index.model());
     if(m->isRabat(index) || m->isIlosc(index))
     {
         QDoubleSpinBox *spinBox = qobject_cast<QDoubleSpinBox*>(editor);
@@ -47,9 +47,9 @@ void TowarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) con
     }
 }
 
-void TowarDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void MerchandiseListDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    const TowarModel* m = static_cast<const TowarModel*>(index.model());
+    const MerchandiseListModel* m = static_cast<const MerchandiseListModel*>(index.model());
     if(m->isIlosc(index) || m->isRabat(index))
     {
         QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(editor);
@@ -58,7 +58,7 @@ void TowarDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, con
     }
 }
 
-void TowarDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
+void MerchandiseListDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
 {
     editor->setGeometry(option.rect);
 }

@@ -1,18 +1,18 @@
-#include "WyborTowaruModel.h"
+#include "MerchandiseSelectionModel.h"
 #include <QtDebug>
 
-WyborTowaruModel::WyborTowaruModel(const QHash<int, double> &hash, QObject *parent) :
+MerchandiseSelectionModel::MerchandiseSelectionModel(const QHash<int, double> &hash, QObject *parent) :
     SzukajTowaruModel(parent),
     m_hash(hash)
 {
 }
 
-int WyborTowaruModel::columnCount()
+int MerchandiseSelectionModel::columnCount()
 {
     return 5;
 }
 
-Qt::ItemFlags WyborTowaruModel::flags(const QModelIndex &index) const
+Qt::ItemFlags MerchandiseSelectionModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
         return 0;
@@ -23,7 +23,7 @@ Qt::ItemFlags WyborTowaruModel::flags(const QModelIndex &index) const
     return 0;
 }
 
-bool WyborTowaruModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool MerchandiseSelectionModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if(role != Qt::EditRole || index.column() != 0)
         return false;
@@ -36,7 +36,7 @@ bool WyborTowaruModel::setData(const QModelIndex &index, const QVariant &value, 
     return true;
 }
 
-QVariant WyborTowaruModel::data(const QModelIndex &index, int role) const
+QVariant MerchandiseSelectionModel::data(const QModelIndex &index, int role) const
 {
     if(!(role == Qt::DisplayRole || role == Qt::EditRole) || !index.isValid())
         return QVariant();
@@ -64,7 +64,7 @@ QVariant WyborTowaruModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant WyborTowaruModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant MerchandiseSelectionModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(!role == Qt::DisplayRole || orientation == Qt::Vertical)
         return QVariant();
@@ -82,7 +82,7 @@ QVariant WyborTowaruModel::headerData(int section, Qt::Orientation orientation, 
     return QVariant();
 }
 
-void WyborTowaruModel::setHash(const QHash<int, double> &hash)
+void MerchandiseSelectionModel::setHash(const QHash<int, double> &hash)
 {
     m_hash = hash;
 }

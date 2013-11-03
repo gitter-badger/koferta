@@ -12,12 +12,12 @@ class QSqlRecord;
 /*!
  * \brief Model przechowywujący listę oferowanych towarów
  */
-class TowarModel : public QAbstractTableModel
+class MerchandiseListModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit TowarModel(QObject *parent = 0);
-    virtual ~TowarModel();
+    explicit MerchandiseListModel(QObject *parent = 0);
+    virtual ~MerchandiseListModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;

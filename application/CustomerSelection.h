@@ -16,25 +16,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-#include "WyborKlienta.h"
-#include "ui_WyborKlienta.h"
+#ifndef KLIENT_H
+#define KLIENT_H
 
-//#include <QSqlQuery>
+#include <QDialog>
+class QSqlRecord;
 
-
-WyborKlienta::WyborKlienta(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::WyborKlienta)
-{
-    ui->setupUi(this);
-
-    ui->pushButton_exit->setText(tr("Zakończ"));
-
-    connect(ui->pushButton_exit, SIGNAL(clicked()), this, SLOT(close()));
-    connect(ui->widget, SIGNAL(selectionChanged(QSqlRecord)), this, SIGNAL(selectionChanged(QSqlRecord)));
+namespace Ui {
+    class CustomerSelection;
 }
 
-WyborKlienta::~WyborKlienta()
+/*! Dialog WyborKlienta umożliwiający wybór klienta z bazy dla którego adresowana jest oferta
+*/
+class CustomerSelection : public QDialog
 {
-    delete ui;
-}
+    Q_OBJECT
+
+public:
+    ///inicjacja ui
+    explicit CustomerSelection(QWidget *parent = 0);
+    ~CustomerSelection();
+
+signals:
+    ///sygnał przekazujący wybranego lienta do MainWindow
+    void selectionChanged(const QSqlRecord&);
+
+private:
+    Ui::CustomerSelection *ui;
+};
+
+#endif // KLIENT_H
+

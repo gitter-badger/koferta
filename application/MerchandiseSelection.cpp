@@ -16,25 +16,25 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 #include "ui_SzukajTowaru.h"
-#include "WyborTowaru.h"
-#include "WyborTowaruModel.h"
+#include "MerchandiseSelection.h"
+#include "MerchandiseSelectionModel.h"
 #include "MerchendiseSelectionDelegate.h"
 #include "LocalDatabase.h"
 #include <QSqlRecord>
 #include <QSqlTableModel>
 
-WyborTowaru::WyborTowaru(const QHash<int, double> &hash, QWidget *parent) :
-    SzukajTowaru(new WyborTowaruModel(hash, parent), parent)
+MerchandiseSelection::MerchandiseSelection(const QHash<int, double> &hash, QWidget *parent) :
+    SzukajTowaru(new MerchandiseSelectionModel(hash, parent), parent)
 {
     m_merchandiseModel = localDatabase()->merchandiseModel();
     m_model->setSourceModel(m_merchandiseModel);
     MerchendiseSelectionDelegate* delegate = new MerchendiseSelectionDelegate(this);
     ui->tableView->setItemDelegate(delegate);
 
-    connect(delegate, &MerchendiseSelectionDelegate::itemCountChanged, this, &WyborTowaru::itemCountChanged);
+    connect(delegate, &MerchendiseSelectionDelegate::itemCountChanged, this, &MerchandiseSelection::itemCountChanged);
 }
 
-WyborTowaru::~WyborTowaru()
+MerchandiseSelection::~MerchandiseSelection()
 {
 
 }

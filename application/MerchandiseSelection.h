@@ -28,13 +28,13 @@ class QModelIndex;
 /*!
  * \brief Klasa umożliwiająca dodanie towaru do oferty
  */
-class WyborTowaru : public SzukajTowaru
+class MerchandiseSelection : public SzukajTowaru
 {
     Q_OBJECT
     
 public:
-    explicit WyborTowaru(const QHash<int, double>& hash = QHash<int, double>(), QWidget *parent = 0);
-    ~WyborTowaru();
+    explicit MerchandiseSelection(const QHash<int, double>& hash = QHash<int, double>(), QWidget *parent = 0);
+    ~MerchandiseSelection();
 
 signals:
     void itemCountChanged(int id, double count);

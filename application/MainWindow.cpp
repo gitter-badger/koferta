@@ -19,12 +19,12 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "LocalDatabase.h"
-#include "WyborTowaru.h"
-#include "WyborKlienta.h"
-#include "LoadDialog.h"
-#include "TowarModel.h"
+#include "MerchandiseSelection.h"
+#include "CustomerSelection.h"
+#include "OfferSelection.h"
+#include "MerchandiseListModel.h"
 #include "Merchandise.h"
-#include "TowarDelegate.h"
+#include "MerchandiseListDelegate.h"
 
 
 #include <QDate>
@@ -135,9 +135,9 @@ MainWindow::MainWindow ():
     ui->plainTextEdit_oferta->setReadOnly(true);
     ui->label_oferta->setText(tr("Warunki Oferty:"));
 
-    m_towarModel = new TowarModel;
+    m_towarModel = new MerchandiseListModel;
     ui->tableView->setModel(m_towarModel);
-    ui->tableView->setItemDelegate(new TowarDelegate(this));
+    ui->tableView->setItemDelegate(new MerchandiseListDelegate(this));
     //------------------ co z tym: ??? --------------
     ui->tableView->setDragDropMode(QAbstractItemView::InternalMove);
 
@@ -319,7 +319,7 @@ void MainWindow::checkData(bool ch)
 
 void MainWindow::popWyborKlienta()
 {
-    WyborKlienta* pop = new WyborKlienta(this);
+    CustomerSelection* pop = new CustomerSelection(this);
     connect(pop, SIGNAL(selectionChanged(QSqlRecord)), this, SLOT(clientChanged(QSqlRecord)));
     pop->exec();
     delete pop;
@@ -327,8 +327,8 @@ void MainWindow::popWyborKlienta()
 
 void MainWindow::popWyborTowaru()
 {
-    WyborTowaru* pop = new WyborTowaru(m_towarModel->hash(), this);
-    connect(pop, &WyborTowaru::itemCountChanged, m_towarModel, &TowarModel::changeItemCount);
+    MerchandiseSelection* pop = new MerchandiseSelection(m_towarModel->hash(), this);
+    connect(pop, &MerchandiseSelection::itemCountChanged, m_towarModel, &MerchandiseListModel::changeItemCount);
 //    pop->showMaximized();
     pop->exec();
     delete pop;
@@ -457,7 +457,7 @@ void MainWindow::zapisz()
 
 void MainWindow::popLoadDialog()
 {
-    LoadDialog* pop = new LoadDialog(this);
+    OfferSelection* pop = new OfferSelection(this);
     connect(pop, SIGNAL(offerSelected(QSqlRecord, QSqlTableModel)), this, SLOT(loadOffer(QSqlRecord, QSqlTableModel)));
     pop->exec();
     delete pop;

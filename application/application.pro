@@ -11,28 +11,28 @@ QT += printsupport
 LIBS += -L../common -lcommon
 
 HEADERS += \
-    LoadDialog.h \
     MainWindow.h \
-    WyborKlienta.h \
-    WyborTowaru.h \
-    TowarModel.h \
-    TowarDelegate.h \
-    WyborTowaruModel.h \
-    MerchendiseSelectionDelegate.h
+    MerchendiseSelectionDelegate.h \
+    MerchandiseListModel.h \
+    MerchandiseListDelegate.h \
+    MerchandiseSelectionModel.h \
+    MerchandiseSelection.h \
+    CustomerSelection.h \
+    OfferSelection.h
 
 FORMS += \
-    LoadDialog.ui \
     MainWindow.ui \
-    WyborKlienta.ui
+    OfferSelection.ui \
+    CustomerSelection.ui
          
 SOURCES += \
-    LoadDialog.cpp \
-    Main.cpp \
     MainWindow.cpp \
-    WyborKlienta.cpp \
-    WyborTowaru.cpp \
-    TowarModel.cpp \
-    TowarDelegate.cpp \
-    WyborTowaruModel.cpp \
-    MerchendiseSelectionDelegate.cpp
+    MerchendiseSelectionDelegate.cpp \
+    MerchandiseListModel.cpp \
+    MerchandiseListDelegate.cpp \
+    MerchandiseSelectionModel.cpp \
+    MerchandiseSelection.cpp \
+    CustomerSelection.cpp \
+    main.cpp \
+    OfferSelection.cpp
 

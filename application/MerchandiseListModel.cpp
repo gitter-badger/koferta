@@ -1,31 +1,31 @@
-#include "TowarModel.h"
+#include "MerchandiseListModel.h"
 #include "Merchandise.h"
 #include <QDebug>
 #include <QSqlTableModel>
 #include <QSqlRecord>
 #include "LocalDatabase.h"
 
-TowarModel::TowarModel(QObject *parent) :
+MerchandiseListModel::MerchandiseListModel(QObject *parent) :
     QAbstractTableModel(parent), m_pln(false), m_kurs(1)
 {
 }
 
-TowarModel::~TowarModel()
+MerchandiseListModel::~MerchandiseListModel()
 {
     qDeleteAll(m_list);
 }
 
-int TowarModel::rowCount(const QModelIndex & /*parent*/) const
+int MerchandiseListModel::rowCount(const QModelIndex & /*parent*/) const
 {
     return m_list.count() + 1;
 }
 
-int TowarModel::columnCount(const QModelIndex & /*parent*/) const
+int MerchandiseListModel::columnCount(const QModelIndex & /*parent*/) const
 {
     return (m_pln ? 9 : 8);
 }
 
-bool TowarModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool MerchandiseListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if(role == Qt::EditRole && isRabat(index))
     {
@@ -44,7 +44,7 @@ bool TowarModel::setData(const QModelIndex &index, const QVariant &value, int ro
     return false;
 }
 
-QVariant TowarModel::data(const QModelIndex &index, int role) const
+QVariant MerchandiseListModel::data(const QModelIndex &index, int role) const
 {
 
     if(!(role == Qt::DisplayRole || role == Qt::EditRole) || !index.isValid() || (index.row() > m_list.count()))
@@ -121,7 +121,7 @@ QVariant TowarModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant TowarModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant MerchandiseListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(!role == Qt::DisplayRole)
         return QVariant();
@@ -162,7 +162,7 @@ QVariant TowarModel::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-Qt::ItemFlags TowarModel::flags(const QModelIndex &index) const
+Qt::ItemFlags MerchandiseListModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
         return 0;
@@ -173,7 +173,7 @@ Qt::ItemFlags TowarModel::flags(const QModelIndex &index) const
     return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
 }
 
-QModelIndex TowarModel::index(int row, int column, const QModelIndex & /*parent*/) const
+QModelIndex MerchandiseListModel::index(int row, int column, const QModelIndex & /*parent*/) const
 {
     if(row > m_list.count())
         return QModelIndex();
@@ -182,38 +182,38 @@ QModelIndex TowarModel::index(int row, int column, const QModelIndex & /*parent*
     return QAbstractTableModel::createIndex(row, column, m_list[row]);
 }
 
-bool TowarModel::pln() const
+bool MerchandiseListModel::pln() const
 {
     return m_pln;
 }
 
-void TowarModel::clear()
+void MerchandiseListModel::clear()
 {
     beginRemoveRows(QModelIndex(), 0, m_list.count()-1);
     qDeleteAll(m_list);
     m_list.clear();
     endRemoveRows();
 }
-double TowarModel::kurs() const
+double MerchandiseListModel::kurs() const
 {
     return m_kurs;
 }
 
-bool TowarModel::isRabat(const QModelIndex &i) const
+bool MerchandiseListModel::isRabat(const QModelIndex &i) const
 {
     if(i.row() < m_list.count() && ((m_pln && i.column() == 4) || (!m_pln && i.column() == 3)))
         return true;
     return false;
 }
 
-bool TowarModel::isIlosc(const QModelIndex &i) const
+bool MerchandiseListModel::isIlosc(const QModelIndex &i) const
 {
     if(i.row() < m_list.count() && ((m_pln && i.column() == 6) || (!m_pln && i.column() == 5)))
         return true;
     return false;
 }
 
-void TowarModel::setKurs(double kurs)
+void MerchandiseListModel::setKurs(double kurs)
 {
     if(m_pln && (m_kurs == 0 || m_kurs == 1 || m_kurs == -1))
     {
@@ -231,7 +231,7 @@ void TowarModel::setKurs(double kurs)
     }
 }
 
-void TowarModel::changeItemCount(int id, double ile)
+void MerchandiseListModel::changeItemCount(int id, double ile)
 {
     Merchandise* t = new Merchandise(id);
     if(m_list.contains(t))
@@ -243,7 +243,7 @@ void TowarModel::changeItemCount(int id, double ile)
 }
 
 
-bool TowarModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
+bool MerchandiseListModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
 {
     if(row == m_list.count())
         return false;
@@ -259,7 +259,7 @@ bool TowarModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
     return true;
 }
 
-void TowarModel::setGlobalRabat(double r)
+void MerchandiseListModel::setGlobalRabat(double r)
 {
     foreach(Merchandise* t, m_list)
     {
@@ -268,7 +268,7 @@ void TowarModel::setGlobalRabat(double r)
 // potrzebne?   emit dataChanged(this->index(2, 0), this->index(m_list.count(), 8)); -- ?
 }
 
-QHash<int, double> TowarModel::hash() const
+QHash<int, double> MerchandiseListModel::hash() const
 {
     QHash<int, double> hash;
 
@@ -278,7 +278,7 @@ QHash<int, double> TowarModel::hash() const
     return hash;
 }
 
-double TowarModel::przeliczSume() const
+double MerchandiseListModel::przeliczSume() const
 {
     double suma = 0;
     foreach(Merchandise* t, m_list)
@@ -286,7 +286,7 @@ double TowarModel::przeliczSume() const
     return suma;
 }
 
-void TowarModel::addItem(Merchandise *towar)
+void MerchandiseListModel::addItem(Merchandise *towar)
 {
     int numer = m_list.count();
     beginInsertRows(QModelIndex(), numer, numer);
@@ -294,7 +294,7 @@ void TowarModel::addItem(Merchandise *towar)
     endInsertRows();
 }
 
-void TowarModel::loadOffer(const QSqlTableModel &mod)
+void MerchandiseListModel::loadOffer(const QSqlTableModel &mod)
 {
     // TODO
     /*

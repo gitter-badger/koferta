@@ -29,16 +29,16 @@ class QSqlTableModel;
 #include <QDialog>
 
 namespace Ui {
-    class LoadDialog;
+    class OfferSelection;
 }
 
-class LoadDialog : public QDialog
+class OfferSelection : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit LoadDialog(QWidget *parent = 0);
-    ~LoadDialog();
+    explicit OfferSelection(QWidget *parent = 0);
+    ~OfferSelection();
 
 public slots:
     void ok();
@@ -48,7 +48,7 @@ signals:
     void offerSelected(const QSqlRecord&, const QSqlTableModel&);
 
 private:
-    Ui::LoadDialog *ui;
+    Ui::OfferSelection *ui;
 
     QSqlRecord* cur;
     QSqlTableModel* model;

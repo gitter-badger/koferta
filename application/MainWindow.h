@@ -25,7 +25,7 @@
 #include <QMainWindow>
 #include <QHash>
 
-class TowarModel;
+class MerchandiseListModel;
 class QSqlTableModel;
 class QModelIndex;
 class QTextDocument;
@@ -34,7 +34,7 @@ class cUser;
 class QSqlRecord;
 class QCalendarWidget;
 class QDate;
-class TowarDelegate;
+class MerchandiseListDelegate;
 class QPrinter;
 
 namespace Ui {
@@ -111,7 +111,7 @@ private:
     QString* data;
     bool htm;
 
-    TowarModel* m_towarModel;
+    MerchandiseListModel* m_towarModel;
 
     QCalendarWidget* calendarWidget;
     QSqlRecord* klient;

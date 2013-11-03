@@ -16,16 +16,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-#include "LoadDialog.h"
-#include "ui_LoadDialog.h"
+#include "OfferSelection.h"
+#include "ui_OfferSelection.h"
 
 #include "SzukajOferty.h"
 #include <QSqlRecord>
 #include <QSqlTableModel>
 
-LoadDialog::LoadDialog(QWidget *parent) :
+OfferSelection::OfferSelection(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::LoadDialog)
+    ui(new Ui::OfferSelection)
 {
     ui->setupUi(this);
     ui->label_towary->setText(tr("Towary:"));
@@ -51,19 +51,19 @@ LoadDialog::LoadDialog(QWidget *parent) :
     cur = NULL;
 }
 
-LoadDialog::~LoadDialog()
+OfferSelection::~OfferSelection()
 {
     delete ui;
     delete cur;
 }
 
-void LoadDialog::ok()
+void OfferSelection::ok()
 {
     emit offerSelected(*cur, *model);
     this->accept();
 }
 
-void LoadDialog::ref(const QSqlRecord& rec)
+void OfferSelection::ref(const QSqlRecord& rec)
 {
     delete cur;
     cur = new QSqlRecord(rec);

@@ -4,12 +4,12 @@
 #include "SzukajTowaruModel.h"
 #include <QHash>
 
-class WyborTowaruModel : public SzukajTowaruModel
+class MerchandiseSelectionModel : public SzukajTowaruModel
 {
     Q_OBJECT
 
 public:  
-    WyborTowaruModel(const QHash<int, double>& hash =  QHash<int, double>(), QObject *parent = nullptr);
+    MerchandiseSelectionModel(const QHash<int, double>& hash =  QHash<int, double>(), QObject *parent = nullptr);
 
     virtual int columnCount();
     virtual Qt::ItemFlags flags(const QModelIndex &index) const;

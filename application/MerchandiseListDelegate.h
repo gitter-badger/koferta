@@ -44,12 +44,12 @@
 #include <QItemDelegate>
 //#include <QObject>
 
-class TowarDelegate : public QItemDelegate
+class MerchandiseListDelegate : public QItemDelegate
 {
     Q_OBJECT
 
 public:
-    TowarDelegate(QObject *parent = 0);
+    MerchandiseListDelegate(QObject *parent = 0);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
