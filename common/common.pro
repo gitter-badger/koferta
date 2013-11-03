@@ -18,7 +18,8 @@ HEADERS += \
     sqlitedatabase.h \
     PsqlDatabase.h \
     Database.h \
-    SzukajTowaruModel.h
+    SzukajTowaruModel.h \
+    Merchandise.h
 
 FORMS += \
     SzukajKlienta.ui \
@@ -36,5 +37,5 @@ SOURCES += \
     sqlitedatabase.cpp \
     PsqlDatabase.cpp \
     Database.cpp \
-    SzukajTowaruModel.cpp
-
+    SzukajTowaruModel.cpp \
+    Merchandise.cpp

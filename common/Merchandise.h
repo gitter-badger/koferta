@@ -8,12 +8,12 @@ class QSqlRecord;
 /*!
  * \brief Klasa reprezentująca towar w ofercie
  */
-class Towar
+class Merchandise
 {
 public:
-    explicit Towar();
-    explicit Towar(int id);
-    Towar(int id, const QString& kod, const QString& nazwa, double cena, bool metr = false, int ilosc = 0);
+    explicit Merchandise();
+    explicit Merchandise(int id);
+    Merchandise(int id, const QString& kod, const QString& nazwa, double cena, bool metr = false, int ilosc = 0);
     //Towar(const QSqlRecord& rec);
 
     double cenaPln(double kurs) const;
@@ -45,7 +45,7 @@ public:
     int id() const;
     void setId(int id);
 
-    bool operator==(const Towar& other) const;
+    bool operator==(const Merchandise& other) const;
 
 protected:
     int     m_id;

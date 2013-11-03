@@ -5,7 +5,7 @@
 #include <QHash>
 #include <QList>
 
-class Towar;
+class Merchandise;
 class QSqlTableModel;
 class QSqlRecord;
 
@@ -33,7 +33,7 @@ public:
 
     void setGlobalRabat(double r);
 
-    void addItem(Towar* towar);
+    void addItem(Merchandise* towar);
     void loadOffer(const QSqlTableModel& mod);
 
     bool pln() const;
@@ -53,7 +53,7 @@ public slots:
     void changeItemCount(int id, double ile);
 
 protected:
-    QList<Towar*> m_list;
+    QList<Merchandise*> m_list;
 
     bool m_pln;
     double m_kurs;

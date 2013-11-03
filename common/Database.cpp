@@ -1,6 +1,6 @@
 #include "Database.h"
 #include "AbstractDatabase.h"
-#include "Towar.h"
+#include "Merchandise.h"
 
 #include <QSqlTableModel>
 #include <QSqlRecord>
@@ -15,19 +15,19 @@ Database::Database()
 
 QSqlTableModel* Database::customerModel()
 {
-    db()->customerModel();
+    return db()->customerModel();
 }
 
 QSqlTableModel* Database::merchandiseModel()
 {
-    db()->customerModel();
+    return db()->customerModel();
 }
 
 /*******************************
  *      Users table
  */
 
-QHash<int, QString> Database::userNames() const
+QHash<int, QString> Database::userNames()
 {
     QSqlTableModel* usersModel = db()->usersModel();
     usersModel->setFilter("");
@@ -44,7 +44,7 @@ QHash<int, QString> Database::userNames() const
  *      Options table
  */
 
-QHash<QString, QString> Database::optionsList(eOptionType type) const
+QHash<QString, QString> Database::optionsList(eOptionType type)
 {
     QSqlTableModel* optionsModel = db()->optionsModel();
     optionsModel->setFilter(QString("type = %1").arg(type));
@@ -61,12 +61,12 @@ QHash<QString, QString> Database::optionsList(eOptionType type) const
  *      Merchandise table
  */
 
-Towar *Database::merchandise(int id)
+Merchandise *Database::merchandise(int id)
 {
-    SqlTableModel* merchModel = db()->merchandiseModel();
+    QSqlTableModel* merchModel = db()->merchandiseModel();
     merchModel->setFilter(QString("id = %1").arg(id));
     QSqlRecord r = merchModel->record();
-    Towar* t = new Towar(id, r.value("code").toString(), r.value("desc").toString(), r.value("price").toDouble(), r.value("unit").toChar() == 'm');
-    merchModel()->setFilter("");
+    Merchandise* t = new Merchandise(id, r.value("code").toString(), r.value("desc").toString(), r.value("price").toDouble(), r.value("unit").toChar() == 'm');
+    merchModel->setFilter("");
     return t;
 }

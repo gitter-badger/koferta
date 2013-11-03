@@ -23,7 +23,7 @@
 #include "WyborKlienta.h"
 #include "LoadDialog.h"
 #include "TowarModel.h"
-#include "Towar.h"
+#include "Merchandise.h"
 #include "TowarDelegate.h"
 
 

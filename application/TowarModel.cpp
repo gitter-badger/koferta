@@ -1,5 +1,5 @@
 #include "TowarModel.h"
-#include "Towar.h"
+#include "Merchandise.h"
 #include <QDebug>
 #include <QSqlTableModel>
 #include <QSqlRecord>
@@ -29,14 +29,14 @@ bool TowarModel::setData(const QModelIndex &index, const QVariant &value, int ro
 {
     if(role == Qt::EditRole && isRabat(index))
     {
-        Towar* t = static_cast<Towar*>(index.internalPointer());
+        Merchandise* t = static_cast<Merchandise*>(index.internalPointer());
         t->setRabat(value.toDouble());
         emit dataChanged(index, index);
         return true;
     }
     if(role == Qt::EditRole && isIlosc(index))
     {
-        Towar* t = static_cast<Towar*>(index.internalPointer());
+        Merchandise* t = static_cast<Merchandise*>(index.internalPointer());
         t->setIlosc(value.toDouble());
         emit dataChanged(index, index);
         return true;
@@ -50,7 +50,7 @@ QVariant TowarModel::data(const QModelIndex &index, int role) const
     if(!(role == Qt::DisplayRole || role == Qt::EditRole) || !index.isValid() || (index.row() > m_list.count()))
         return QVariant();
 
-    Towar* t = static_cast<Towar*>(index.internalPointer());
+    Merchandise* t = static_cast<Merchandise*>(index.internalPointer());
 
     if(role == Qt::EditRole)
     {
@@ -233,12 +233,12 @@ void TowarModel::setKurs(double kurs)
 
 void TowarModel::changeItemCount(int id, double ile)
 {
-    Towar* t = new Towar(id);
+    Merchandise* t = new Merchandise(id);
     if(m_list.contains(t))
         m_list[m_list.indexOf(t)]->setIlosc(ile);
     else
     {
-       localDatabase->
+        m_list.append(localDatabase()->merchandise(id));
     }
 }
 
@@ -261,7 +261,7 @@ bool TowarModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
 
 void TowarModel::setGlobalRabat(double r)
 {
-    foreach(Towar* t, m_list)
+    foreach(Merchandise* t, m_list)
     {
         t->setRabat(r);
     }
@@ -272,7 +272,7 @@ QHash<int, double> TowarModel::hash() const
 {
     QHash<int, double> hash;
 
-    foreach(Towar* t, m_list)
+    foreach(Merchandise* t, m_list)
         hash.insert(t->id(), t->ilosc());
 
     return hash;
@@ -281,12 +281,12 @@ QHash<int, double> TowarModel::hash() const
 double TowarModel::przeliczSume() const
 {
     double suma = 0;
-    foreach(Towar* t, m_list)
+    foreach(Merchandise* t, m_list)
         suma += t->wartosc(m_kurs);
     return suma;
 }
 
-void TowarModel::addItem(Towar *towar)
+void TowarModel::addItem(Merchandise *towar)
 {
     int numer = m_list.count();
     beginInsertRows(QModelIndex(), numer, numer);
@@ -296,11 +296,13 @@ void TowarModel::addItem(Towar *towar)
 
 void TowarModel::loadOffer(const QSqlTableModel &mod)
 {
+    // TODO
+    /*
     QSqlTableModel towary;
     towary.setTable("towar");
     towary.select();
 
-    Towar* t;
+    Merchandise* t;
     QSqlRecord record, towarRecord;
 
     for(int row=0; row<mod.rowCount(); ++row)
@@ -310,11 +312,12 @@ void TowarModel::loadOffer(const QSqlTableModel &mod)
         towary.setFilter(QString("id='%1'").arg(record.value("kod").toString()));
         towarRecord = towary.record(0);
 
-        t = new Towar(towarRecord);
+        t = new Merchandise(towarRecord);
         t->setRabat(record.value("rabat").toDouble());
         t->setIlosc(record.value("ilosc").toInt());
 
         addItem(t);
     }
+    */
 }
 
