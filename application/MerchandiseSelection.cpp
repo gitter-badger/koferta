@@ -20,7 +20,6 @@
 #include "MerchandiseSelectionModel.h"
 #include "MerchendiseSelectionDelegate.h"
 #include "LocalDatabase.h"
-#include <QSqlRecord>
 #include <QSqlTableModel>
 
 MerchandiseSelection::MerchandiseSelection(const QHash<int, double> &hash, QWidget *parent) :
@@ -31,7 +30,7 @@ MerchandiseSelection::MerchandiseSelection(const QHash<int, double> &hash, QWidg
     MerchendiseSelectionDelegate* delegate = new MerchendiseSelectionDelegate(this);
     ui->tableView->setItemDelegate(delegate);
 
-    connect(delegate, &MerchendiseSelectionDelegate::itemCountChanged, this, &MerchandiseSelection::itemCountChanged);
+    connect(static_cast<MerchandiseSelectionModel*>(m_model), &MerchandiseSelectionModel::itemCountChanged, this, &MerchandiseSelection::itemCountChanged);
 }
 
 MerchandiseSelection::~MerchandiseSelection()

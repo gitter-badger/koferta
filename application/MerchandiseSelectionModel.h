@@ -20,6 +20,9 @@ public:
 
     virtual void setHash(const QHash<int, double>& hash);
 
+signals:
+    void itemCountChanged(int id, double count);
+
 protected:
     QHash<int, double> m_hash;
 

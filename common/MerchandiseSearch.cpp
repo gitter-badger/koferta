@@ -35,24 +35,7 @@ MerchandiseSearch::MerchandiseSearch(MerchandiseSearchModel* model, QWidget *par
     ui->radioButton_id->setText(tr("Id produktu"));
     ui->radioButton_id->setChecked(true);
     ui->radioButton_name->setText(tr("Nazwa produktu"));
-/*
-    localDatabase()->merchandiseModel()->setFilter("");
 
-    ui->tableView->setModel(localDatabase()->merchandiseModel());
-
-    ui->tableView->hideColumn(2);
-    ui->tableView->hideColumn(3);
-
-    ui->tableView->setSortingEnabled(true);
-
-    ui->tableView->resizeColumnToContents(0);
- //   ui->tableView->resizeColumnToContents(1);
-
-
-    QHeaderView* hdr = ui->tableView->horizontalHeader();
- //   hdr->setResizeMode(0, QHeaderView::ResizeToContents);
-    hdr->setSectionResizeMode(1, QHeaderView::Stretch);
-*/
     m_model->setFilter("");
     ui->tableView->setModel(m_model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -62,11 +45,6 @@ MerchandiseSearch::MerchandiseSearch(MerchandiseSearchModel* model, QWidget *par
     connect(ui->radioButton_name, SIGNAL(clicked()), this, SLOT(ref2()));
     connect(ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(ref(QString)));
     connect(ui->pushButton_close, &QPushButton::clicked, this, &MerchandiseSearch::close);
-/*
-    QItemSelectionModel *sm = ui->tableView->selectionModel();
-    connect(sm, SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged(QModelIndex,QModelIndex)));
-    connect(ui->tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(select(QModelIndex)));
-*/
 }
 
 MerchandiseSearch::~MerchandiseSearch()
@@ -74,14 +52,7 @@ MerchandiseSearch::~MerchandiseSearch()
     delete ui;
   //  delete m_model;
 }
-/*
-void SzukajTowaru::select(const QModelIndex& idx)
-{
-    QSqlRecord r = m_model->record(idx.row());
-    if(!r.isEmpty())
-        emit selectionChanged(r);
-}
-*/
+
 void MerchandiseSearch::ref2()
 {
     ref(ui->lineEdit->text());
@@ -97,12 +68,5 @@ void MerchandiseSearch::ref(const QString & in)
     s += in;
     s += "%'";
     */
-    m_model->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "id" : "nazwa").arg(in));
+    m_model->setFilter(QString("%1 like '%2%'").arg(ui->radioButton_id->isChecked() ? "code" : "desc").arg(in));
 }
-/*
-void SzukajTowaru::currentRowChanged(const QModelIndex &cur, const QModelIndex &prev)
-{
-    Q_UNUSED(prev);
-    select(cur);
-}
-*/

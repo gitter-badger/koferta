@@ -65,7 +65,7 @@ Merchandise *Database::merchandise(int id)
 {
     QSqlTableModel* merchModel = db()->merchandiseModel();
     merchModel->setFilter(QString("id = %1").arg(id));
-    QSqlRecord r = merchModel->record();
+    QSqlRecord r = merchModel->record(0);
     Merchandise* t = new Merchandise(id, r.value("code").toString(), r.value("desc").toString(), r.value("price").toDouble(), r.value("unit").toChar() == 'm');
     merchModel->setFilter("");
     return t;

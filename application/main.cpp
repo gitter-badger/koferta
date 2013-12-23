@@ -47,7 +47,8 @@ if(Logger::instance()->setFilePath(filePath(".log")))
     int result;
 
     MainWindow w;
-    w.showMaximized();
+    w.show();
+  //  w.showMaximized();
 
     qDebug() << "wchodzę do głównej pętli";
 

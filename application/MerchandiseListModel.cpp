@@ -235,10 +235,16 @@ void MerchandiseListModel::changeItemCount(int id, double ile)
 {
     Merchandise* t = new Merchandise(id);
     if(m_list.contains(t))
-        m_list[m_list.indexOf(t)]->setIlosc(ile);
+    {
+        t = m_list[m_list.indexOf(t)];
+        t->setIlosc(ile);
+    }
     else
     {
-        m_list.append(localDatabase()->merchandise(id));
+        beginInsertRows(QModelIndex(), m_list.size(), m_list.size());
+        t = localDatabase()->merchandise(id);
+        t->setIlosc(ile);
+        m_list.append(t);
     }
 }
 

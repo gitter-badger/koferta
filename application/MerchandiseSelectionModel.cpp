@@ -29,10 +29,15 @@ bool MerchandiseSelectionModel::setData(const QModelIndex &index, const QVariant
         return false;
 
     int id = d(index, 0).toInt();
+    double count = value.toDouble();
+
     if(m_hash.contains(id))
-        m_hash[id] = value.toDouble();
+        m_hash[id] = count;
     else
-        m_hash.insert(id, value.toDouble());
+        m_hash.insert(id, count);
+
+    emit itemCountChanged(id, count);
+
     return true;
 }
 
@@ -57,7 +62,7 @@ QVariant MerchandiseSelectionModel::data(const QModelIndex &index, int role) con
     case 1: return d(index, 1);
     case 2: return d(index, 2);
     case 3: return d(index, 3);
-    case 4: return d(index, 4).toChar() == 'p' ? tr("szt.") : tr("m.b.");
+    case 4: return (d(index, 4).toString() == "m") ? tr("m.b.") : tr("szt.");
     }
 
     qWarning() << "View requested non-existant column, number:" << section;

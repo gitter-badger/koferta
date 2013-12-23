@@ -17,8 +17,11 @@ bool MerchandiseSearchModel::lessThan(const QModelIndex &left, const QModelIndex
 
 bool MerchandiseSearchModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QDate from = QDate::fromString(sourceModel()->data(sourceModel()->index(sourceRow, 5, sourceParent)).toString(), m_dateFmt);
-    QDate to = QDate::fromString(sourceModel()->data(sourceModel()->index(sourceRow, 6, sourceParent)).toString(), m_dateFmt);
+    QString d1 = sourceModel()->data(sourceModel()->index(sourceRow, 5, sourceParent)).toString();
+    QString d2 = sourceModel()->data(sourceModel()->index(sourceRow, 6, sourceParent)).toString();
+
+    QDate from = QDate::fromString(d1, m_dateFmt);
+    QDate to = QDate::fromString(d2, m_dateFmt);
     return (QDate::currentDate() > from) && (QDate::currentDate() < to);
 }
 
@@ -57,7 +60,7 @@ QVariant MerchandiseSearchModel::data(const QModelIndex &index, int role) const
     case 0: return d(index, 1);
     case 1: return d(index, 2);
     case 2: return d(index, 3);
-    case 3: return d(index, 4).toChar() == 'p' ? tr("szt.") : tr("m.b.");
+    case 3: return (d(index, 4).toString() == "m") ? tr("m.b.") : tr("szt.");
     }
 
     qWarning() << "View requested non-existant column, number:" << section;
