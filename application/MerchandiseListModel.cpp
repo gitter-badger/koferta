@@ -189,6 +189,9 @@ bool MerchandiseListModel::pln() const
 
 void MerchandiseListModel::clear()
 {
+    if(m_list.isEmpty())
+        return;
+
     beginRemoveRows(QModelIndex(), 0, m_list.count()-1);
     qDeleteAll(m_list);
     m_list.clear();

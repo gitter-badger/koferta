@@ -411,7 +411,7 @@ void MainWindow::init()
     ui->actionNR->setEnabled(true);
 
     //inicjacja tabelki
-    m_towarModel->clear();
+  //  m_towarModel->clear(); //chyba niepotrzebne
     for(int i=0; i < m_towarModel->columnCount(); i++)
         ui->tableView->setColumnWidth(i, 85);
     ui->tableView->setColumnWidth(1, 410);
