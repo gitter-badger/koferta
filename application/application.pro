@@ -8,7 +8,14 @@ TEMPLATE = app
 
 QT += printsupport
 
+
+unix {
 LIBS += -L../common -lcommon
+}
+
+win32 {
+LIBS += -L../common/debug -lcommon
+}
 
 HEADERS += \
     MainWindow.h \

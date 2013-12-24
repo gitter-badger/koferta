@@ -4,8 +4,9 @@
 
 
 TEMPLATE = lib
-
-#TARGET = ../kCommon
+CONFIG  += dll staticlib
+TARGET = common
+VERSION  = 0
 
 HEADERS += \
     LocalDatabase.h \
