@@ -1,0 +1,38 @@
+version: "{branch}-ci-{build}"
+os:
+- Visual Studio 2013
+
+platform:
+- Win32
+
+configuration:
+- Debug 
+- Release
+
+on_finish:
+- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+environment:
+  QT_ROOT C:\qt
+  MYSQL_INCLUDEDIR: C:\Libraries\boost_1_58_0\boost
+  MYSQL_LIBRARYDIR: C:\Libraries\boost_1_58_0\lib32-msvc-12.0
+
+install:
+#- git submodule init
+#- git submodule update
+ - qmake -v
+
+build_script:
+- qmake
+- nmake
+
+test_script:
+
+notifications:
+- provider: Email
+  to:
+    - konserw@gmail.com
+  subject: kOferta AppVeyor Build
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: true
