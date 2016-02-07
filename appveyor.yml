@@ -13,7 +13,7 @@ on_finish:
 - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 environment:
-  QT_ROOT C:\qt
+  QT_ROOT: C:\qt
   MYSQL_INCLUDEDIR: C:\Libraries\boost_1_58_0\boost
   MYSQL_LIBRARYDIR: C:\Libraries\boost_1_58_0\lib32-msvc-12.0
 
