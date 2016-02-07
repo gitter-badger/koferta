@@ -22,7 +22,7 @@ install:
 #- git submodule update
 #- C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd /x86
 #- ps: %VS120COMNTOOLS%\..\..\VC\vcvarsall.bat x86
-- ps: '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86'
+- cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86'
 - set PATH=%PATH%;%QTDIR%\bin
 - qmake -v
 
