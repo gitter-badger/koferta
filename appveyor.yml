@@ -20,7 +20,7 @@ environment:
 install:
 #- git submodule init
 #- git submodule update
-- %VS120COMNTOOLS%\..\..\VC\vcvarsall.bat x86
+- ps: %VS120COMNTOOLS%\..\..\VC\vcvarsall.bat x86
 - set PATH=%PATH%;%QTDIR%\bin
 - qmake -v
 
