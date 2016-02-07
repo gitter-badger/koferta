@@ -20,7 +20,8 @@ environment:
 install:
 #- git submodule init
 #- git submodule update
-- ps: %VS120COMNTOOLS%\..\..\VC\vcvarsall.bat x86
+- "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x32
+#- ps: %VS120COMNTOOLS%\..\..\VC\vcvarsall.bat x86
 - set PATH=%PATH%;%QTDIR%\bin
 - qmake -v
 
