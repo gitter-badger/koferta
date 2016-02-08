@@ -45,6 +45,11 @@ after_build:
 
 test_script:
 
+artifacts:
+  - path: koferta_x86
+    name: kOferta_x86
+    type: zip
+
 notifications:
 - provider: Email
   to:
