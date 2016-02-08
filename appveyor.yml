@@ -9,7 +9,7 @@ configuration:
 - Release
 
 on_finish:
-#- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 environment:
   QTDIR: C:\Qt\5.5\msvc2013 
@@ -41,6 +41,7 @@ after_build:
 - cp C:\Qt/5.5/msvc2013/plugins/platforms/qwindows.dll ./platforms/
 - mkdir printsupport
 - cp C:\Qt/5.5/msvc2013/plugins/printsupport/windowsprintersupport.dll ./printsupport/
+- mkdir sql
 - cd ..
 - 7z a kOferta_x86.7z koferta_x86
 
