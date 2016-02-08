@@ -6,7 +6,6 @@ platform:
 - Win32
 
 configuration:
-- Debug 
 - Release
 
 on_finish:
@@ -14,14 +13,10 @@ on_finish:
 
 environment:
   QTDIR: C:\Qt\5.5\msvc2013 
-  MYSQL_INCLUDEDIR: C:\Librart
-  MYSQL_LIBRARYDIR: C:\Program Files\MySQL\MySQL Server 5.6\lib
 
 install:
 #- git submodule init
 #- git submodule update
-#- C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd /x86
-#- ps: %VS120COMNTOOLS%\..\..\VC\vcvarsall.bat x86
 - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86'
 - set PATH=%PATH%;%QTDIR%\bin
 - qmake -v
@@ -29,6 +24,24 @@ install:
 build_script:
 - qmake
 - nmake
+
+after_build:
+- cd C:\projects
+- mkdir koferta_x86
+- cd koferta_x86
+- cp ..\koferta\Release/koferta.exe .\
+- cp ..\koferta\3rdParty\* .\
+- cp ..\koferta\LICENSE.md .\
+- cp ..\koferta\README.md .\
+- cp C:\Qt\5.5\msvc2013\bin\Qt5Core.dll
+- cp C:\Qt\5.5\msvc2013\bin\Qt5Gui.dll
+- cp C:\Qt\5.5\msvc2013\bin\Qt5PrintSupport.dll
+- cp C:\Qt\5.5\msvc2013\bin\Qt5Sql.dll
+- cp C:\Qt\5.5\msvc2013\bin\Qt5Widgets.dll
+- mkdir platforms
+- cp C:\Qt\5.5\msvc2013\plugins\platforms\qwindows.dll .\platforms\
+- mkdir printsupport
+- cp C:\Qt\5.5\msvc2013\plugins\printsupport\windowsprintersupport.dll .\printsupport\
 
 test_script:
 
