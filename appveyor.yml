@@ -43,7 +43,7 @@ after_build:
 - mkdir printsupport
 - cp C:\Qt/5.5/msvc2013/plugins/printsupport/windowsprintersupport.dll ./printsupport/
 - cd ..
-- 7z a kOferta_x86.7z a koferta_x86
+- 7z a kOferta_x86.7z koferta_x86
 
 test_script:
 
