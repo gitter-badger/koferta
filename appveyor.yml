@@ -41,7 +41,8 @@ after_build:
 - cp C:\Qt/5.5/msvc2013/plugins/platforms/qwindows.dll ./platforms/
 - mkdir printsupport
 - cp C:\Qt/5.5/msvc2013/plugins/printsupport/windowsprintersupport.dll ./printsupport/
-- mkdir sql
+- mkdir sqldrivers
+- cp C:\Qt/5.5/msvc2013/plugins/sqldrivers/qsqlmysql.dll ./sqldrivers/
 - cd ..
 - 7z a kOferta_x86.7z koferta_x86
 
