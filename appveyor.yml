@@ -29,8 +29,8 @@ after_build:
 - cd C:\projects
 - mkdir koferta_x86
 - cd koferta_x86
-- cp ..\koferta\Release/koferta.exe .\
-- cp ..\koferta\3rdParty\* .\
+- cp ..\koferta\Release\koferta.exe .\
+- 'cp ..\koferta\3rdParty\* .\'
 - cp ..\koferta\LICENSE.md .\
 - cp ..\koferta\README.md .\
 - cp C:\Qt\5.5\msvc2013\bin\Qt5Core.dll
