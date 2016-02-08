@@ -29,19 +29,19 @@ after_build:
 - cd C:\projects
 - mkdir koferta_x86
 - cd koferta_x86
-- cp ..\koferta\Release\koferta.exe .\
-- 'cp ..\koferta\3rdParty\* .\'
-- cp ..\koferta\LICENSE.md .\
-- cp ..\koferta\README.md .\
-- cp C:\Qt\5.5\msvc2013\bin\Qt5Core.dll
-- cp C:\Qt\5.5\msvc2013\bin\Qt5Gui.dll
-- cp C:\Qt\5.5\msvc2013\bin\Qt5PrintSupport.dll
-- cp C:\Qt\5.5\msvc2013\bin\Qt5Sql.dll
-- cp C:\Qt\5.5\msvc2013\bin\Qt5Widgets.dll
+- cp ../koferta/Release/koferta.exe ./
+- cp ../koferta/3rdParty/* ./
+- cp ../koferta/LICENSE.md ./
+- cp ../koferta/README.md ./
+- cp C:\Qt/5.5/msvc2013/bin/Qt5Core.dll
+- cp C:\Qt/5.5/msvc2013/bin/Qt5Gui.dll
+- cp C:\Qt/5.5/msvc2013/bin/Qt5PrintSupport.dll
+- cp C:\Qt/5.5/msvc2013/bin/Qt5Sql.dll
+- cp C:\Qt/5.5/msvc2013/bin/Qt5Widgets.dll
 - mkdir platforms
-- cp C:\Qt\5.5\msvc2013\plugins\platforms\qwindows.dll .\platforms\
+- cp C:\Qt/5.5/msvc2013/plugins/platforms/qwindows.dll ./platforms/
 - mkdir printsupport
-- cp C:\Qt\5.5\msvc2013\plugins\printsupport\windowsprintersupport.dll .\printsupport\
+- cp C:\Qt/5.5/msvc2013/plugins/printsupport/windowsprintersupport.dll ./printsupport/
 
 test_script:
 
