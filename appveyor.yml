@@ -26,13 +26,13 @@ build_script:
 - nmake
 
 after_build:
-- cd C:\projects
+#- cd C:\projects
 - mkdir koferta_x86
 - cd koferta_x86
-- cp ../koferta/Release/koferta.exe ./
-- cp ../koferta/3rdParty/* ./
-- cp ../koferta/LICENSE.md ./
-- cp ../koferta/README.md ./
+- cp ../Release/koferta.exe ./
+- cp ../3rdParty/* ./
+- cp ../LICENSE.md ./
+- cp ../README.md ./
 - cp C:\Qt/5.5/msvc2013/bin/Qt5Core.dll ./
 - cp C:\Qt/5.5/msvc2013/bin/Qt5Gui.dll ./
 - cp C:\Qt/5.5/msvc2013/bin/Qt5PrintSupport.dll ./
@@ -42,6 +42,7 @@ after_build:
 - cp C:\Qt/5.5/msvc2013/plugins/platforms/qwindows.dll ./platforms/
 - mkdir printsupport
 - cp C:\Qt/5.5/msvc2013/plugins/printsupport/windowsprintersupport.dll ./printsupport/
+- 7z a kOferta_x86.7z a koferta_x86
 
 test_script:
 
@@ -49,6 +50,8 @@ artifacts:
   - path: koferta_x86
     name: kOferta_x86
     type: zip
+  - path: kOferta_x86.7z
+    name: kOferta_x86.7z
 
 notifications:
 - provider: Email
